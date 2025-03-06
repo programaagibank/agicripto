@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="963736c1-8d0c-4103-b5b2-6553c051a03c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" afterDir="false" />
     </list>
+=======
+    <list default="true" id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
+>>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -16,26 +21,45 @@
   "associatedIndex": 2
 }]]></component>
   <component name="ProjectId" id="2txNX58xGQEhR5GDThMQOpHMnR2" />
+=======
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2twS8Isx1dD15MkznVvcUqXV0r0" />
+>>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< HEAD
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/vijc/Documents/GitHub/agicripto/AgiCripto"
+=======
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/vitor.coelho/Desktop/GitHub/agicripto/AgiCripto"
+>>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="963736c1-8d0c-4103-b5b2-6553c051a03c" name="Changes" comment="" />
       <created>1741289801881</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1741289801881</updated>
+=======
+      <changelist id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
+      <created>1741261482673</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741261482673</updated>
+>>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
     </task>
     <servers />
   </component>
