@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
+import java.util.Objects;
 
 public class Conexao {
     private static final Dotenv dotenv = Dotenv.load();
@@ -28,9 +29,17 @@ public class Conexao {
 
             try {
                 if (c == 0) {
-                    conexao = DriverManager.getConnection(INFOS[0], INFOS[1], INFOS[2]);
+                    conexao = DriverManager.getConnection(
+                            Objects.requireNonNull(dotenv.get(INFOS[0])),
+                            Objects.requireNonNull(dotenv.get(INFOS[1])),
+                            Objects.requireNonNull(dotenv.get(INFOS[2]))
+                    );
                 } else if (c == 1) {
-                    conexao = DriverManager.getConnection(INFOS[3], INFOS[4], INFOS[5]);
+                    conexao = DriverManager.getConnection(
+                            Objects.requireNonNull(dotenv.get(INFOS[3])),
+                            Objects.requireNonNull(dotenv.get(INFOS[4])),
+                            Objects.requireNonNull(dotenv.get(INFOS[5]))
+                    );
                 }
             } catch (InputMismatchException e) {
                 throw new InputMismatchException("Apenas 0 ou 1");
