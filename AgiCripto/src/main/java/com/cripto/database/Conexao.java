@@ -1,26 +1,40 @@
 package com.cripto.database;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 
 public class Conexao {
-    private static final String URL = "jdbc:mysql://localhost:3306/agicripto";
-    private static final String USUARIO = "root";
-    private static final String SENHA = "root";
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String[] INFOS = {
+            "DB_URL_ONLINE",
+            "DB_USER_ONLINE",
+            "DB_PASSWORD_ONLINE",
+            "DB_URL_LOCAL",
+            "DB_USER_LOCAL",
+            "DB_PASSWORD_LOCAL"
+    };
+
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    public Conexao() {
-
-    }
-
-    public Connection getConexao() throws SQLException {
+    public Connection getConexao(int c) throws SQLException {
         Connection conexao = null;
 
         try {
             Class.forName(DRIVER);
 
-            conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
+            try {
+                if (c == 0) {
+                    conexao = DriverManager.getConnection(INFOS[0], INFOS[1], INFOS[2]);
+                } else if (c == 1) {
+                    conexao = DriverManager.getConnection(INFOS[3], INFOS[4], INFOS[5]);
+                }
+            } catch (InputMismatchException e) {
+                throw new InputMismatchException("Apenas 0 ou 1");
+            }
 
             if (conexao != null) {
                 System.out.println("CONEXAO AUTORIZADA");
