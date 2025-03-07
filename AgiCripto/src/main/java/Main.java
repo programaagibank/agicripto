@@ -1,7 +1,4 @@
-package com.cripto;
-
 import com.cripto.controller.ClienteController;
-import com.cripto.model.Cliente;
 import com.cripto.model.database.Conexao;
 
 import java.sql.SQLException;
