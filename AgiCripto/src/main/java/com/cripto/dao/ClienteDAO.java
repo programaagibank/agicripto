@@ -19,7 +19,7 @@ public class ClienteDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = Objects.requireNonNull(conexao.getConexao(1)).prepareStatement(sql);
+            ps = Objects.requireNonNull(conexao.getConexao(0)).prepareStatement(sql);
 
             ps.setString(1, cliente.getNome());
             ps.setString(2, cliente.getEmail());
