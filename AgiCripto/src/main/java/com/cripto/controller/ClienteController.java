@@ -7,12 +7,12 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ClienteController {
-    private Scanner scanner;
-    private ClienteDAO clienteDAO;
+    private final Scanner scanner;
+    private final ClienteDAO clienteDAO;
 
-    public ClienteController() {
+    public ClienteController(ClienteDAO clienteDAO) {
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
-        this.clienteDAO = new ClienteDAO();
+        this.clienteDAO = clienteDAO;
     }
 
     public void cadastro() {

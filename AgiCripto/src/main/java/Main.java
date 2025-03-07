@@ -1,6 +1,8 @@
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.ClienteDAO;
 import com.cripto.model.database.Conexao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -12,9 +14,11 @@ public class Main {
         int opcao = scanner.nextInt();
 
         Conexao conexao = new Conexao();
-        conexao.getConexao(opcao);
+        Connection connection = conexao.getConexao(opcao);
 
-        ClienteController controller = new ClienteController();
+        ClienteDAO clienteDAO = new ClienteDAO(connection);
+
+        ClienteController controller = new ClienteController(clienteDAO);
         controller.cadastro();
 
     }

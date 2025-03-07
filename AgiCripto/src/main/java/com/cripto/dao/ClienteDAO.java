@@ -3,15 +3,15 @@ package com.cripto.dao;
 import com.cripto.model.Cliente;
 import com.cripto.model.database.Conexao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class ClienteDAO {
-    private Conexao conexao;
+    private final Connection conexao;
 
-    public ClienteDAO() {
-        this.conexao = new Conexao();
+    public ClienteDAO(Connection conexao) {
+        this.conexao = conexao;
     }
 
     public void cadastrarCliente(Cliente cliente) {
@@ -19,7 +19,7 @@ public class ClienteDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = Objects.requireNonNull(conexao.getConexao(0)).prepareStatement(sql);
+            ps = conexao.prepareStatement(sql);
 
             ps.setString(1, cliente.getNome());
             ps.setString(2, cliente.getEmail());
