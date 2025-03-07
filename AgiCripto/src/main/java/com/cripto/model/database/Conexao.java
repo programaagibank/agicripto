@@ -1,4 +1,4 @@
-package com.cripto.database;
+package com.cripto.model.database;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -26,7 +26,6 @@ public class Conexao {
 
         try {
             Class.forName(DRIVER);
-
             try {
                 if (c == 0) {
                     conexao = DriverManager.getConnection(
