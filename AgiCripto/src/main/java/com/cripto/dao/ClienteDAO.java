@@ -1,8 +1,6 @@
 package com.cripto.dao;
 
 import com.cripto.model.Cliente;
-import com.cripto.model.database.Conexao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

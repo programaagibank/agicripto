@@ -1,5 +1,7 @@
 package com.cripto.model;
 
+import java.util.Random;
+
 public class Cliente {
     private Integer id_cliente;
     private String nome;
@@ -11,11 +13,10 @@ public class Cliente {
 
     public Cliente() {}
 
-    public Cliente(String nome, String email, String cpf, String senha) {
+    public Cliente(String nome, String email, String cpf) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.senha = senha;
     }
 
     public Integer getId_cliente() {
@@ -72,5 +73,21 @@ public class Cliente {
 
     public void setId_assinatura(Integer id_assinatura) {
         this.id_assinatura = id_assinatura;
+    }
+
+    public String criptografarSenha(String senha) {
+        long hash = 0;
+
+        for (int i = 0; i < senha.length(); i++) {
+            hash = hash *  31 + senha.charAt(i);
+            hash = hash ^ (hash >> 16);
+        }
+        hash *= hash & 0x7FFFFFFF;
+
+        return Long.toHexString(hash);
+    }
+
+    public boolean verificar(String senha, String senhaC) {
+        return criptografarSenha(senha).equals(senhaC);
     }
 }

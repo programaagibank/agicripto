@@ -1,5 +1,6 @@
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.ClienteDAO;
+import com.cripto.model.Cliente;
 import com.cripto.model.database.Conexao;
 
 import java.sql.Connection;

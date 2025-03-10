@@ -21,8 +21,10 @@ public class ClienteController {
         String senha = scanner.nextLine();
         String cpf = scanner.nextLine();
 
-        Cliente cliente = new Cliente(nome, email, cpf, senha);
+        Cliente cliente = new Cliente(nome, email, cpf);
         cliente.setStatus("ativo");
+        String senhaCriptografada = cliente.criptografarSenha(senha);
+        cliente.setSenha(senhaCriptografada);
 
         clienteDAO.cadastrarCliente(cliente);
     }
