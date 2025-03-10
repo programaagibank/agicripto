@@ -20,10 +20,9 @@ public class Conexao {
     };
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private Connection conexao = null;
 
     public Connection getConexao(int c) throws SQLException {
-        Connection conexao = null;
-
         try {
             Class.forName(DRIVER);
             try {
@@ -60,6 +59,10 @@ public class Conexao {
             System.err.println("Erro: Não foi possível conectar ao banco de dados.");
             throw new SQLException("Erro ao conectar ao banco de dados.", e);
         }
+    }
+
+    public Connection getConnection() {
+        return conexao;
     }
 
     public void fecharConexao(Connection conexao) {
