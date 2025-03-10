@@ -1,6 +1,9 @@
+package com.cripto;
+
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
-import com.cripto.model.Cliente;
+import com.cripto.model.Carteira;
 import com.cripto.model.database.Conexao;
 
 import java.sql.Connection;
@@ -17,9 +20,10 @@ public class Main {
         Conexao conexao = new Conexao();
         Connection connection = conexao.getConexao(opcao);
 
+        CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
 
-        ClienteController controller = new ClienteController(clienteDAO);
+        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
         controller.cadastro();
 
     }
