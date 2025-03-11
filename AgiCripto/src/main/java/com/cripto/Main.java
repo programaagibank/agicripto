@@ -5,6 +5,7 @@ import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
 import com.cripto.model.Cliente;
 import com.cripto.model.database.Conexao;
+import com.cripto.view.TelaView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,10 +24,14 @@ public class Main {
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
 
+        TelaView tela = new TelaView();
+        tela.mostrarTelaInicial();
+
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
         controller.fazerLogin();
         controller.cadastro();
         controller.excluirCliente();
+
 
     }
 }
