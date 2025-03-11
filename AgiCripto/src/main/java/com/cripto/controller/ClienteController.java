@@ -19,14 +19,19 @@ public class ClienteController {
         this.clienteDAO = clienteDAO;
     }
 
-    public void cadastro() {
+    public void cadastro() throws Exception {
         String nome = scanner.nextLine();
         String email = scanner.nextLine();
         String senha = scanner.nextLine();
         String cpf = scanner.nextLine();
 
+        if (cpf.length() > 11) {
+            throw new Exception("CPF nao pode ser maior que 11");
+        }
+
         Cliente cliente = new Cliente(nome, email, cpf);
         cliente.setStatus("ativo");
+        cliente.setCpf(cliente.formatarCpf(cpf));
         String senhaCriptografada = cliente.criptografarSenha(senha);
         cliente.setSenha(senhaCriptografada);
         clienteDAO.cadastrarCliente(cliente);

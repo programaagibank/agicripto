@@ -90,4 +90,21 @@ public class Cliente {
     public boolean verificar(String senha, String senhaC) {
         return criptografarSenha(senha).equals(senhaC);
     }
+
+    public String formatarCpf(String cpf) {
+        StringBuilder cpfFormatado = new StringBuilder();
+        int i = 0;
+
+        while (i < cpf.length()) {
+            cpfFormatado.append(cpf.charAt(i));
+            if (i == 2 || i == 5) {
+                cpfFormatado.append('.');
+            } else if (i == 8) {
+                cpfFormatado.append('-');
+            }
+            i++;
+        }
+        return cpfFormatado.toString();
+    }
+
 }
