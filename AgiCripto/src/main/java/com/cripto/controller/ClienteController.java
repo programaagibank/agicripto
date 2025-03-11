@@ -56,4 +56,20 @@ public class ClienteController {
             System.out.println("Erro ao excluir usuário. Verifique se o ID está correto.");
         }
     }
+
+    public void fazerLogin() {
+        Cliente cliente = new Cliente();
+        System.out.println("E-mail: ");
+        String email = scanner.nextLine();
+
+        System.out.println("Senha: ");
+        String senha = scanner.nextLine();
+
+        if (clienteDAO.login(email, cliente.criptografarSenha(senha))) {
+            System.out.println("Login bem sucedido!");
+        } else {
+            System.out.println("E-mail ou senha incorretos");
+        }
+
+    }
 }

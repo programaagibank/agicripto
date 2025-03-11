@@ -58,4 +58,35 @@ public class ClienteDAO {
             return false;
         }
     }
+
+    public boolean login(String email, String senha) {
+        String sql = "SELECT * FROM Cliente WHERE email = ? AND senha = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+
+            ps.setString(1, email);
+            ps.setString(2, senha);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao tentar logar: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (Exception e) {
+                throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
 }
