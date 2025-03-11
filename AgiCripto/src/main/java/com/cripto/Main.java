@@ -3,7 +3,7 @@ package com.cripto;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
-import com.cripto.model.Carteira;
+import com.cripto.model.Cliente;
 import com.cripto.model.database.Conexao;
 
 import java.sql.Connection;
@@ -25,6 +25,7 @@ public class Main {
 
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
         controller.cadastro();
+        controller.excluirCliente();
 
     }
 }

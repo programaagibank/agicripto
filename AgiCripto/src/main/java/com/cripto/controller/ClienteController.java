@@ -36,4 +36,19 @@ public class ClienteController {
         carteira.gerarSaldoAleatoriamente();
         carteiraDAO.criarCarteira(carteira);
     }
+
+    public void excluirCliente() {
+        System.out.print("\u001b[2J\u001b[H");
+
+        System.out.printf("Digite o ID do usuário a ser excluído: ");
+        int id = scanner.nextInt();
+
+        boolean sucesso = clienteDAO.excluirCliente(id);
+
+        if (sucesso) {
+            System.out.println("Usuário excluído com sucesso.");
+        } else {
+            System.out.println("Erro ao excluir usuário. Verifique se o ID está correto.");
+        }
+    }
 }
