@@ -34,4 +34,20 @@ public class ClienteDAO {
             throw new RuntimeException("Nao conseguiu se conectar para realizar o cadastro!");
         }
     }
+
+    public boolean excluirCliente(int id){
+        String sql = "DELETE FROM agicripto.Cliente WHERE ID_CLIENTE = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            int linhasAfetadas = ps.executeUpdate();
+            ps.close();
+            return linhasAfetadas > 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
