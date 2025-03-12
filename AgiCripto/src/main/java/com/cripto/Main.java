@@ -3,12 +3,10 @@ package com.cripto;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
-import com.cripto.model.Cliente;
 import com.cripto.model.database.Conexao;
-import com.cripto.view.TelaView;
+import com.cripto.view.ClienteView;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -24,14 +22,11 @@ public class Main {
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
 
-        TelaView tela = new TelaView();
-        tela.mostrarTelaInicial();
-
-        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
-        controller.fazerLogin();
-        controller.cadastro();
-        controller.excluirCliente();
-
-
+        ClienteView tela = new ClienteView();
+        boolean exit = false;
+        do {
+            exit = tela.mostrarTelaInicial();
+            tela.clearScreen();
+        } while (!exit);
     }
 }

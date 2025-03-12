@@ -2,10 +2,10 @@ package com.cripto.view;
 
 import java.util.Scanner;
 
-public class TelaView {
+public class ClienteView {
     private Scanner scanner;
 
-    public TelaView() {
+    public ClienteView() {
         this.scanner =  new Scanner(System.in);
     }
 
@@ -28,10 +28,10 @@ public class TelaView {
         }
     }
 
-    public void mostrarTelaInicial() {
+    public boolean mostrarTelaInicial() {
         System.out.println("==== Bem-vindo à Aplicação ====");
         System.out.println("1 - Tela de Cadastro");
-        System.out.println("2 - Tela de Consulta");
+        System.out.println("2 - Tela de Login");
         System.out.println("3 - Sair");
 
         int opcao = escolha("Selecione uma opção:", 1, 3);
@@ -39,10 +39,35 @@ public class TelaView {
             case 1:
                 break;
             case 2:
+                mostrarTelaLogin();
                 break;
             case 3:
                 System.out.println("Saindo...");
-                break;
+                return true;
+        }
+        return false;
+    }
+
+    public void mostrarTelaLogin() {
+        System.out.println("==== Bem-vindo à tela login ====");
+        System.out.println("Digite seu email: ");
+        String email = scanner.nextLine();
+        System.out.println("Digite sua senha: ");
+        String senha = scanner.nextLine();
+
+
+    }
+
+    public void clearScreen() {
+        for (int i = 0; i < 15; i++) {
+            System.out.println();
         }
     }
+
+
+
+
+
 }
+
+
