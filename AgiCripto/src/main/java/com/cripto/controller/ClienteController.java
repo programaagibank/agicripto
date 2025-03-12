@@ -72,4 +72,24 @@ public class ClienteController {
         }
 
     }
+
+    public void alterarSenha(String login){
+        System.out.println("Digite seu login: ");
+        login = scanner.nextLine();
+
+        if (clienteDAO.encontrarEmail(login) == true){
+            System.out.println("digite sua nova senha: ");
+            String novaSenha = scanner.nextLine();
+
+            System.out.println("digite novamente a nova senha: ");
+            String confirmacaoNovaSenha = scanner.nextLine();
+
+            if (novaSenha.equals(confirmacaoNovaSenha)){
+                clienteDAO.alterarSenha(novaSenha,login);
+            }
+
+        }else {
+            System.out.println("erro, conta não encontrada!");
+        }
+    }
 }

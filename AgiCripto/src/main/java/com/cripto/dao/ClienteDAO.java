@@ -1,5 +1,6 @@
 package com.cripto.dao;
 
+import com.cripto.controller.ClienteController;
 import com.cripto.model.Cliente;
 
 import java.sql.*;
@@ -82,6 +83,49 @@ public class ClienteDAO {
         } finally {
             try {
                 if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (Exception e) {
+                throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+    public boolean encontrarEmail(String login) {
+        String sql = "SELECT email FROM Cliente WHERE email = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, login);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+                rs.close();
+                ps.close();
+                return false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }
+    }
+
+    public void alterarSenha(String novaSenha, String email){
+        String sql = "UPDATE senha SET senha = ? WHERE email = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+
+            ps.setString(1, novaSenha);
+            ps.setString(1, email);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }finally {
+            try {
                 if (ps != null) ps.close();
             } catch (Exception e) {
                 throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
