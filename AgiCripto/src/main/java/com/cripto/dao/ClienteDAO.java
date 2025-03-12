@@ -112,21 +112,24 @@ public class ClienteDAO {
         }
     }
 
-    public void alterarSenha(String novaSenha, String email){
-        String sql = "UPDATE senha SET senha = ? WHERE email = ?";
+    public void alterarSenha(String novaSenha, String login){
+        String sql = "UPDATE agicripto.Cliente SET senha = ? WHERE email = ?";
         PreparedStatement ps = null;
 
         try {
             ps = conexao.prepareStatement(sql);
 
             ps.setString(1, novaSenha);
-            ps.setString(1, email);
+            ps.setString(2, login);
+
+            ps.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
         }finally {
             try {
                 if (ps != null) ps.close();
+
             } catch (Exception e) {
                 throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
             }

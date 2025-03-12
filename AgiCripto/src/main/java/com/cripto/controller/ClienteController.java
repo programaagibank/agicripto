@@ -73,11 +73,11 @@ public class ClienteController {
 
     }
 
-    public void alterarSenha(String login){
+    public void alterarSenha(){
         System.out.println("Digite seu login: ");
-        login = scanner.nextLine();
+        String login = scanner.nextLine();
 
-        if (clienteDAO.encontrarEmail(login) == true){
+        if (clienteDAO.encontrarEmail(login)){
             System.out.println("digite sua nova senha: ");
             String novaSenha = scanner.nextLine();
 
@@ -85,7 +85,11 @@ public class ClienteController {
             String confirmacaoNovaSenha = scanner.nextLine();
 
             if (novaSenha.equals(confirmacaoNovaSenha)){
-                clienteDAO.alterarSenha(novaSenha,login);
+
+                Cliente cliente = new Cliente();
+                clienteDAO.alterarSenha(cliente.criptografarSenha(novaSenha),login);
+            }else {
+                System.out.println("erro, a senha digitada não corresponde a anterior");
             }
 
         }else {

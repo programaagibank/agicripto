@@ -14,7 +14,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite 0 para conexao online e 1 para local: ");
+        System.out.print("""
+                0 - para conexao online
+                1 - para local: """);
         int opcao = scanner.nextInt();
 
         Conexao conexao = new Conexao();
@@ -24,9 +26,11 @@ public class Main {
         ClienteDAO clienteDAO = new ClienteDAO(connection);
 
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
-        controller.fazerLogin();
-        controller.cadastro();
-        controller.excluirCliente();
+
+  //controller.alterarSenha();
+ //        controller.fazerLogin();
+//        controller.cadastro();
+//        controller.excluirCliente();
 
     }
 }
