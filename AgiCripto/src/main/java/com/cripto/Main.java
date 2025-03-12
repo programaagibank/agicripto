@@ -28,9 +28,9 @@ public class Main {
 
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
 
-        controller.alterarSenha();
- //        controller.fazerLogin();
-//        controller.cadastro();
+//        controller.alterarSenha();
+     //controller.fazerLogin();
+       controller.cadastro();
 //        controller.excluirCliente();
 
     }
