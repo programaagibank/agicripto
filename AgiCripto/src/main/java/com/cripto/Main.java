@@ -16,7 +16,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                 0 - para conexao online
-                1 - para local: """);
+                1 - para local
+                Digite: """);
         int opcao = scanner.nextInt();
 
         Conexao conexao = new Conexao();
@@ -27,7 +28,7 @@ public class Main {
 
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
 
-  //controller.alterarSenha();
+        controller.alterarSenha();
  //        controller.fazerLogin();
 //        controller.cadastro();
 //        controller.excluirCliente();
