@@ -89,10 +89,12 @@ public class ClienteDAO {
             }
         }
     }
-    public boolean encontrarEmail(String login) {
+
+    public Cliente encontrarEmail(String login) {
         String sql = "SELECT email FROM Cliente WHERE email = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Cliente cliente = null;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -100,19 +102,27 @@ public class ClienteDAO {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                return true;
+                cliente = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("cpf"),
+                        rs.getString("senha"),
+                        rs.getString("status"),
+                        rs.getInt("id_assinatura")
+                );
             } else {
                 rs.close();
                 ps.close();
-                return false;
             }
 
         } catch (Exception e) {
             throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
         }
+        return cliente;
     }
 
-    public void alterarSenha(String novaSenha, String login){
+    public boolean alterarSenha(String novaSenha, String login){
         String sql = "UPDATE agicripto.Cliente SET senha = ? WHERE email = ?";
         PreparedStatement ps = null;
 
@@ -124,6 +134,7 @@ public class ClienteDAO {
 
             ps.executeUpdate();
 
+            return true;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
         }finally {
@@ -135,5 +146,4 @@ public class ClienteDAO {
             }
         }
     }
-
 }

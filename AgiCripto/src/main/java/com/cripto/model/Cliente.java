@@ -19,6 +19,16 @@ public class Cliente {
         this.cpf = cpf;
     }
 
+    public Cliente(Integer id_cliente, String nome, String email, String cpf, String senha, String status, Integer id_assinatura) {
+        this.id_cliente = id_cliente;
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.status = status;
+        this.id_assinatura = id_assinatura;
+    }
+
     public Integer getId_cliente() {
         return id_cliente;
     }
