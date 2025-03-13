@@ -56,14 +56,14 @@ public class ClienteController {
         return clienteDAO.login(email, this.cliente.criptografarSenha(senha));
     }
 
-//    public boolean alterarSenha(String email, String novaSenha, String confirmarSenha){
-//        if (!clienteDAO.encontrarEmail(email)) return false;
-//        if (!novaSenha.equals(confirmarSenha)) return false;
-//
-//        return clienteDAO.alterarSenha(this.cliente.criptografarSenha(novaSenha), email);
-//    }
-//
-//    public boolean encontrarPeloEmail(String email) {
-//        Cliente atual = clienteDAO.encontrarEmail(email);
-//    }
+    public boolean alterarSenha(String email, String novaSenha, String confirmarSenha){
+        if (clienteDAO.encontrarEmail(email) == null) return false;
+        if (!novaSenha.equals(confirmarSenha)) return false;
+
+        return clienteDAO.alterarSenha(this.cliente.criptografarSenha(novaSenha), email);
+    }
+
+    public Cliente encontrarPeloEmail(String email) {
+        return clienteDAO.encontrarEmail(email);
+    }
 }

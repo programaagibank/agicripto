@@ -117,4 +117,16 @@ public class Cliente {
         return cpfFormatado.toString();
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id_cliente=" + id_cliente +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", senha='" + senha + '\'' +
+                ", status='" + status + '\'' +
+                ", id_assinatura=" + id_assinatura +
+                '}';
+    }
 }

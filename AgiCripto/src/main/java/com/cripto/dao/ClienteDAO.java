@@ -91,7 +91,7 @@ public class ClienteDAO {
     }
 
     public Cliente encontrarEmail(String login) {
-        String sql = "SELECT email FROM Cliente WHERE email = ?";
+        String sql = "SELECT id_cliente, nome, email, cpf, senha, status, id_assinatura FROM Cliente WHERE email = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         Cliente cliente = null;
