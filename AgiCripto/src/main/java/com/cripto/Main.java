@@ -24,9 +24,9 @@ public class Main {
         ClienteDAO clienteDAO = new ClienteDAO(connection);
 
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
-        controller.fazerLogin();
-        controller.cadastro();
-        controller.excluirCliente();
-
+//        controller.fazerLogin();
+//        controller.cadastro();
+//        controller.excluirCliente();
+        System.out.println(controller.acharPeloId());
     }
 }

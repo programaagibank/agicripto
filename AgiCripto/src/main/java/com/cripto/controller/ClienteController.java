@@ -72,4 +72,9 @@ public class ClienteController {
         }
 
     }
+
+    public Cliente acharPeloId(){
+        int id = scanner.nextInt();
+        return clienteDAO.acharPeloId(id);
+    }
 }
