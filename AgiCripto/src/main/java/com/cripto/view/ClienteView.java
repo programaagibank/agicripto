@@ -3,8 +3,10 @@ package com.cripto.view;
 import com.cripto.controller.ClienteController;
 import com.cripto.model.Cliente;
 
+import java.sql.SQLOutput;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class ClienteView {
     private final Scanner scanner;
@@ -100,5 +102,16 @@ public class ClienteView {
             return "Senha alterada com sucesso!";
         }
         return "Nao foi possivel alterar sua senha";
+    }
+
+    public String comprar() {
+        System.out.print("\t\tDigite o valor da compra: ");
+        double valor = scanner.nextInt();
+        scanner.nextLine();
+
+        if (controller.comprar(valor)) {
+            return "Compra bem sucedida.";
+        }
+        return "Nao conseguiu comprar!";
     }
 }

@@ -3,7 +3,9 @@ package com.cripto;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
+import com.cripto.dao.TransacaoDAO;
 import com.cripto.model.Cliente;
+import com.cripto.model.Transacao;
 import com.cripto.model.database.Conexao;
 import com.cripto.view.ClienteView;
 
@@ -23,19 +25,13 @@ public class Main {
         Connection connection = conexao.getConexao(opcao);
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
-        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO);
+        TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
+        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
         ClienteView view = new ClienteView(controller);
 
         // Comeca chamar o aplicativo...
 
-
-//        System.out.println(clienteDAO.acharPeloId(2));
         view.escolhaMenu();
-//
-//        controller.alterarSenha();
-     //controller.fazerLogin();
-//       controller.cadastro();
-//        controller.excluirCliente();
-
+        System.out.println(view.comprar());
     }
 }
