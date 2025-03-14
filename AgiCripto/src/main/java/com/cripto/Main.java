@@ -29,6 +29,7 @@ public class Main {
         // Comeca chamar o aplicativo...
 
 
+//        System.out.println(clienteDAO.acharPeloId(2));
         view.escolhaMenu();
 //
 //        controller.alterarSenha();

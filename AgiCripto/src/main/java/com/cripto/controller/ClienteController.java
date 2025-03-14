@@ -27,6 +27,7 @@ public class ClienteController {
         Cliente cliente = new Cliente(nome, email, cpf);
         cliente.setSenha(cliente.criptografarSenha(senha));
         cliente.setStatus("ativo");
+        cliente.setCpf(cliente.formatarCpf(cliente.getCpf()));
         clienteDAO.cadastrarCliente(cliente);
 
         Carteira carteira = new Carteira();

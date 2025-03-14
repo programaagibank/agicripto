@@ -146,4 +146,36 @@ public class ClienteDAO {
             }
         }
     }
+
+    public Cliente acharPeloId(int id) {
+        String sql = "SELECT * FROM Cliente WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Cliente cliente = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("cpf"),
+                        rs.getString("senha"),
+                        rs.getString("status"),
+                        rs.getInt("id_assinatura")
+                );
+            } else {
+                rs.close();
+                ps.close();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }
+        return cliente;
+    }
 }
