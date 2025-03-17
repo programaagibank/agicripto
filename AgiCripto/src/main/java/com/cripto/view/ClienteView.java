@@ -1,6 +1,7 @@
 package com.cripto.view;
 
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Cliente;
 
 import java.sql.SQLOutput;
@@ -11,9 +12,11 @@ import java.util.SortedMap;
 public class ClienteView {
     private final Scanner scanner;
     private final ClienteController controller;
+    private final CarteiraDAO carteiraDAO;
 
-    public ClienteView(ClienteController controller) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO) {
         this.controller = controller;
+        this.carteiraDAO = carteiraDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
     }
 
@@ -49,6 +52,8 @@ public class ClienteView {
     }
 
     public String login() {
+        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO);
+
         System.out.print("\t\tDigite seu email: ");
         String email = scanner.nextLine();
         Cliente cliente = controller.encontrarPeloEmail(email);
@@ -77,12 +82,14 @@ public class ClienteView {
                 String senhaNovamente = scanner.nextLine();
 
                 if (controller.fazerLogin(email, senhaNovamente)) {
+                    carteiraView.telaCarteiraContaCorrente();
                     return "Logado com sucesso";
                 }
             }
         }
 
         if (controller.fazerLogin(email, senha)) {
+            carteiraView.telaCarteiraContaCorrente();
             return "Logado com sucesso";
         }
         return "Email ou senha incorreto!";
@@ -102,16 +109,5 @@ public class ClienteView {
             return "Senha alterada com sucesso!";
         }
         return "Nao foi possivel alterar sua senha";
-    }
-
-    public String comprar() {
-        System.out.print("\t\tDigite o valor da compra: ");
-        double valor = scanner.nextInt();
-        scanner.nextLine();
-
-        if (controller.comprar(valor)) {
-            return "Compra bem sucedida.";
-        }
-        return "Nao conseguiu comprar!";
     }
 }

@@ -80,6 +80,10 @@ public class ClienteController {
         return clienteDAO.encontrarEmail(email);
     }
 
+    public Cliente pegarClienteLogado() {
+        return this.clienteLogado;
+    }
+
     public boolean comprar(Double valor) {
         if (this.clienteLogado == null) {
             System.out.println("Nenhum cliente está logado.");

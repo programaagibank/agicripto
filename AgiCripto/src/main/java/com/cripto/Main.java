@@ -27,11 +27,11 @@ public class Main {
         ClienteDAO clienteDAO = new ClienteDAO(connection);
         TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
-        ClienteView view = new ClienteView(controller);
+        ClienteView view = new ClienteView(controller, carteiraDAO);
 
         // Comeca chamar o aplicativo...
 
         view.escolhaMenu();
-        System.out.println(view.comprar());
+//        System.out.println(view.comprar());
     }
 }
