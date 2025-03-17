@@ -1,87 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
-=======
-<<<<<<< HEAD
-    <list default="true" id="963736c1-8d0c-4103-b5b2-6553c051a03c" name="Changes" comment="">
+    <list default="true" id="58042f33-2268-4980-bbd5-93acfe5be5e9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_protobuf_protobuf_java_3_21_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mysql_mysql_connector_j_8_0_32.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__io_github_cdimascio_java_dotenv_5_2_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_annotations_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_5_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_params_5_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/AgiCripto.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/AgiCripto.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/AgiCripto.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/agicripto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/agicripto.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/controller/ClienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/CarteiraDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/CarteiraDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/ClienteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/ClienteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Carteira.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Carteira.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/database/Conexao.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/database/Conexao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/view/ClienteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/view/ClienteView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
-=======
-    <list default="true" id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/AgiCripto">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/AgiCripto">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="AgiCripto" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="AgiCripto" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="AgiCripto" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
-  <component name="ProjectId" id="2txNX58xGQEhR5GDThMQOpHMnR2" />
-=======
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
-  <component name="ProjectId" id="2twS8Isx1dD15MkznVvcUqXV0r0" />
-<<<<<<< HEAD
-=======
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2uSFih0pGe8ANAOo1ABPhhdTg66" />
   <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-<<<<<<< HEAD
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vitor.coelho/Desktop/GitHub/agicripto/AgiCripto"
-=======
-<<<<<<< HEAD
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vijc/Documents/GitHub/agicripto/AgiCripto"
-=======
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vitor.coelho/Desktop/GitHub/agicripto/AgiCripto"
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AgiCripto [:com.cripto.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AgiCripto [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AgiCripto [classes].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AgiCripto [init].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build AgiCripto.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;leonardo-teste&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle build" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cripto.Main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cripto.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AgiCripto [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/AgiCripto" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="AgiCripto [classes]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/AgiCripto" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="classes" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="AgiCripto [init]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/AgiCripto" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="init" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.AgiCripto [classes]" />
+        <item itemvalue="Gradle.AgiCripto [init]" />
+        <item itemvalue="Gradle.AgiCripto [build]" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-      <changelist id="963736c1-8d0c-4103-b5b2-6553c051a03c" name="Changes" comment="" />
-      <created>1741289801881</created>
+      <changelist id="58042f33-2268-4980-bbd5-93acfe5be5e9" name="Changes" comment="" />
+      <created>1742233695480</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1741289801881</updated>
-=======
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
-      <changelist id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
-      <created>1741261482673</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1741261482673</updated>
-<<<<<<< HEAD
-=======
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
+      <updated>1742233695480</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

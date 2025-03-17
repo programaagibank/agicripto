@@ -1,5 +1,6 @@
 package com.cripto.dao;
 
+import com.cripto.controller.ClienteController;
 import com.cripto.model.Cliente;
 
 import java.sql.*;
@@ -89,4 +90,92 @@ public class ClienteDAO {
         }
     }
 
+    public Cliente encontrarEmail(String login) {
+        String sql = "SELECT id_cliente, nome, email, cpf, senha, status, id_assinatura FROM Cliente WHERE email = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Cliente cliente = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, login);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("cpf"),
+                        rs.getString("senha"),
+                        rs.getString("status"),
+                        rs.getInt("id_assinatura")
+                );
+            } else {
+                rs.close();
+                ps.close();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }
+        return cliente;
+    }
+
+    public boolean alterarSenha(String novaSenha, String login){
+        String sql = "UPDATE agicripto.Cliente SET senha = ? WHERE email = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+
+            ps.setString(1, novaSenha);
+            ps.setString(2, login);
+
+            ps.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }finally {
+            try {
+                if (ps != null) ps.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    public Cliente acharPeloId(int id) {
+        String sql = "SELECT * FROM Cliente WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Cliente cliente = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("cpf"),
+                        rs.getString("senha"),
+                        rs.getString("status"),
+                        rs.getInt("id_assinatura")
+                );
+            } else {
+                rs.close();
+                ps.close();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }
+        return cliente;
+    }
 }

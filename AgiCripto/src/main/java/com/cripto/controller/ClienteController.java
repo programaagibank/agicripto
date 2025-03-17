@@ -12,34 +12,30 @@ public class ClienteController {
     private final Scanner scanner;
     private final ClienteDAO clienteDAO;
     private final CarteiraDAO carteiraDAO;
+    private final Cliente cliente = new Cliente();
 
-    public ClienteController(ClienteDAO clienteDAO, CarteiraDAO carteiraDAO) {
+    public ClienteController(
+            ClienteDAO clienteDAO,
+            CarteiraDAO carteiraDAO
+    ) {
         this.carteiraDAO = carteiraDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.clienteDAO = clienteDAO;
     }
 
-    public void cadastro() throws Exception {
-        String nome = scanner.nextLine();
-        String email = scanner.nextLine();
-        String senha = scanner.nextLine();
-        String cpf = scanner.nextLine();
-
-        if (cpf.length() > 11) {
-            throw new Exception("CPF nao pode ser maior que 11");
-        }
-
+    public boolean cadastro(String nome, String email, String senha, String cpf) {
         Cliente cliente = new Cliente(nome, email, cpf);
+        cliente.setSenha(cliente.criptografarSenha(senha));
         cliente.setStatus("ativo");
-        cliente.setCpf(cliente.formatarCpf(cpf));
-        String senhaCriptografada = cliente.criptografarSenha(senha);
-        cliente.setSenha(senhaCriptografada);
+        cliente.setCpf(cliente.formatarCpf(cliente.getCpf()));
         clienteDAO.cadastrarCliente(cliente);
 
         Carteira carteira = new Carteira();
         carteira.setId_cliente(cliente.getId_cliente());
         carteira.gerarSaldoAleatoriamente();
         carteiraDAO.criarCarteira(carteira);
+
+        return true;
     }
 
     public void excluirCliente() {
@@ -57,19 +53,22 @@ public class ClienteController {
         }
     }
 
-    public void fazerLogin() {
-        Cliente cliente = new Cliente();
-        System.out.println("E-mail: ");
-        String email = scanner.nextLine();
+    public boolean fazerLogin(String email, String senha) {
+        return clienteDAO.login(email, this.cliente.criptografarSenha(senha));
+    }
 
-        System.out.println("Senha: ");
-        String senha = scanner.nextLine();
+    public boolean alterarSenha(String email, String novaSenha, String confirmarSenha){
+        if (clienteDAO.encontrarEmail(email) == null) return false;
+        if (!novaSenha.equals(confirmarSenha)) return false;
 
-        if (clienteDAO.login(email, cliente.criptografarSenha(senha))) {
-            System.out.println("Login bem sucedido!");
-        } else {
-            System.out.println("E-mail ou senha incorretos");
-        }
+        return clienteDAO.alterarSenha(this.cliente.criptografarSenha(novaSenha), email);
+    }
 
+    public Cliente encontrarPeloEmail(String email) {
+        return clienteDAO.encontrarEmail(email);
+    }
+
+    public void realizarPix(double valor, int idContaOrigem,int idContaDestino) {
+        carteiraDAO.Pix(valor, idContaOrigem, idContaDestino);
     }
 }
