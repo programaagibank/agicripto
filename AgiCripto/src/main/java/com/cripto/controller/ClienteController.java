@@ -93,6 +93,8 @@ public class ClienteController {
         Carteira carteiraLogada = carteiraDAO.pegarCarteiraPeloClienteId(this.clienteLogado.getId_cliente());
         if (carteiraLogada == null) return false;
 
+        if (carteiraLogada.getSaldoContaCorrente() < valor) return false;
+
         carteiraDAO.atualizarSaldo(
                 (carteiraLogada.getSaldoContaCorrente() - valor),
                 carteiraLogada.getId_carteira()

@@ -1,23 +1,24 @@
 package com.cripto.view;
 
+import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Cliente;
 
-import java.sql.SQLOutput;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class ClienteView {
     private final Scanner scanner;
     private final ClienteController controller;
     private final CarteiraDAO carteiraDAO;
+    private final CarteiraCriptoController carteiraCriptoController;
 
-    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+        this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
-        this.scanner = new Scanner(System.in).useLocale(Locale.US);
+        this.carteiraCriptoController = carteiraCriptoController;
     }
 
     public void escolhaMenu() {
@@ -52,11 +53,15 @@ public class ClienteView {
     }
 
     public String login() {
-        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO);
+        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO, carteiraCriptoController);
 
         System.out.print("\t\tDigite seu email: ");
         String email = scanner.nextLine();
         Cliente cliente = controller.encontrarPeloEmail(email);
+
+        if (cliente == null) {
+            return "Cliente nao existe!";
+        }
 
         System.out.print("\t\tDigite sua senha: ");
         String senha = scanner.nextLine();
