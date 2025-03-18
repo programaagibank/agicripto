@@ -1,5 +1,6 @@
 package com.cripto.view;
 
+import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Carteira;
@@ -12,9 +13,11 @@ public class CarteiraView {
     private final Scanner scanner;
     private final ClienteController controller;
     private final CarteiraDAO carteiraDAO;
+    private final CarteiraCriptoController carteiraCriptoController;
 
-    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO) {
+    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
         this.carteiraDAO = carteiraDAO;
+        this.carteiraCriptoController = carteiraCriptoController;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
     }
@@ -35,7 +38,7 @@ public class CarteiraView {
         if (opcao == 1) {
             System.out.println(comprar());
         } else if (opcao == 2) {
-            System.out.println("Em andamento...");
+            System.out.println(carteiraCriptoController.ativarCarteiraCripto());
         } else {
             System.out.println("Saindo...");
         }
