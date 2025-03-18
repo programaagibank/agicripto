@@ -33,17 +33,18 @@ public class CarteiraView {
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=========================================================================");
 
-        System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair");
+        System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair     4 - Comprar Criptomoedas");
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
         if (opcao == 1) {
             System.out.println(comprar());
         } else if (opcao == 2) {
-//            System.out.println(carteiraCriptoController.ativarCarteiraCripto());
-            carteiraCriptoView.mostrarCarteiraCripto();
-        } else {
+            System.out.println(carteiraCriptoController.ativarCarteiraCripto());
+        } else if (opcao == 3){
             System.out.println("Saindo...");
+        } else {
+            carteiraCriptoView.mostrarCarteiraCripto();
         }
     }
 

@@ -32,7 +32,6 @@ public class Main {
         // Comeca chamar o aplicativo...
 
         view.escolhaMenu();
-//        System.out.println(view.comprar());
     }
 
     @NotNull
@@ -46,7 +45,8 @@ public class Main {
                 controller,
                 criptoDAO,
                 carteiraDAO,
-                clienteDAO
+                clienteDAO,
+                transacaoDAO
         );
         CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(carteiraCriptoController, controller, carteiraDAO);
         return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView);
