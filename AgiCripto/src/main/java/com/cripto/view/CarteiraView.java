@@ -23,10 +23,10 @@ public class CarteiraView {
         Cliente cliente = controller.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
 
-        System.out.println("=========================================================================");
+        System.out.println("=".repeat(73));
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
-        System.out.println("=========================================================================");
+        System.out.println("=".repeat(73));
 
         System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair");
         int opcao = scanner.nextInt();
