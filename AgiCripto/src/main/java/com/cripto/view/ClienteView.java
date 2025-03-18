@@ -1,47 +1,36 @@
 package com.cripto.view;
 
 import com.cripto.controller.ClienteController;
-import com.cripto.model.Carteira;
+import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Cliente;
 
+import java.sql.SQLOutput;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class ClienteView {
     private final Scanner scanner;
     private final ClienteController controller;
+    private final CarteiraDAO carteiraDAO;
 
-    public ClienteView(ClienteController controller) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO) {
         this.controller = controller;
+        this.carteiraDAO = carteiraDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
     }
 
     public void escolhaMenu() {
-        System.out.print("\t".repeat(5) + "Agi - Cripto");
-        System.out.println();
-        System.out.println("=".repeat(50));
-        System.out.println("1 - Login \n2 - Cadastro \n3 - Esqueceu senha \n4 - Sair");
-        System.out.println("=".repeat(50));
-        System.out.print("Digite: ");
+        System.out.println("\n 1 - Login \n 2 - Cadastro \n 3 - Esqueceu senha \n 4 - Sair");
+        System.out.print("Digite:");
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
-        if (opcao == 1) {
-            Cliente clienteLogado = login();
-            if (clienteLogado != null) {
-                escolhaMenuLogado(clienteLogado);
-            }
-        } else if (opcao == 2) {
-            System.out.println(pegarInfosCliente());
-        } else if (opcao == 3) {
-            System.out.println(esqueceuSenha());
-        } else if (opcao == 4) {
-            System.out.println("Saindo....");
-        } else {
-            System.out.println("Opção inválida!");
-        }
+        if (opcao == 1) System.out.println(login());
+        if (opcao == 2) System.out.println(pegarInfosCliente());
+        if (opcao == 3) System.out.println(esqueceuSenha());
+        if (opcao == 4) System.out.println("Saindo....");
     }
-
 
     public String pegarInfosCliente() {
         System.out.println("Digite seu nome completo: ");
@@ -62,59 +51,52 @@ public class ClienteView {
         return "Cliente nao cadastrado!";
     }
 
-    public Cliente login() {
+    public String login() {
+        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO);
+
         System.out.print("\t\tDigite seu email: ");
         String email = scanner.nextLine();
-
         Cliente cliente = controller.encontrarPeloEmail(email);
+
         if (cliente == null) {
-            System.out.println("Email não encontrado!");
-            return null;
-            // TODO: FLUXO DE CADASTRO
+            return "Cliente nao existe!";
         }
 
         System.out.print("\t\tDigite sua senha: ");
         String senha = scanner.nextLine();
 
-        String senhaCriptografada = cliente.criptografarSenha(senha);
-        if (senhaCriptografada.equals(cliente.getSenha())) {
-            System.out.println("Logado com sucesso!");
-            return cliente;
-        }
+        if (!cliente.criptografarSenha(senha).equals(cliente.getSenha())) {
+            System.out.print("Vejo que esqueceu a senha, gostaria de trocar (1- SIM / 0- NAO): ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+            if (opcao == 1) {
+                System.out.println("\t\tEmail: " + cliente.getEmail());
 
-        System.out.print("Senha incorreta. Deseja redefinir sua senha? (1 - SIM / 0 - NÃO): ");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+                System.out.print("\t\tDigite sua nova senha: ");
+                String novaSenha = scanner.nextLine();
 
-        if (opcao == 1) {
-            System.out.println("\t\tEmail: " + cliente.getEmail());
+                System.out.print("\t\tConfirme sua nova senha: ");
+                String confirmarSenha = scanner.nextLine();
 
-            System.out.print("\t\tDigite sua nova senha: ");
-            String novaSenha = scanner.nextLine();
-
-            System.out.print("\t\tConfirme sua nova senha: ");
-            String confirmarSenha = scanner.nextLine();
-
-            if (novaSenha.equals(confirmarSenha)) {
                 controller.alterarSenha(cliente.getEmail(), novaSenha, confirmarSenha);
-                System.out.println("Senha alterada com sucesso!");
+                return "Senha alterada com sucesso!";
             } else {
-                System.out.println("As senhas não coincidem. Tente novamente.");
-            }
+                System.out.println();
+                System.out.print("\t\tDigite sua senha novamente: ");
+                String senhaNovamente = scanner.nextLine();
 
-        } else {
-            System.out.print("\t\tDigite sua senha novamente: ");
-            String senhaNovamente = scanner.nextLine();
-            String senhaCriptografada2 = cliente.criptografarSenha(senhaNovamente);
-
-            if (senhaCriptografada2.equals(cliente.getSenha())) {
-                System.out.println("Logado com sucesso!");
-                return cliente;
-            } else {
-                System.out.println("Senha incorreta novamente. Acesso negado.");
+                if (controller.fazerLogin(email, senhaNovamente)) {
+                    carteiraView.telaCarteiraContaCorrente();
+                    return "Logado com sucesso";
+                }
             }
         }
-        return null;
+
+        if (controller.fazerLogin(email, senha)) {
+            carteiraView.telaCarteiraContaCorrente();
+            return "Logado com sucesso";
+        }
+        return "Email ou senha incorreto!";
     }
 
     public String esqueceuSenha() {
@@ -131,25 +113,5 @@ public class ClienteView {
             return "Senha alterada com sucesso!";
         }
         return "Nao foi possivel alterar sua senha";
-    }
-
-    public void escolhaMenuLogado(Cliente clienteLogado) {
-        System.out.printf("%sConta: %s", "\t".repeat(5), clienteLogado.getId_cliente());
-        System.out.println();
-        System.out.println("=".repeat(50));
-        System.out.println("1 - Pix ");
-        System.out.println("=".repeat(50));
-        System.out.print("Digite:");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-
-        if (opcao == 1) menuPix(clienteLogado);
-    }
-
-    public void menuPix(Cliente clienteLogado) {
-        System.out.println("=".repeat(50));
-        controller.realizarPix(200, clienteLogado.getId_cliente(), 17);
-        System.out.println("=".repeat(50));
-
     }
 }
