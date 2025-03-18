@@ -58,6 +58,10 @@ public class ClienteView {
         String email = scanner.nextLine();
         Cliente cliente = controller.encontrarPeloEmail(email);
 
+        if (cliente == null) {
+            return "Cliente nao existe!";
+        }
+
         System.out.print("\t\tDigite sua senha: ");
         String senha = scanner.nextLine();
 
