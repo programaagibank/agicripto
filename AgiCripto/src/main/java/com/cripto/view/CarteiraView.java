@@ -17,7 +17,7 @@ public class CarteiraView {
     private final CarteiraCriptoController carteiraCriptoController;
     private QuestionarioView questionarioView = new QuestionarioView();
 
-    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView) {
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
