@@ -50,7 +50,7 @@ public class CarteiraCriptoController {
 
         double novoValor;
         if (opcao == 1) {
-            novoValor = carteiraCripto.getSaldoBRL() + valor;
+            novoValor = carteiraCripto.getSaldoBTC() + valor;
         } else if (opcao == 2) {
             novoValor = carteiraCripto.getSaldoETH() + valor;
         } else if (opcao == 3) {
