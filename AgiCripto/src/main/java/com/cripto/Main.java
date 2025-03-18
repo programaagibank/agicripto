@@ -3,7 +3,9 @@ package com.cripto;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
+import com.cripto.dao.TransacaoDAO;
 import com.cripto.model.Cliente;
+import com.cripto.model.Transacao;
 import com.cripto.model.database.Conexao;
 import com.cripto.view.ClienteView;
 
@@ -13,20 +15,23 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite 0 para conexao online e 1 para local: ");
+        System.out.print("""
+                0 - para conexao online
+                1 - para local
+                Digite: """);
         int opcao = scanner.nextInt();
-
         Conexao conexao = new Conexao();
         Connection connection = conexao.getConexao(opcao);
-
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
-        ClienteView clienteView = new ClienteView(scanner);
+        TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
+        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
+        ClienteView view = new ClienteView(controller, carteiraDAO);
 
-        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, clienteView);
-        controller.cadastro();
+        // Comeca chamar o aplicativo...
 
+        view.escolhaMenu();
+//        System.out.println(view.comprar());
     }
 }
