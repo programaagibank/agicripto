@@ -6,14 +6,11 @@ import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.dao.ClienteDAO;
 import com.cripto.dao.TransacaoDAO;
-import com.cripto.model.Cliente;
-import com.cripto.model.Transacao;
 import com.cripto.model.database.Conexao;
 import com.cripto.view.ClienteView;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {

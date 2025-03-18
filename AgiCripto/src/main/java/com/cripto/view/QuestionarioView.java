@@ -7,7 +7,7 @@ public class QuestionarioView {
 
     private Scanner scanner = new Scanner(System.in);
 
-    public void iniciarQuestionario() {
+    public int iniciarQuestionario() {
         System.out.println("\t".repeat(7) + "Questinário Cripto" + "\t".repeat(7));
         System.out.println("=".repeat(73));
         System.out.println("Gostaria de testar seus conhecimentos sobre o mercado de criptomoedas?");
@@ -18,10 +18,12 @@ public class QuestionarioView {
 
         if (escolha == 2) {
             System.out.println("Você será redirecionado para sua carteira digital...");
+            return 0;
         } else if (escolha == 1) {
             int pontuacao = iniciarPerguntas();
-            avaliarPontuacao(pontuacao);
+            return (pontuacao);
         }
+        return 0;
     }
 
     private int iniciarPerguntas() {
@@ -57,31 +59,16 @@ public class QuestionarioView {
                 scanner.nextLine();
 
                 if (opcao >= min && opcao <= max) {
-                    entradaValida = true; // Entrada correta, sai do loop
+                    entradaValida = true;
                 } else {
                     System.out.println("Opção inválida. Digite um número entre " + min + " e " + max + ".");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite apenas números.");
-                scanner.nextLine(); // Consumir entrada inválida
+                scanner.nextLine();
             }
         }
 
         return opcao;
-    }
-
-    private void avaliarPontuacao(int pontuacao) {
-        System.out.println("\nSua pontuação: " + pontuacao);
-
-        if (pontuacao == 16) {
-            System.out.println("Parabéns! Você será direcionado para a carteira digital.");
-        } else {
-            System.out.println("Para mais informações, entre em contato com nosso suporte: (11) 99999-9999.");
-        }
-    }
-
-    public static void main(String[] args) {
-        QuestionarioView questionario = new QuestionarioView();
-        questionario.iniciarQuestionario();
     }
 }
