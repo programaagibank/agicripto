@@ -178,4 +178,26 @@ public class ClienteDAO {
         }
         return cliente;
     }
+
+    public boolean ativarConta(int idCliente) {
+        String sql = "UPDATE agicripto.Cliente SET status = 'ATIVO' WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            int linhasAfetadas = ps.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

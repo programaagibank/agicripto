@@ -110,4 +110,20 @@ public class ClienteController {
         return transacaoDAO.comprar(transacao);
     }
 
+    public boolean ativarContaCripto(){
+        if(this.clienteLogado == null){
+            System.out.println("Cliente não está logado");
+            return false;
+        }
+
+        boolean sucesso = clienteDAO.ativarConta(this.clienteLogado.getId_cliente());
+        if (!sucesso) {
+        } else {
+            this.clienteLogado.setStatus("ATIVO");
+        }
+
+        return sucesso;
+    }
+
+
 }

@@ -28,14 +28,27 @@ public class CarteiraView {
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=========================================================================");
 
-        System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair");
+        System.out.println("1 - Transacco");
+
+        if (cliente.getStatus().equalsIgnoreCase("ATIVO")) {
+            System.out.println("2 - Entrar na Carteira Cripto");
+        } else {
+            System.out.println("2 - Ativar Cripto");
+        }
+
+        System.out.println("3 - Sair");
+
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
         if (opcao == 1) {
             System.out.println(comprar());
         } else if (opcao == 2) {
-            System.out.println();
+            if (cliente.getStatus().equalsIgnoreCase("ATIVO")) {
+                entrarNaCarteiraCripto();
+            } else {
+                System.out.println(ativar());
+            }
         } else {
             System.out.println("Saindo...");
         }
@@ -43,13 +56,23 @@ public class CarteiraView {
 
     public String comprar() {
         System.out.print("\t\tDigite o valor da compra: ");
-        double valor = scanner.nextInt();
+        double valor = scanner.nextDouble();
         scanner.nextLine();
 
         if (controller.comprar(valor)) {
             return "Compra bem sucedida.";
         }
-        return "Nao conseguiu comprar!";
+        return "Não conseguiu comprar!";
     }
-    
+
+    public String ativar() {
+        if (controller.ativarContaCripto()) {
+            return "Conta cripto ativada com sucesso!";
+        }
+        return "Falha ao ativar conta cripto.";
+    }
+
+    public void entrarNaCarteiraCripto() {
+        System.out.println("Bem-vindo a sua Carteira Cripto!");
+    }
 }
