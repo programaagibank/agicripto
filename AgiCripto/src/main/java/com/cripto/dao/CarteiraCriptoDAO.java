@@ -4,6 +4,7 @@ import com.cripto.model.CarteiraCripto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CarteiraCriptoDAO {
@@ -34,5 +35,63 @@ public class CarteiraCriptoDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao criar carteira", e);
         }
+    }
+
+    public boolean comprarCriptomoedas(Integer opcao, Double valor, Integer idCarteira) {
+        String sql;
+        if (opcao == 1) {
+            sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = ? WHERE id_cliente = ?";
+        } else if (opcao == 2) {
+            sql = "UPDATE agicripto.Carteira_Cripto SET saldo_eth = ? WHERE id_cliente = ?";
+        } else if (opcao == 3) {
+            sql =  "UPDATE agicripto.Carteira_Cripto SET saldo_sol = ? WHERE id_cliente = ?";
+        } else {
+            return false;
+        }
+
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setDouble(1, valor);
+            ps.setInt(2, idCarteira);
+
+            ps.execute();
+            ps.close();
+
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao comprar alguma criptmoeda!", e);
+        }
+    }
+
+    public CarteiraCripto acharPeloIdCliente(Integer id) {
+        String sql = "SELECT id_cliente, saldo_brl, saldo_btc, saldo_eth, saldo_sol, saldo_agicoin FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CarteiraCripto carteiraCripto = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                carteiraCripto = new CarteiraCripto(
+                        rs.getInt("id_cliente"),
+                        rs.getDouble("saldo_brl"),
+                        rs.getDouble("saldo_btc"),
+                        rs.getDouble("saldo_eth"),
+                        rs.getDouble("saldo_sol"),
+                        rs.getDouble("saldo_agicoin")
+                );
+            } else {
+                rs.close();
+                ps.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao procurar carteira pelo id do cliente");
+        }
+        return carteiraCripto;
     }
 }

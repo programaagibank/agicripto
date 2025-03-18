@@ -13,8 +13,10 @@ public class ClienteView {
     private final ClienteController controller;
     private final CarteiraDAO carteiraDAO;
     private final CarteiraCriptoController carteiraCriptoController;
+    private final CarteiraCriptoView carteiraCriptoView;
 
-    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView) {
+        this.carteiraCriptoView = carteiraCriptoView;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
@@ -53,7 +55,7 @@ public class ClienteView {
     }
 
     public String login() {
-        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO, carteiraCriptoController);
+        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView);
 
         System.out.print("\t\tDigite seu email: ");
         String email = scanner.nextLine();

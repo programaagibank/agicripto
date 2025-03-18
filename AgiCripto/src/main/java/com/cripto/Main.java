@@ -9,6 +9,7 @@ import com.cripto.dao.TransacaoDAO;
 import com.cripto.model.Cliente;
 import com.cripto.model.Transacao;
 import com.cripto.model.database.Conexao;
+import com.cripto.view.CarteiraCriptoView;
 import com.cripto.view.ClienteView;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +42,13 @@ public class Main {
         TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
         CarteiraCriptoDAO criptoDAO = new CarteiraCriptoDAO(connection);
-        CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(controller, criptoDAO, carteiraDAO);
-        return new ClienteView(controller, carteiraDAO, carteiraCriptoController);
+        CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(
+                controller,
+                criptoDAO,
+                carteiraDAO,
+                clienteDAO
+        );
+        CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(carteiraCriptoController, controller, carteiraDAO);
+        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView);
     }
 }
