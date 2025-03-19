@@ -16,12 +16,14 @@ public class CarteiraView {
     private final CarteiraDAO carteiraDAO;
     private final CarteiraCriptoController carteiraCriptoController;
     private QuestionarioView questionarioView = new QuestionarioView();
+    private PagamentosView pagamentosView;
 
     public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
+        this.pagamentosView = new PagamentosView(controller);
     }
 
     public void telaCarteiraContaCorrente() {
@@ -34,12 +36,12 @@ public class CarteiraView {
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=".repeat(73));
 
-        System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair");
+        System.out.println("1 - Área Pagamentos     2 - Ativar Cripto     3 - Sair");
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
         if (opcao == 1) {
-            System.out.println(comprar());
+            pagamentosView.telaPagamento();
         } else if (opcao == 2) {
             resultado = questionarioView.iniciarQuestionario();
             if (resultado <= 6) {
@@ -61,17 +63,6 @@ public class CarteiraView {
         } else {
             System.out.println("Saindo...");
         }
-    }
-
-    public String comprar() {
-        System.out.print("\t\tDigite o valor da compra: ");
-        double valor = scanner.nextInt();
-        scanner.nextLine();
-
-        if (controller.comprar(valor)) {
-            return "Compra bem sucedida.";
-        }
-        return "Nao conseguiu comprar!";
     }
 
     public void exibirTutorial(){
