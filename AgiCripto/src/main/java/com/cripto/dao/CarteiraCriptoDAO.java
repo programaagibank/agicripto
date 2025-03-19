@@ -94,4 +94,20 @@ public class CarteiraCriptoDAO {
         }
         return carteiraCripto;
     }
+
+    public void atualizarSaldoBrl(Double saldoBRL, Integer id) {
+        String sql = "UPDATE agicripto.Carteira_Cripto SET saldo_brl = ? WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setDouble(1, saldoBRL);
+            ps.setInt(2, id);
+
+            ps.execute();
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar saldo", e);
+        }
+    }
 }

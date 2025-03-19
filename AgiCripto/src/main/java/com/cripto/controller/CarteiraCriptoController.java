@@ -85,6 +85,13 @@ public class CarteiraCriptoController {
         carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() - valor), carteira.getId_carteira());
         transacaoDAO.comprar(transacao);
 
-        return carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
+        carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
+        double saldoBRL = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoBTC() + carteiraCripto.getSaldoETH();
+        carteiraCriptoDAO.atualizarSaldoBrl(saldoBRL, cliente.getId_cliente());
+        return true;
+    }
+
+    public CarteiraCripto pegarCarteiraCripto(Integer id) {
+        return carteiraCriptoDAO.acharPeloIdCliente(id);
     }
 }

@@ -55,7 +55,12 @@ public class ClienteView {
     }
 
     public String login() {
-        CarteiraView carteiraView = new CarteiraView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView);
+        CarteiraView carteiraView = new CarteiraView(
+                controller,
+                carteiraDAO,
+                carteiraCriptoController,
+                carteiraCriptoView
+        );
 
         System.out.print("\t\tDigite seu email: ");
         String email = scanner.nextLine();

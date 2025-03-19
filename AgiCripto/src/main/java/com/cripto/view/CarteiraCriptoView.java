@@ -4,6 +4,7 @@ import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Carteira;
+import com.cripto.model.CarteiraCripto;
 import com.cripto.model.Cliente;
 
 import java.util.Locale;
@@ -25,10 +26,17 @@ public class CarteiraCriptoView {
     public void mostrarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoController.pegarCarteiraCripto(cliente.getId_cliente());
 
         System.out.println("=========================================================================");
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
+        System.out.println(" |");
+        System.out.printf(" | %-30s | %-30s |\n", "Saldo em BRL:", carteiraCripto.getSaldoBRL());
+        System.out.printf(" | %-30s | %-30s |\n", "Quantidade BTC:", carteiraCripto.conversao(1, carteiraCripto.getSaldoBTC()));
+        System.out.printf(" | %-30s | %-30s |\n", "Quantidade ETH:", carteiraCripto.conversao(2, carteiraCripto.getSaldoETH()));
+        System.out.printf(" | %-30s | %-30s |\n", "Quantidade SOL:", carteiraCripto.conversao(3, carteiraCripto.getSaldoSOl()));
+        System.out.printf(" | %-30s | %-30s |\n", "Quantidade AGICOIN:",carteiraCripto.getSaldoAGICOIN());
         System.out.println("=========================================================================");
         System.out.println(comprarCripto());
     }
