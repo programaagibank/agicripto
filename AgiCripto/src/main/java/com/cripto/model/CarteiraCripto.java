@@ -80,4 +80,14 @@ public class CarteiraCripto {
     public void setSaldoAGICOIN(Double saldoAGICOIN) {
         this.saldoAGICOIN = saldoAGICOIN;
     }
+
+    public double conversao(int o, double v) {
+        if (o == 1) {
+            return v * 0.00000179;
+        } else if (o == 2) {
+            return v * 0.000093;
+        } else  {
+            return v * 0.00135582;
+        }
+    }
 }

@@ -95,20 +95,22 @@ public class ClienteController {
 
         if (carteiraLogada.getSaldoContaCorrente() < valor) return false;
 
+        LocalDateTime data = LocalDateTime.now();
+        Transacao transacao = new Transacao(
+                carteiraLogada.getId_carteira(),
+                this.clienteLogado.getId_cliente(),
+                4,
+                "PAGO",
+                1,
+                valor,
+                data
+        );
+
         carteiraDAO.atualizarSaldo(
                 (carteiraLogada.getSaldoContaCorrente() - valor),
                 carteiraLogada.getId_carteira()
         );
 
-        LocalDateTime data = LocalDateTime.now();
-        Transacao transacao = new Transacao(
-                carteiraLogada.getId_carteira(),
-                this.clienteLogado.getId_cliente(),
-                1,
-                valor,
-                data
-        );
-        transacao.setStatus("PAGO");
         return transacaoDAO.comprar(transacao);
     }
 

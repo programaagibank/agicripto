@@ -17,10 +17,12 @@ public class CarteiraView {
     private final CarteiraCriptoController carteiraCriptoController;
     private QuestionarioView questionarioView = new QuestionarioView();
     private PagamentosView pagamentosView;
+    private final CarteiraCriptoView carteiraCriptoView;
 
-    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView) {
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.carteiraCriptoView = carteiraCriptoView;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.pagamentosView = new PagamentosView(controller);
@@ -36,13 +38,18 @@ public class CarteiraView {
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=".repeat(73));
 
-        System.out.println("1 - Área Pagamentos     2 - Ativar Cripto     3 - Sair");
+        if (cliente.getStatus().equals("ativo")) {
+            System.out.println("1 - Transacao     2 - Entrar Cripto     3 - Sair");
+        } else {
+            System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair");
+        }
+
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
         if (opcao == 1) {
             pagamentosView.telaPagamento();
-        } else if (opcao == 2) {
+        } else if (opcao == 2 && cliente.getStatus().equals("desativado")) {
             resultado = questionarioView.iniciarQuestionario();
             if (resultado <= 6) {
                 exibirTutorial();
@@ -61,7 +68,7 @@ public class CarteiraView {
             else
                 System.out.println(carteiraCriptoController.ativarCarteiraCripto());
         } else {
-            System.out.println("Saindo...");
+            carteiraCriptoView.mostrarCarteiraCripto();
         }
     }
 

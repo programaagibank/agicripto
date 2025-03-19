@@ -19,17 +19,18 @@ public class TransacaoDAO {
     }
 
     public boolean comprar(Transacao transacao) {
-        String sql = "INSERT INTO Transacao (id_carteira, id_cliente, status, id_tipo_transacao, valor, data) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Transacao (id_carteira, id_cliente, id_cripto, status, id_tipo_transacao, valor, data) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
 
         try {
             ps = conexao.prepareStatement(sql);
             ps.setInt(1,transacao.getIdCarteira());
             ps.setInt(2, transacao.getIdCliente());
-            ps.setString(3, transacao.getStatus());
-            ps.setInt(4, transacao.getIdTipoTransacao());
-            ps.setDouble(5, transacao.getValor());
-            ps.setDate(6, Date.valueOf(transacao.getData().toLocalDate()));
+            ps.setInt(3, transacao.getIdCripto());
+            ps.setString(4, transacao.getStatus());
+            ps.setInt(5, transacao.getIdTipoTransacao());
+            ps.setDouble(6, transacao.getValor());
+            ps.setDate(7, Date.valueOf(transacao.getData().toLocalDate()));
 
             ps.execute();
             ps.close();
