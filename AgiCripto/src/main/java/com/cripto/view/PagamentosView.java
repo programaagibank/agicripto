@@ -69,14 +69,19 @@ public class PagamentosView {
         boolean sucesso = clienteController.comprar(valor);
 
         if (sucesso) {
-            System.out.println("Compra realizada com sucesso!");
-
-            boolean cashbackSucesso = carteiraCriptoController.realizarCashback(valor, cliente.getId_cliente());
-            if (cashbackSucesso) {
-                System.out.println("Cashback aplicado com sucesso no valor de " + 0.005 * valor+ "!");
-            } else {
-                System.out.println("Erro ao aplicar cashback.");
+            if (cliente.getStatus().equals("ativo")) {
+                System.out.println("Compra realizada com sucesso!");
+                boolean cashbackSucesso = carteiraCriptoController.realizarCashback(valor, cliente.getId_cliente());
+                if (cashbackSucesso) {
+                    System.out.println("Cashback aplicado com sucesso no valor de " + 0.005 * valor + "!");
+                } else {
+                    System.out.println("Erro ao aplicar cashback.");
+                }
             }
+            else
+                System.out.println("Compra realizada com sucesso! Caso queira receber cashback, " +
+                        "ative sua conta cripto! Cashback que teria recebido nesta transação: " +
+                        valor * 0.005 + "agicoin.");
         } else {
             System.out.println("Erro ao realizar a compra.");
         }
