@@ -56,26 +56,25 @@ public class CarteiraView {
             resultado = questionarioView.iniciarQuestionario();
             if (resultado <= 6) {
                 questionarioView.exibirTutorial();
-            }
-            else if (resultado < 16) {
+                carteiraCriptoController.ativarCarteiraCripto();
+            } else if (resultado < 16) {
                 System.out.println("Deseja ver o questionário?");
                 System.out.println("1 - SIM");
                 System.out.println("2 - NÃO");
+
                 int escolha = lerOpcao(1, 2);
                 if (escolha == 1) {
                     questionarioView.exibirTutorial();
+                } else {
+                    carteiraCriptoController.ativarCarteiraCripto();
                 }
-                else
-                    System.out.println("Entrando na carteira digital");
+            } else {
+                carteiraCriptoController.ativarCarteiraCripto();
             }
-            else
-                System.out.println(carteiraCriptoController.ativarCarteiraCripto());
         } else {
             carteiraCriptoView.mostrarCarteiraCripto();
         }
     }
-
-
 
     private int lerOpcao(int min, int max) {
         int opcao = 0;

@@ -57,7 +57,6 @@ public class CarteiraCriptoView {
 
     public void mostrarPortifolioCripto(){
         Cliente cliente = clienteController.pegarClienteLogado();
-        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
         CarteiraCripto carteiraCripto = carteiraCriptoController.pegarCarteiraCripto(cliente.getId_cliente());
 
         if (carteiraCripto == null) {
@@ -66,11 +65,11 @@ public class CarteiraCriptoView {
         }
 
         System.out.println("=========================================================================");
-        System.out.printf(" | %-30s | %-30.2f |\n", "Saldo em BRL:", carteiraCripto.getSaldoBRL());
-        System.out.printf(" | %-30s | %-30.6f |\n", "Quantidade BTC:", carteiraCripto.conversao(1, carteiraCripto.getSaldoBTC()));
-        System.out.printf(" | %-30s | %-30.6f |\n", "Quantidade ETH:", carteiraCripto.conversao(2, carteiraCripto.getSaldoETH()));
-        System.out.printf(" | %-30s | %-30.6f |\n", "Quantidade SOL:", carteiraCripto.conversao(3, carteiraCripto.getSaldoSOl()));
-        System.out.printf(" | %-30s | %-30.2f |\n", "Quantidade AGICOIN:", carteiraCripto.getSaldoAGICOIN());
+        System.out.printf(" | %-30s | %-7.2f |\n", "Saldo em BRL:", carteiraCripto.getSaldoBRL());
+        System.out.printf(" | %-30s | %-7.6f | R$ %-5.2f |\n", "Quantidade BTC:", carteiraCripto.conversao(1, carteiraCripto.getSaldoBTC()), carteiraCripto.getSaldoBTC());
+        System.out.printf(" | %-30s | %-7.6f | R$ %-5.2f |\n", "Quantidade ETH:", carteiraCripto.conversao(2, carteiraCripto.getSaldoETH()), carteiraCripto.getSaldoETH());
+        System.out.printf(" | %-30s | %-7.6f | R$ %-5.2f |\n", "Quantidade SOL:", carteiraCripto.conversao(3, carteiraCripto.getSaldoSOl()), carteiraCripto.getSaldoSOl());
+        System.out.printf(" | %-30s | %-7.6f |\n", "Quantidade AGICOIN:", carteiraCripto.getSaldoAGICOIN());
         System.out.println("=========================================================================");
     }
 }
