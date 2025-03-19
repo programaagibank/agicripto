@@ -26,19 +26,19 @@ public class CarteiraCriptoView {
     public void mostrarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
-        CarteiraCripto carteiraCripto = carteiraCriptoController.pegarCarteiraCripto(cliente.getId_cliente());
 
         System.out.println("=========================================================================");
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
-        System.out.println(" |");
-        System.out.printf(" | %-30s | %-30s |\n", "Saldo em BRL:", carteiraCripto.getSaldoBRL());
-        System.out.printf(" | %-30s | %-30s |\n", "Quantidade BTC:", carteiraCripto.conversao(1, carteiraCripto.getSaldoBTC()));
-        System.out.printf(" | %-30s | %-30s |\n", "Quantidade ETH:", carteiraCripto.conversao(2, carteiraCripto.getSaldoETH()));
-        System.out.printf(" | %-30s | %-30s |\n", "Quantidade SOL:", carteiraCripto.conversao(3, carteiraCripto.getSaldoSOl()));
-        System.out.printf(" | %-30s | %-30s |\n", "Quantidade AGICOIN:",carteiraCripto.getSaldoAGICOIN());
         System.out.println("=========================================================================");
-        System.out.println(comprarCripto());
+        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - SAIR");
+        int opcao = scanner.nextInt();
+
+        if (opcao == 1){
+            System.out.println(comprarCripto());
+        } else if (opcao == 2) {
+            mostrarPortifolioCripto();
+        }
     }
 
     public String comprarCripto() {
@@ -55,4 +55,22 @@ public class CarteiraCriptoView {
         return "Nao foi possivel comprar a criptomoeda";
     }
 
+    public void mostrarPortifolioCripto(){
+        Cliente cliente = clienteController.pegarClienteLogado();
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoController.pegarCarteiraCripto(cliente.getId_cliente());
+
+        if (carteiraCripto == null) {
+            System.out.println("Erro: Carteira Cripto não encontrada!");
+            return;
+        }
+
+        System.out.println("=========================================================================");
+        System.out.printf(" | %-30s | %-30.2f |\n", "Saldo em BRL:", carteiraCripto.getSaldoBRL());
+        System.out.printf(" | %-30s | %-30.6f |\n", "Quantidade BTC:", carteiraCripto.conversao(1, carteiraCripto.getSaldoBTC()));
+        System.out.printf(" | %-30s | %-30.6f |\n", "Quantidade ETH:", carteiraCripto.conversao(2, carteiraCripto.getSaldoETH()));
+        System.out.printf(" | %-30s | %-30.6f |\n", "Quantidade SOL:", carteiraCripto.conversao(3, carteiraCripto.getSaldoSOl()));
+        System.out.printf(" | %-30s | %-30.2f |\n", "Quantidade AGICOIN:", carteiraCripto.getSaldoAGICOIN());
+        System.out.println("=========================================================================");
+    }
 }
