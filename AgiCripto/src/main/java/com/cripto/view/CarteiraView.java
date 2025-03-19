@@ -2,6 +2,7 @@ package com.cripto.view;
 
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Carteira;
 import com.cripto.model.Cliente;
@@ -18,14 +19,16 @@ public class CarteiraView {
     private QuestionarioView questionarioView = new QuestionarioView();
     private PagamentosView pagamentosView;
     private final CarteiraCriptoView carteiraCriptoView;
+    private final CarteiraCriptoDAO carteiraCriptoDAO;
 
-    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView) {
+    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO) {
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
         this.carteiraCriptoView = carteiraCriptoView;
+        this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
-        this.pagamentosView = new PagamentosView(controller);
+        this.pagamentosView = new PagamentosView(controller, carteiraCriptoDAO, carteiraCriptoController);
     }
 
     public void telaCarteiraContaCorrente() {

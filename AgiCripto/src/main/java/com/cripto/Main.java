@@ -34,6 +34,7 @@ public class Main {
     @NotNull
     private static ClienteView getClienteView(Connection connection) {
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
+        CarteiraCriptoDAO carteiraCriptoDAO = new CarteiraCriptoDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
         TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
@@ -46,6 +47,6 @@ public class Main {
                 transacaoDAO
         );
         CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(carteiraCriptoController, controller, carteiraDAO);
-        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView);
+        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView, carteiraCriptoDAO);
     }
 }
