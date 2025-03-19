@@ -20,6 +20,16 @@ public class Transacao {
         this.data = data;
     }
 
+    public Transacao(Integer idCarteira, Integer idCliente, Integer idCripto, String status, Integer idTipoTransacao, Double valor, LocalDateTime data) {
+        this.idCarteira = idCarteira;
+        this.idCliente = idCliente;
+        this.idCripto = idCripto;
+        this.status = status;
+        this.idTipoTransacao = idTipoTransacao;
+        this.valor = valor;
+        this.data = data;
+    }
+
     public Integer getIdTransacao() {
         return idTransacao;
     }

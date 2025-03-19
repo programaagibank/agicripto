@@ -33,7 +33,7 @@ public class ClienteController {
     public boolean cadastro(String nome, String email, String senha, String cpf) {
         Cliente cliente = new Cliente(nome, email, cpf);
         cliente.setSenha(cliente.criptografarSenha(senha));
-        cliente.setStatus("ativo");
+        cliente.setStatus("DESATIVADO");
         cliente.setCpf(cliente.formatarCpf(cliente.getCpf()));
         clienteDAO.cadastrarCliente(cliente);
 
@@ -95,21 +95,39 @@ public class ClienteController {
 
         if (carteiraLogada.getSaldoContaCorrente() < valor) return false;
 
+        LocalDateTime data = LocalDateTime.now();
+        Transacao transacao = new Transacao(
+                carteiraLogada.getId_carteira(),
+                this.clienteLogado.getId_cliente(),
+                4,
+                "PAGO",
+                1,
+                valor,
+                data
+        );
+
         carteiraDAO.atualizarSaldo(
                 (carteiraLogada.getSaldoContaCorrente() - valor),
                 carteiraLogada.getId_carteira()
         );
 
-        LocalDateTime data = LocalDateTime.now();
-        Transacao transacao = new Transacao(
-                carteiraLogada.getId_carteira(),
-                this.clienteLogado.getId_cliente(),
-                1,
-                valor,
-                data
-        );
-        transacao.setStatus("PAGO");
         return transacaoDAO.comprar(transacao);
     }
+
+    public boolean ativarContaCripto(){
+        if(this.clienteLogado == null){
+            System.out.println("Cliente não está logado");
+            return false;
+        }
+
+        boolean sucesso = clienteDAO.ativarConta(this.clienteLogado.getId_cliente());
+        if (!sucesso) {
+        } else {
+            this.clienteLogado.setStatus("ATIVO");
+        }
+
+        return sucesso;
+    }
+
 
 }
