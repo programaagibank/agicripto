@@ -110,4 +110,39 @@ public class CarteiraCriptoDAO {
             throw new RuntimeException("Erro ao atualizar saldo", e);
         }
     }
+
+    public void cashback(double valor, int id) {
+        String sql = "UPDATE agicripto.Carteira_Cripto SET saldo_agicoin = saldo_agicoin + ? WHERE id_cliente = ?";
+        double valorCashback = 0.005 * valor;
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setDouble(1, valorCashback);
+            ps.setInt(2, id);
+
+            int linhasAfetadas = ps.executeUpdate();
+            if (linhasAfetadas == 0) {
+                throw new RuntimeException("Nenhuma linha foi atualizada. O ID pode estar incorreto.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar saldo: " + e.getMessage(), e);
+        }
+    }
+
+    public boolean excluirCarteiraCripto(Integer idCliente) {
+        String sql = "DELETE FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+
+            ps.execute();
+            ps.close();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

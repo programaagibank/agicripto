@@ -85,13 +85,38 @@ public class CarteiraCriptoController {
         carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() - valor), carteira.getId_carteira());
         transacaoDAO.comprar(transacao);
 
-        carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
-        double saldoBRL = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoBTC() + carteiraCripto.getSaldoETH();
-        carteiraCriptoDAO.atualizarSaldoBrl(saldoBRL, cliente.getId_cliente());
-        return true;
+        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC() + valor;
+        carteiraCriptoDAO.atualizarSaldoBrl(saldoBRl, cliente.getId_cliente());
+
+        return carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
     }
 
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);
+    }
+
+    public boolean realizarCashback(double valor, int id) {
+        try {
+            carteiraCriptoDAO.cashback(valor, id);
+            return true;
+        } catch (Exception e) {
+            System.err.println("Erro ao processar cashback: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean desativarCarteiraCripto() {
+        Cliente cliente = clienteController.pegarClienteLogado();
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
+
+        if (clienteDAO.desativarCarteira(cliente.getId_cliente())) {
+            carteiraDAO.atualizarSaldo((carteiraCripto.getSaldoBRL() + carteira.getSaldoContaCorrente()), carteira.getId_carteira());
+            carteiraCriptoDAO.atualizarSaldoBrl(0.0, cliente.getId_cliente());
+            carteiraCriptoDAO.excluirCarteiraCripto(cliente.getId_cliente());
+
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package com.cripto.view;
 
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Carteira;
 import com.cripto.model.Cliente;
@@ -18,14 +19,16 @@ public class CarteiraView {
     private QuestionarioView questionarioView = new QuestionarioView();
     private PagamentosView pagamentosView;
     private final CarteiraCriptoView carteiraCriptoView;
+    private final CarteiraCriptoDAO carteiraCriptoDAO;
 
-    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView) {
+    public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO) {
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
         this.carteiraCriptoView = carteiraCriptoView;
+        this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
-        this.pagamentosView = new PagamentosView(controller);
+        this.pagamentosView = new PagamentosView(controller, carteiraCriptoDAO, carteiraCriptoController);
     }
 
 
@@ -55,26 +58,25 @@ public class CarteiraView {
             resultado = questionarioView.iniciarQuestionario();
             if (resultado <= 6) {
                 questionarioView.exibirTutorial();
-            }
-            else if (resultado < 16) {
+                carteiraCriptoController.ativarCarteiraCripto();
+            } else if (resultado < 16) {
                 System.out.println("Deseja ver o questionário?");
                 System.out.println("1 - SIM");
                 System.out.println("2 - NÃO");
+
                 int escolha = lerOpcao(1, 2);
                 if (escolha == 1) {
                     questionarioView.exibirTutorial();
+                } else {
+                    carteiraCriptoController.ativarCarteiraCripto();
                 }
-                else
-                    System.out.println("Entrando na carteira digital");
+            } else {
+                carteiraCriptoController.ativarCarteiraCripto();
             }
-            else
-                System.out.println(carteiraCriptoController.ativarCarteiraCripto());
         } else {
             carteiraCriptoView.mostrarCarteiraCripto();
         }
     }
-
-
 
     private int lerOpcao(int min, int max) {
         int opcao = 0;

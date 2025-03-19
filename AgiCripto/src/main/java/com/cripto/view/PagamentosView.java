@@ -1,6 +1,9 @@
 package com.cripto.view;
 
+import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.CarteiraCriptoDAO;
+import com.cripto.model.Cliente;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,10 +12,14 @@ public class PagamentosView {
 
     private final Scanner scanner = new Scanner(System.in);
     private final ClienteController clienteController;
+    private final CarteiraCriptoDAO carteiraCriptoDAO;
+    private final CarteiraCriptoController carteiraCriptoController;
+    private Cliente cliente;
 
-    // Modificando o construtor para aceitar o ClienteController
-    public PagamentosView(ClienteController clienteController) {
+    public PagamentosView(ClienteController clienteController, CarteiraCriptoDAO carteiraCriptoDAO, CarteiraCriptoController carteiraCriptoController) {
         this.clienteController = clienteController;
+        this.carteiraCriptoDAO = carteiraCriptoDAO;
+        this.carteiraCriptoController = carteiraCriptoController;
     }
 
     public void telaPagamento() {
@@ -53,19 +60,31 @@ public class PagamentosView {
         return opcao;
     }
 
-    // Tela de compra
     private void telaCompra() {
         System.out.println("\t".repeat(7) + "Comprar" + "\t".repeat(7));
         System.out.println("=".repeat(73));
         System.out.println("Digite o valor: ");
         double valor = scanner.nextDouble();
-
-        boolean sucesso = clienteController.comprar(valor); // Chama o método comprar do controller
+        cliente = clienteController.pegarClienteLogado();
+        boolean sucesso = clienteController.comprar(valor);
 
         if (sucesso) {
-            System.out.println("Compra realizada com sucesso!");
+            if (cliente.getStatus().equals("ativo")) {
+                System.out.println("Compra realizada com sucesso!");
+                boolean cashbackSucesso = carteiraCriptoController.realizarCashback(valor, cliente.getId_cliente());
+                if (cashbackSucesso) {
+                    System.out.println("Cashback aplicado com sucesso no valor de " + 0.005 * valor + "!");
+                } else {
+                    System.out.println("Erro ao aplicar cashback.");
+                }
+            }
+            else
+                System.out.println("Compra realizada com sucesso! Caso queira receber cashback, " +
+                        "ative sua conta cripto! Cashback que teria recebido nesta transação:" +
+                        valor * 0.005 + " agicoin.");
         } else {
             System.out.println("Erro ao realizar a compra.");
         }
     }
+
 }
