@@ -2,6 +2,7 @@ package com.cripto.view;
 
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
+import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Cliente;
 
@@ -14,9 +15,11 @@ public class ClienteView {
     private final CarteiraDAO carteiraDAO;
     private final CarteiraCriptoController carteiraCriptoController;
     private final CarteiraCriptoView carteiraCriptoView;
+    private final CarteiraCriptoDAO carteiraCriptoDAO;
 
-    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO) {
         this.carteiraCriptoView = carteiraCriptoView;
+        this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
@@ -59,7 +62,8 @@ public class ClienteView {
                 controller,
                 carteiraDAO,
                 carteiraCriptoController,
-                carteiraCriptoView
+                carteiraCriptoView,
+                carteiraCriptoDAO
         );
 
         System.out.print("\t\tDigite seu email: ");
