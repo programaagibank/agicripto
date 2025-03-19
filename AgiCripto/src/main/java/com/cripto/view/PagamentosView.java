@@ -80,8 +80,8 @@ public class PagamentosView {
             }
             else
                 System.out.println("Compra realizada com sucesso! Caso queira receber cashback, " +
-                        "ative sua conta cripto! Cashback que teria recebido nesta transação: " +
-                        valor * 0.005 + "agicoin.");
+                        "ative sua conta cripto! Cashback que teria recebido nesta transação:" +
+                        valor * 0.005 + " agicoin.");
         } else {
             System.out.println("Erro ao realizar a compra.");
         }
