@@ -200,4 +200,21 @@ public class ClienteDAO {
         }
     }
 
+    public boolean desativarCarteira(Integer idCliente) {
+        String sql = "UPDATE agicripto.Cliente SET status = ? WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, "desativado");
+            ps.setInt(2, idCliente);
+
+            ps.execute();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao desativar conta", e);
+        }
+    }
+
 }

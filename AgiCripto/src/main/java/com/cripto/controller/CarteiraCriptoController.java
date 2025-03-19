@@ -94,4 +94,19 @@ public class CarteiraCriptoController {
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);
     }
+
+    public boolean desativarCarteiraCripto() {
+        Cliente cliente = clienteController.pegarClienteLogado();
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
+
+        if (clienteDAO.desativarCarteira(cliente.getId_cliente())) {
+            carteiraDAO.atualizarSaldo((carteiraCripto.getSaldoBRL() + carteira.getSaldoContaCorrente()), carteira.getId_carteira());
+            carteiraCriptoDAO.atualizarSaldoBrl(0.0, cliente.getId_cliente());
+            carteiraCriptoDAO.excluirCarteiraCripto(cliente.getId_cliente());
+
+            return true;
+        }
+        return false;
+    }
 }
