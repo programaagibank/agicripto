@@ -31,13 +31,17 @@ public class CarteiraCriptoView {
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=========================================================================");
-        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - SAIR");
+        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - DESATIVAR CARTEIRA CRIPTO     4 - SAIR");
         int opcao = scanner.nextInt();
 
         if (opcao == 1){
             System.out.println(comprarCripto());
         } else if (opcao == 2) {
             mostrarPortifolioCripto();
+        } else if (opcao == 3) {
+            desativarCarteiraCripto();
+        } else {
+            System.out.println("SAINDO...");
         }
     }
 
@@ -71,5 +75,25 @@ public class CarteiraCriptoView {
         System.out.printf(" | %-30s | %-7.6f | R$ %-5.2f |\n", "Quantidade SOL:", carteiraCripto.conversao(3, carteiraCripto.getSaldoSOl()), carteiraCripto.getSaldoSOl());
         System.out.printf(" | %-30s | %-7.6f |\n", "Quantidade AGICOIN:", carteiraCripto.getSaldoAGICOIN());
         System.out.println("=========================================================================");
+    }
+
+    public String desativarCarteiraCripto() {
+        System.out.println("Certeza que gostaria de encerrar sua carteira cripto?" +
+                "Todas as criptomoedas que voce possui sera convertida em real e coloca" +
+                "na sua conta principal. Caso deseja desativar digite 1, para voltar digite 2");
+        System.out.print("Opcao: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        if (opcao == 1) {
+            if (carteiraCriptoController.desativarCarteiraCripto()) {
+                return "Desativado com sucesso";
+            }
+        } else {
+            mostrarCarteiraCripto();
+        }
+
+
+        return "Nao foi possivel desativar";
     }
 }

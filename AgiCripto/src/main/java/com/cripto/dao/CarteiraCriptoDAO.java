@@ -127,4 +127,22 @@ public class CarteiraCriptoDAO {
             throw new RuntimeException("Erro ao atualizar saldo: " + e.getMessage(), e);
         }
     }
+
+    public boolean excluirCarteiraCripto(Integer idCliente) {
+        String sql = "DELETE FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+
+            ps.execute();
+            ps.close();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
