@@ -5,6 +5,7 @@ import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Cliente;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -26,13 +27,18 @@ public class ClienteView {
     public void escolhaMenu() {
         System.out.println("\n 1 - Login \n 2 - Cadastro \n 3 - Esqueceu senha \n 4 - Sair");
         System.out.print("Digite:");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
 
-        if (opcao == 1) System.out.println(login());
-        if (opcao == 2) System.out.println(pegarInfosCliente());
-        if (opcao == 3) System.out.println(esqueceuSenha());
-        if (opcao == 4) System.out.println("Saindo....");
+        try {
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+            if (opcao == 1) System.out.println(login());
+            if (opcao == 2) System.out.println(pegarInfosCliente());
+            if (opcao == 3) System.out.println(esqueceuSenha());
+            if (opcao == 4) System.out.println("Saindo....");
+            if (opcao > 4 || opcao <= 0) System.out.println("Erro, esse numero não está listado!");
+        }catch (InputMismatchException e) {
+            System.out.println("Erro, voce digitou uma letra!");
+        }
     }
 
     public String pegarInfosCliente() {
@@ -47,6 +53,12 @@ public class ClienteView {
 
         System.out.println("Digite seu cpf (sem . e -): ");
         String cpf = scanner.nextLine();
+
+        do {
+            if (!cpf.matches("\\d{11}")){
+                System.out.println("erro, cpf invalido!");
+            }
+        }while (!cpf.matches("\\d{11}"));
 
         if (controller.cadastro(nome, email, senha, cpf)) {
             return "Cliente cadastrado com sucesso";
