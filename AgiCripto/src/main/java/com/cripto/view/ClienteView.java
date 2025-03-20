@@ -4,6 +4,7 @@ import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
+import com.cripto.dao.ClienteDAO;
 import com.cripto.model.Cliente;
 
 import java.util.InputMismatchException;
@@ -13,18 +14,20 @@ import java.util.Scanner;
 public class ClienteView {
     private final Scanner scanner;
     private final ClienteController controller;
+    private final ClienteDAO clienteDAO;
     private final CarteiraDAO carteiraDAO;
     private final CarteiraCriptoController carteiraCriptoController;
     private final CarteiraCriptoView carteiraCriptoView;
     private final CarteiraCriptoDAO carteiraCriptoDAO;
 
-    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO, ClienteDAO clienteDAO) {
         this.carteiraCriptoView = carteiraCriptoView;
         this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.clienteDAO = clienteDAO;
     }
 
     public void escolhaMenu() {
@@ -49,15 +52,24 @@ public class ClienteView {
         String nome = scanner.nextLine();
 
         System.out.println("Digite seu email: ");
-        String email = scanner.nextLine();
+        String email;
+
+        do {
+            email = scanner.nextLine();
+            if (clienteDAO.encontrarEmail(email) != null){
+                System.out.println("erro, o email já está cadastrado!");
+                System.out.println("Digite seu email: ");
+            }
+
+        }while (clienteDAO.encontrarEmail(email) != null);
 
         System.out.println("Digite sua senha: ");
         String senha = scanner.nextLine();
 
         System.out.println("Digite seu cpf (sem . e -): ");
-        String cpf = scanner.nextLine();
-
+        String cpf;
         do {
+            cpf = scanner.nextLine();
             if (!cpf.matches("\\d{11}")){
                 System.out.println("erro, cpf invalido!");
             }

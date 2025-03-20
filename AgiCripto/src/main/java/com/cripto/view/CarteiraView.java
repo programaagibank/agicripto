@@ -49,34 +49,45 @@ public class CarteiraView {
             System.out.println("1 - Transacao     2 - Ativar Cripto     3 - Sair");
         }
 
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("DIGITE: ");
 
-        if (opcao == 1) {
-            pagamentosView.telaPagamento();
-        } else if (opcao == 2 && cliente.getStatus().equals("desativado")) {
-            resultado = questionarioView.iniciarQuestionario();
-            if (resultado <= 6) {
-                questionarioView.exibirTutorial();
-                carteiraCriptoController.ativarCarteiraCripto();
-            } else if (resultado < 16) {
-                System.out.println("Deseja ver o questionário?");
-                System.out.println("1 - SIM");
-                System.out.println("2 - NÃO");
+        try {
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
 
-                int escolha = lerOpcao(1, 2);
-                if (escolha == 1) {
+            if (opcao == 1) {
+                pagamentosView.telaPagamento();
+            } else if (opcao == 2 && cliente.getStatus().equals("desativado")) {
+                resultado = questionarioView.iniciarQuestionario();
+                if (resultado <= 6) {
                     questionarioView.exibirTutorial();
+                    carteiraCriptoController.ativarCarteiraCripto();
+                } else if (resultado < 16) {
+                    System.out.println("Deseja ver o questionário?");
+                    System.out.println("1 - SIM");
+                    System.out.println("2 - NÃO");
+
+                    int escolha = lerOpcao(1, 2);
+                    if (escolha == 1) {
+                        questionarioView.exibirTutorial();
+                    } else {
+                        carteiraCriptoController.ativarCarteiraCripto();
+                    }
                 } else {
                     carteiraCriptoController.ativarCarteiraCripto();
                 }
+            } else if (opcao == 2 && cliente.getStatus().equals("ativo")){
+              carteiraCriptoView.mostrarCarteiraCripto();
+            } else if (opcao == 3) {
+                System.out.println("Saindo do sistema...");
             } else {
-                carteiraCriptoController.ativarCarteiraCripto();
+                System.out.println("Erro, opção não encontrada!");
             }
-        } else {
-            carteiraCriptoView.mostrarCarteiraCripto();
+        } catch (InputMismatchException e){
+            System.out.println("Erro, voce digitou uma letra!");
         }
     }
+
 
     private int lerOpcao(int min, int max) {
         int opcao = 0;

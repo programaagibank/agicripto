@@ -70,8 +70,13 @@ public class ClienteController {
     }
 
     public boolean alterarSenha(String email, String novaSenha, String confirmarSenha){
-        if (clienteDAO.encontrarEmail(email) == null) return false;
-        if (!novaSenha.equals(confirmarSenha)) return false;
+        if (clienteDAO.encontrarEmail(email) == null) {
+            System.out.println("Erro, conta não localizada");
+            return false;
+        }
+        if (!novaSenha.equals(confirmarSenha)) {
+            return false;
+        }
 
         return clienteDAO.alterarSenha(this.cliente.criptografarSenha(novaSenha), email);
     }

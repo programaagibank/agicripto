@@ -63,9 +63,21 @@ public class PagamentosView {
     private void telaCompra() {
         System.out.println("\t".repeat(7) + "Comprar" + "\t".repeat(7));
         System.out.println("=".repeat(73));
-        System.out.println("Digite o valor: ");
-        double valor = scanner.nextDouble();
+        double valor = 0;
+        try {
+            System.out.println("Digite o valor: ");
+            valor = scanner.nextDouble();
+        }catch (InputMismatchException e){
+            System.out.println("voce digitou uma letra!");
+
+        }
         cliente = clienteController.pegarClienteLogado();
+        if (valor < 1){
+            valor = 0;
+            System.out.println("Erro, nao e possivel mandar esse valor!");
+            System.out.println("Encerrando a operacao");
+        }
+
         boolean sucesso = clienteController.comprar(valor);
 
         if (sucesso) {
