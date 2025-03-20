@@ -37,63 +37,54 @@ public class CarteiraCriptoDAO {
         }
     }
 
-    public boolean comprarCriptomoedas(Integer opcao, Double valor, Integer idCarteira) {
-        String sql;
+    public boolean comprarCriptomoedas(Integer opcao, Double valor, Integer idCliente) {
+        String coluna;
         if (opcao == 1) {
-            sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = ? WHERE id_cliente = ?";
+            coluna = "saldo_btc";
         } else if (opcao == 2) {
-            sql = "UPDATE agicripto.Carteira_Cripto SET saldo_eth = ? WHERE id_cliente = ?";
+            coluna = "saldo_eth";
         } else if (opcao == 3) {
-            sql =  "UPDATE agicripto.Carteira_Cripto SET saldo_sol = ? WHERE id_cliente = ?";
+            coluna = "saldo_sol";
         } else {
             return false;
         }
 
-        PreparedStatement ps = null;
+        String sql = "UPDATE agicripto.Carteira_Cripto SET " + coluna + " = " + coluna + " + ? WHERE id_cliente = ?";
 
-        try {
-            ps = conexao.prepareStatement(sql);
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setDouble(1, valor);
-            ps.setInt(2, idCarteira);
-
-            ps.execute();
-            ps.close();
-
+            ps.setInt(2, idCliente);
+            ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao comprar alguma criptmoeda!", e);
+            throw new RuntimeException("Erro ao comprar criptomoeda!", e);
         }
     }
+
 
     public CarteiraCripto acharPeloIdCliente(Integer id) {
         String sql = "SELECT id_cliente, saldo_brl, saldo_btc, saldo_eth, saldo_sol, saldo_agicoin FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        CarteiraCripto carteiraCripto = null;
 
-        try {
-            ps = conexao.prepareStatement(sql);
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setInt(1, id);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                carteiraCripto = new CarteiraCripto(
-                        rs.getInt("id_cliente"),
-                        rs.getDouble("saldo_brl"),
-                        rs.getDouble("saldo_btc"),
-                        rs.getDouble("saldo_eth"),
-                        rs.getDouble("saldo_sol"),
-                        rs.getDouble("saldo_agicoin")
-                );
-            } else {
-                rs.close();
-                ps.close();
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new CarteiraCripto(
+                            rs.getInt("id_cliente"),
+                            rs.getDouble("saldo_brl"),
+                            rs.getDouble("saldo_btc"),
+                            rs.getDouble("saldo_eth"),
+                            rs.getDouble("saldo_sol"),
+                            rs.getDouble("saldo_agicoin")
+                    );
+                }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao procurar carteira pelo id do cliente");
+            throw new RuntimeException("Erro ao procurar carteira pelo id do cliente", e);
         }
-        return carteiraCripto;
+        return null;
     }
+
 
     public void atualizarSaldoBrl(Double saldoBRL, Integer id) {
         String sql = "UPDATE agicripto.Carteira_Cripto SET saldo_brl = ? WHERE id_cliente = ?";
