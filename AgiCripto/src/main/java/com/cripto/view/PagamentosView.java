@@ -60,43 +60,82 @@ public class PagamentosView {
         return opcao;
     }
 
+    private void aplicarCashback(double valor, String tipoPagamento, int idCliente) {
+        double taxaCashback = tipoPagamento.equals("crédito") ? 0.01 : 0.005;
+        double valorCashback = taxaCashback * valor;
+
+        boolean cashbackSucesso = carteiraCriptoController.realizarCashback(valorCashback, idCliente);
+        if (cashbackSucesso) {
+            System.out.println("Cashback aplicado com sucesso no valor de " + valorCashback + " agicoin!");
+        } else {
+            System.out.println("Erro ao aplicar cashback.");
+        }
+    }
+
+
     private void telaCompra() {
         System.out.println("\t".repeat(7) + "Comprar" + "\t".repeat(7));
         System.out.println("=".repeat(73));
-        double valor = 0;
+
+        System.out.println("Escolha a forma de pagamento:");
+        System.out.println("1 - Débito");
+        System.out.println("2 - Crédito");
+
+        int opcao = 0;
+        String tipoPagamento = "";
         try {
-            System.out.println("Digite o valor: ");
-            valor = scanner.nextDouble();
-        }catch (InputMismatchException e){
-            System.out.println("voce digitou uma letra!");
-
+            opcao = scanner.nextInt();
+            if (opcao == 1) {
+                tipoPagamento = "débito";
+            } else if (opcao == 2) {
+                tipoPagamento = "crédito";
+            } else {
+                System.out.println("Opção inválida! Operação cancelada.");
+                return;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida! Digite 1 para débito ou 2 para crédito.");
+            scanner.nextLine();
+            return;
         }
+
+        double valor = obterValorCompra();
+        if (valor == 0) {
+            System.out.println("Encerrando a operação.");
+            return;
+        }
+
         cliente = clienteController.pegarClienteLogado();
-        if (valor < 1){
-            valor = 0;
-            System.out.println("Erro, nao e possivel mandar esse valor!");
-            System.out.println("Encerrando a operacao");
-        }
-
         boolean sucesso = clienteController.comprar(valor);
 
         if (sucesso) {
+            System.out.println("Compra no " + tipoPagamento + " realizada com sucesso!");
             if (cliente.getStatus().equals("ativo")) {
-                System.out.println("Compra realizada com sucesso!");
-                boolean cashbackSucesso = carteiraCriptoController.realizarCashback(valor, cliente.getId_cliente());
-                if (cashbackSucesso) {
-                    System.out.println("Cashback aplicado com sucesso no valor de " + 0.005 * valor + "!");
-                } else {
-                    System.out.println("Erro ao aplicar cashback.");
-                }
+                aplicarCashback(valor, tipoPagamento, cliente.getId_cliente());
+            } else {
+                double cashbackPrevisto = (tipoPagamento.equals("crédito") ? 0.01 : 0.005) * valor;
+                System.out.println("Caso queira receber cashback, ative sua conta cripto! Cashback que teria recebido nesta transação: " + cashbackPrevisto + " agicoin.");
             }
-            else
-                System.out.println("Compra realizada com sucesso! Caso queira receber cashback, " +
-                        "ative sua conta cripto! Cashback que teria recebido nesta transação:" +
-                        valor * 0.005 + " agicoin.");
         } else {
             System.out.println("Erro ao realizar a compra.");
         }
+    }
+
+    private double obterValorCompra() {
+        double valor = 0;
+        try {
+            System.out.println("Digite o valor da compra: ");
+            valor = scanner.nextDouble();
+            if (valor < 1) {
+                System.out.println("Erro, não é possível realizar a compra com esse valor!");
+                return 0;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Você digitou uma entrada inválida! Digite apenas números.");
+            scanner.nextLine();
+            return 0;
+        }
+        return valor;
     }
 
 }
