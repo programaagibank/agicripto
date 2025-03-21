@@ -1,8 +1,10 @@
 package com.cripto.view;
 
+import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
+import com.cripto.model.Assinatura;
 import com.cripto.model.Carteira;
 import com.cripto.model.CarteiraCripto;
 import com.cripto.model.Cliente;
@@ -16,10 +18,12 @@ public class CarteiraCriptoView {
     private final CarteiraCriptoController carteiraCriptoController;
     private final ClienteController clienteController;
     private final CarteiraDAO carteiraDAO;
+    private final AssinaturaController assinaturaController;
 
-    public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO) {
+    public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO, AssinaturaController assinaturaController) {
         this.clienteController = clienteController;
         this.carteiraDAO = carteiraDAO;
+        this.assinaturaController = assinaturaController;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.carteiraCriptoController = carteiraCriptoController;
     }
@@ -35,18 +39,17 @@ public class CarteiraCriptoView {
         System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - DESATIVAR CARTEIRA CRIPTO     4 - SAIR");
         System.out.println("DIGITE: ");
         try {
+            int opcao = scanner.nextInt();
 
-        int opcao = scanner.nextInt();
-
-        if (opcao == 1){
-            System.out.println(comprarCripto());
-        } else if (opcao == 2) {
-            mostrarPortifolioCripto();
-        } else if (opcao == 3) {
-            desativarCarteiraCripto();
-        } else {
-            System.out.println("SAINDO...");
-        }
+            if (opcao == 1){
+                System.out.println(comprarCripto());
+            } else if (opcao == 2) {
+                mostrarPortifolioCripto();
+            } else if (opcao == 3) {
+                desativarCarteiraCripto();
+            } else {
+                System.out.println("SAINDO...");
+            }
         }catch (InputMismatchException e){
             System.out.println("Erro, voce digitou uma letra!");
         }
@@ -102,5 +105,41 @@ public class CarteiraCriptoView {
 
 
         return "Nao foi possivel desativar";
+    }
+
+    public String ativarAssinatura() {
+        Cliente cliente = clienteController.pegarClienteLogado();
+        System.out.println(
+                "1 - ASSINAR BITCOIN" +
+                        "2 - ASSINAR ETHEREUM" +
+                        "3 - ASSINAR SOLANA" +
+                        "4 - DESATIVAR ASSINATURA" +
+                        "5 - VER INFORMACOES"
+        );
+        System.out.print("opcao: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        if (opcao == 4) {
+            assinaturaController.desativar(cliente.getId_cliente());
+            return "Assinatura cancelada com sucesso!";
+        }
+        if (opcao == 5) {
+            mostrarInformacoesAssinatura();
+        }
+
+        System.out.println("Valor: ");
+        double valor = scanner.nextInt();
+        scanner.nextLine();
+
+        assinaturaController.assinar(valor, opcao);
+        carteiraCriptoController.comprarCripto(opcao, valor);
+
+        return "Assinatura realizada!";
+    }
+
+    public Assinatura mostrarInformacoesAssinatura() {
+        Cliente cliente = clienteController.pegarClienteLogado();
+        return assinaturaController.pegarPeloId(cliente.getId_cliente());
     }
 }

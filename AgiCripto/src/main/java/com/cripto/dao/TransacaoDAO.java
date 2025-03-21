@@ -41,7 +41,11 @@ public class TransacaoDAO {
     }
 
     public List<Transacao> listarTransacoesPorCliente(int idCliente) {
+<<<<<<< HEAD
         String sql = "SELECT * FROM agicripto.Transacoes WHERE id_cliente = ?";
+=======
+        String sql = "SELECT * FROM agicripto.Transacao WHERE id_cliente = ?";
+>>>>>>> origin/main
         List<Transacao> transacoes = new ArrayList<>();
         PreparedStatement ps = null;
 
@@ -52,11 +56,19 @@ public class TransacaoDAO {
 
             while (rs.next()) {
                 Transacao transacao = new Transacao(
+<<<<<<< HEAD
+=======
+                        rs.getInt("id_transacao"),
+>>>>>>> origin/main
                         rs.getInt("id_carteira"),
                         rs.getInt("id_cliente"),
                         rs.getInt("id_cripto"),
                         rs.getString("status"),
+<<<<<<< HEAD
                         rs.getInt("tipo"),
+=======
+                        rs.getInt("id_tipo_transacao"),
+>>>>>>> origin/main
                         rs.getDouble("valor"),
                         rs.getTimestamp("data").toLocalDateTime()
                 );

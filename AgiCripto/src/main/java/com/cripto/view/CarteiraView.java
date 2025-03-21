@@ -6,8 +6,10 @@ import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Carteira;
 import com.cripto.model.Cliente;
+import com.cripto.model.Transacao;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -30,8 +32,6 @@ public class CarteiraView {
         this.controller = controller;
         this.pagamentosView = new PagamentosView(controller, carteiraCriptoDAO, carteiraCriptoController);
     }
-
-
 
     public void telaCarteiraContaCorrente() {
         int resultado;

@@ -32,11 +32,11 @@ public class CarteiraCriptoController {
 
         CarteiraCripto carteiraCripto = new CarteiraCripto(
                 cliente.getId_cliente(),
-                0.0,
-                0.00000000,
-                0.00000000,
-                0.00000000,
-                0.00000000
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00
         );
 
         if (carteiraCriptoDAO.criarCarteiraCripto(carteiraCripto)) {
@@ -104,6 +104,7 @@ public class CarteiraCriptoController {
             return false;
         }
     }
+
 
     public boolean desativarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
