@@ -4,8 +4,10 @@ import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.model.Cliente;
+import com.cripto.model.Transacao;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class PagamentosView {
@@ -27,12 +29,17 @@ public class PagamentosView {
         System.out.println("=".repeat(73));
         System.out.println("Selecione a opção que deseja:");
         System.out.println("1 - Compra");
-        System.out.println("2 - Sair");
+        System.out.println("2 - Historico de Transacoes");
+        System.out.println("3 - Sair");
         System.out.println("=".repeat(73));
-        int escolha = lerOpcao(1, 2);
+        int escolha = lerOpcao(1, 3);
 
         if (escolha == 1) {
             telaCompra();
+        } else if (escolha == 2) {
+            historicoTransacoes();
+        } else if (escolha == 3) {
+            System.out.println("Saindo...");
         }
     }
 
@@ -87,4 +94,8 @@ public class PagamentosView {
         }
     }
 
+    public void historicoTransacoes() {
+        List<Transacao> transacaos = clienteController.listarTransacoes();
+        System.out.println(transacaos);
+    }
 }

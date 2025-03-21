@@ -5,11 +5,10 @@ import com.cripto.model.Cliente;
 import com.cripto.model.TipoTransacao;
 import com.cripto.model.Transacao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransacaoDAO {
     private final Connection conexao;
@@ -39,5 +38,35 @@ public class TransacaoDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao efetuar transacao", e);
         }
+    }
+
+    public List<Transacao> listarTransacoesPorCliente(int idCliente) {
+        String sql = "SELECT * FROM agicripto.Transacao WHERE id_cliente = ?";
+        List<Transacao> transacoes = new ArrayList<>();
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Transacao transacao = new Transacao(
+                        rs.getInt("id_transacao"),
+                        rs.getInt("id_carteira"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_cripto"),
+                        rs.getString("status"),
+                        rs.getInt("id_tipo_transacao"),
+                        rs.getDouble("valor"),
+                        rs.getTimestamp("data").toLocalDateTime()
+                );
+                transacoes.add(transacao);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return transacoes;
     }
 }

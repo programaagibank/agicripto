@@ -8,6 +8,7 @@ import com.cripto.model.Cliente;
 import com.cripto.model.Transacao;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -114,20 +115,7 @@ public class ClienteController {
         return transacaoDAO.comprar(transacao);
     }
 
-    public boolean ativarContaCripto(){
-        if(this.clienteLogado == null){
-            System.out.println("Cliente não está logado");
-            return false;
-        }
-
-        boolean sucesso = clienteDAO.ativarConta(this.clienteLogado.getId_cliente());
-        if (!sucesso) {
-        } else {
-            this.clienteLogado.setStatus("ATIVO");
-        }
-
-        return sucesso;
+    public List<Transacao> listarTransacoes() {
+        return transacaoDAO.listarTransacoesPorCliente(pegarClienteLogado().getId_cliente());
     }
-
-
 }

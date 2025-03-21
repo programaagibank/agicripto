@@ -32,11 +32,11 @@ public class CarteiraCriptoController {
 
         CarteiraCripto carteiraCripto = new CarteiraCripto(
                 cliente.getId_cliente(),
-                0.0,
-                0.00000000,
-                0.00000000,
-                0.00000000,
-                0.00000000
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00
         );
 
         if (carteiraCriptoDAO.criarCarteiraCripto(carteiraCripto)) {
@@ -94,6 +94,17 @@ public class CarteiraCriptoController {
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);
     }
+
+    public boolean realizarCashback(double valor, int id) {
+        try {
+            carteiraCriptoDAO.cashback(valor, id);
+            return true;
+        } catch (Exception e) {
+            System.err.println("Erro ao processar cashback: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     public boolean desativarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
