@@ -36,7 +36,19 @@ public class CarteiraCriptoView {
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=========================================================================");
-        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - DESATIVAR CARTEIRA CRIPTO     4 - SAIR");
+        System.out.println("=========================================================================");
+        System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
+        System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
+        System.out.println("=========================================================================");
+        System.out.println("""
+        1 - COMPRAR CRIPTO
+        2 - EXIBIR PORTIFOLIO
+        3 - DESATIVAR CARTEIRA CRIPTO
+        4 - TROCAR CRIPTO
+        5 - VENDER CRIPTO
+        6 - VER TUTORIAL
+        7 - SAIR"""
+        );
         System.out.println("DIGITE: ");
         try {
             int opcao = scanner.nextInt();
@@ -47,8 +59,15 @@ public class CarteiraCriptoView {
                 mostrarPortifolioCripto();
             } else if (opcao == 3) {
                 desativarCarteiraCripto();
-            } else {
-                System.out.println("SAINDO...");
+            } else if (opcao == 4){
+                trocarCripto();
+            }else if (opcao == 5){
+                System.out.println(venderCripto());
+            }else if (opcao == 6) {
+                CarteiraView carteiraView = null;
+                carteiraView.exibirTutorial();
+            }else {
+                System.out.println("saindo...");
             }
         }catch (InputMismatchException e){
             System.out.println("Erro, voce digitou uma letra!");
@@ -67,6 +86,25 @@ public class CarteiraCriptoView {
             return "Compra bem sucedida";
         }
         return "Nao foi possivel comprar a criptomoeda";
+    }
+
+    public String venderCripto() {
+        System.out.println("""
+                1 - VENDER BITCOIN
+                2 - VENDER ETHEREUM
+                3 - VENDER SOLANA
+                """);
+        System.out.print("OPCAO: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Valor pra venda: ");
+        double valor = scanner.nextDouble();
+
+        if (carteiraCriptoController.venderCriptoMoeda(opcao, valor)) {
+            return "Venda feita";
+        }
+        return "Não foi possivel concluir a venda";
+
     }
 
     public void mostrarPortifolioCripto(){
