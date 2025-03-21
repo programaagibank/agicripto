@@ -7,6 +7,23 @@ public class Carteira {
     private Integer id_cliente;
     private Double saldoContaCorrente;
 
+    public Carteira() {
+    }
+
+    public Carteira(Integer id_carteira, Integer id_cliente, Double saldoContaCorrente) {
+        this.id_carteira = id_carteira;
+        this.id_cliente = id_cliente;
+        this.saldoContaCorrente = saldoContaCorrente;
+    }
+
+    public Integer getId_carteira() {
+        return id_carteira;
+    }
+
+    public void setId_carteira(Integer id_carteira) {
+        this.id_carteira = id_carteira;
+    }
+
     public Integer getId_cliente() {
         return id_cliente;
     }

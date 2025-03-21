@@ -148,7 +148,7 @@ public class ClienteDAO {
     }
 
     public Cliente acharPeloId(int id) {
-        String sql = "SELECT * FORM agicripto.Cliente WHERE id_cliente = ?";
+        String sql = "SELECT * FROM Cliente WHERE id_cliente = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         Cliente cliente = null;
@@ -178,4 +178,43 @@ public class ClienteDAO {
         }
         return cliente;
     }
+
+    public boolean ativarConta(int idCliente) {
+        String sql = "UPDATE agicripto.Cliente SET status = 'ATIVO' WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            int linhasAfetadas = ps.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public boolean desativarCarteira(Integer idCliente) {
+        String sql = "UPDATE agicripto.Cliente SET status = ? WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, "desativado");
+            ps.setInt(2, idCliente);
+
+            ps.execute();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao desativar conta", e);
+        }
+    }
+
 }
