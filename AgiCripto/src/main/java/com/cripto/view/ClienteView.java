@@ -4,38 +4,47 @@ import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
+import com.cripto.dao.ClienteDAO;
 import com.cripto.model.Cliente;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class ClienteView {
     private final Scanner scanner;
     private final ClienteController controller;
+    private final ClienteDAO clienteDAO;
     private final CarteiraDAO carteiraDAO;
     private final CarteiraCriptoController carteiraCriptoController;
     private final CarteiraCriptoView carteiraCriptoView;
     private final CarteiraCriptoDAO carteiraCriptoDAO;
 
-    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO) {
+    public ClienteView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO, ClienteDAO clienteDAO) {
         this.carteiraCriptoView = carteiraCriptoView;
         this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.clienteDAO = clienteDAO;
     }
 
     public void escolhaMenu() {
         System.out.println("\n 1 - Login \n 2 - Cadastro \n 3 - Esqueceu senha \n 4 - Sair");
         System.out.print("Digite:");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
 
-        if (opcao == 1) System.out.println(login());
-        if (opcao == 2) System.out.println(pegarInfosCliente());
-        if (opcao == 3) System.out.println(esqueceuSenha());
-        if (opcao == 4) System.out.println("Saindo....");
+        try {
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+            if (opcao == 1) System.out.println(login());
+            if (opcao == 2) System.out.println(pegarInfosCliente());
+            if (opcao == 3) System.out.println(esqueceuSenha());
+            if (opcao == 4) System.out.println("Saindo....");
+            if (opcao > 4 || opcao <= 0) System.out.println("Erro, esse numero não está listado!");
+        }catch (InputMismatchException e) {
+            System.out.println("Erro, voce digitou uma letra!");
+        }
     }
 
     public String pegarInfosCliente() {
@@ -43,13 +52,28 @@ public class ClienteView {
         String nome = scanner.nextLine();
 
         System.out.println("Digite seu email: ");
-        String email = scanner.nextLine();
+        String email;
+
+        do {
+            email = scanner.nextLine();
+            if (clienteDAO.encontrarEmail(email) != null){
+                System.out.println("erro, o email já está cadastrado!");
+                System.out.println("Digite seu email: ");
+            }
+
+        }while (clienteDAO.encontrarEmail(email) != null);
 
         System.out.println("Digite sua senha: ");
         String senha = scanner.nextLine();
 
         System.out.println("Digite seu cpf (sem . e -): ");
-        String cpf = scanner.nextLine();
+        String cpf;
+        do {
+            cpf = scanner.nextLine();
+            if (!cpf.matches("\\d{11}")){
+                System.out.println("erro, cpf invalido!");
+            }
+        }while (!cpf.matches("\\d{11}"));
 
         if (controller.cadastro(nome, email, senha, cpf)) {
             return "Cliente cadastrado com sucesso";

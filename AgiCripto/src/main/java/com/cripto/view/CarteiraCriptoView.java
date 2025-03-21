@@ -9,6 +9,7 @@ import com.cripto.model.Carteira;
 import com.cripto.model.CarteiraCripto;
 import com.cripto.model.Cliente;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -35,17 +36,22 @@ public class CarteiraCriptoView {
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=========================================================================");
-        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - DESATIVAR CARTEIRA CRIPTO     4 - ASSINATURA");
-        int opcao = scanner.nextInt();
+        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - DESATIVAR CARTEIRA CRIPTO     4 - SAIR");
+        System.out.println("DIGITE: ");
+        try {
+            int opcao = scanner.nextInt();
 
-        if (opcao == 1){
-            System.out.println(comprarCripto());
-        } else if (opcao == 2) {
-            mostrarPortifolioCripto();
-        } else if (opcao == 3) {
-            desativarCarteiraCripto();
-        } else {
-            ativarAssinatura();
+            if (opcao == 1){
+                System.out.println(comprarCripto());
+            } else if (opcao == 2) {
+                mostrarPortifolioCripto();
+            } else if (opcao == 3) {
+                desativarCarteiraCripto();
+            } else {
+                System.out.println("SAINDO...");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("Erro, voce digitou uma letra!");
         }
     }
 
@@ -96,6 +102,7 @@ public class CarteiraCriptoView {
         } else {
             mostrarCarteiraCripto();
         }
+
 
         return "Nao foi possivel desativar";
     }
