@@ -30,6 +30,17 @@ public class Transacao {
         this.data = data;
     }
 
+    public Transacao(Integer idTransacao, Integer idCarteira, Integer idCliente, Integer idCripto, String status, Integer idTipoTransacao, Double valor, LocalDateTime data) {
+        this.idTransacao = idTransacao;
+        this.idCarteira = idCarteira;
+        this.idCliente = idCliente;
+        this.idCripto = idCripto;
+        this.status = status;
+        this.idTipoTransacao = idTipoTransacao;
+        this.valor = valor;
+        this.data = data;
+    }
+
     public Integer getIdTransacao() {
         return idTransacao;
     }
@@ -92,5 +103,16 @@ public class Transacao {
 
     public void setData(LocalDateTime data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Transacao{" +
+                "idCripto=" + idCripto +
+                ", status='" + status + '\'' +
+                ", idTipoTransacao=" + idTipoTransacao +
+                ", valor=" + valor +
+                ", data=" + data +
+                "}\n";
     }
 }

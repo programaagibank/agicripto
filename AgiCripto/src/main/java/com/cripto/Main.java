@@ -1,11 +1,9 @@
 package com.cripto;
 
+import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
-import com.cripto.dao.CarteiraCriptoDAO;
-import com.cripto.dao.CarteiraDAO;
-import com.cripto.dao.ClienteDAO;
-import com.cripto.dao.TransacaoDAO;
+import com.cripto.dao.*;
 import com.cripto.model.database.Conexao;
 import com.cripto.view.CarteiraCriptoView;
 import com.cripto.view.ClienteView;
@@ -34,10 +32,13 @@ public class Main {
     @NotNull
     private static ClienteView getClienteView(Connection connection) {
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
+        CarteiraCriptoDAO carteiraCriptoDAO = new CarteiraCriptoDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
         TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
         CarteiraCriptoDAO criptoDAO = new CarteiraCriptoDAO(connection);
+        AssinaturaDAO assinaturaDAO = new AssinaturaDAO(connection);
+        AssinaturaController assinaturaController = new AssinaturaController(controller, assinaturaDAO);
         CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(
                 controller,
                 criptoDAO,
@@ -45,7 +46,6 @@ public class Main {
                 clienteDAO,
                 transacaoDAO
         );
-        CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(carteiraCriptoController, controller, carteiraDAO);
-        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView);
-    }
+        CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(carteiraCriptoController, controller, carteiraDAO, assinaturaController);
+        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView, carteiraCriptoDAO,clienteDAO);    }
 }
