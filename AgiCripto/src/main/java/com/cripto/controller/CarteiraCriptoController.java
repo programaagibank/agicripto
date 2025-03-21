@@ -109,14 +109,4 @@ public class CarteiraCriptoController {
         }
         return false;
     }
-
-    public boolean realizarCashback(double valor, int id) {
-        try {
-            carteiraCriptoDAO.cashback(valor, id);
-            return true;
-        } catch (Exception e) {
-            System.err.println("Erro ao processar cashback: " + e.getMessage());
-            return false;
-        }
-    }
 }

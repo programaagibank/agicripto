@@ -128,21 +128,4 @@ public class CarteiraCriptoDAO {
             return false;
         }
     }
-
-    public void cashback(double valor, int id) {
-        String sql = "UPDATE agicripto.Carteira_Cripto SET saldo_agicoin = saldo_agicoin + ? WHERE id_cliente = ?";
-        double valorCashback = 0.005 * valor;
-
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setDouble(1, valorCashback);
-            ps.setInt(2, id);
-
-            int linhasAfetadas = ps.executeUpdate();
-            if (linhasAfetadas == 0) {
-                throw new RuntimeException("Nenhuma linha foi atualizada. O ID pode estar incorreto.");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar saldo: " + e.getMessage(), e);
-        }
-    }
 }
