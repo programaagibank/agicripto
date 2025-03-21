@@ -94,4 +94,42 @@ public class CarteiraCriptoController {
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);
     }
+
+    public boolean trocarCripto(int criptoOrigem, int criptoDestino, double valor) {
+        Cliente cliente = clienteController.pegarClienteLogado();
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
+
+        if (carteiraCripto == null) return false;
+
+        double saldoAtual;
+        if (criptoOrigem == 1) saldoAtual = carteiraCripto.getSaldoBTC();
+        else if (criptoOrigem == 2) saldoAtual = carteiraCripto.getSaldoETH();
+        else if (criptoOrigem == 3) saldoAtual = carteiraCripto.getSaldoSOl();
+        else if (criptoOrigem == 4) saldoAtual = carteiraCripto.getSaldoAGICOIN();
+        else return false;
+
+        if (saldoAtual < valor) return false;
+
+        double valorConvertido = carteiraCripto.conversao(criptoDestino, valor);
+
+
+        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
+        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, valorConvertido);
+
+        LocalDateTime data = LocalDateTime.now();
+        Transacao transacao = new Transacao(
+                carteira.getId_carteira(),
+                cliente.getId_cliente(),
+                 criptoDestino,
+                "PAGO",
+                2,
+                valor,
+                data
+        );
+
+        transacaoDAO.comprar(transacao);
+
+        return true;
+    }
 }

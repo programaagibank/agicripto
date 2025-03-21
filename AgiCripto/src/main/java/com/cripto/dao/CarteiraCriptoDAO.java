@@ -101,4 +101,24 @@ public class CarteiraCriptoDAO {
             throw new RuntimeException("Erro ao atualizar saldo", e);
         }
     }
+
+    public void atualizarSaldoCripto(int idCliente, int opcaoCripto, double novoSaldo) {
+        String sql = "";
+
+        switch (opcaoCripto) {
+            case 1 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = ? WHERE id_cliente = ?";
+            case 2 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_eth = ? WHERE id_cliente = ?";
+            case 3 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_sol = ? WHERE id_cliente = ?";
+            case 4 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_agicoin = ? WHERE id_cliente = ?";
+            default -> throw new RuntimeException("Criptomoeda inválida!");
+        }
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setDouble(1, novoSaldo);
+            ps.setInt(2, idCliente);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar saldo da cripto: " + e.getMessage(), e);
+        }
+    }
 }

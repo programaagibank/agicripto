@@ -31,14 +31,17 @@ public class CarteiraCriptoView {
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
         System.out.println("=========================================================================");
-        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - SAIR");
+        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - TROCAR CRIPTO    4 - SAIR");
         int opcao = scanner.nextInt();
 
-        if (opcao == 1){
+        if (opcao == 1) {
             System.out.println(comprarCripto());
         } else if (opcao == 2) {
             mostrarPortifolioCripto();
+        }else if (opcao == 3) {
+            System.out.println(trocarCripto());
         }
+
     }
 
     public String comprarCripto() {
@@ -72,4 +75,37 @@ public class CarteiraCriptoView {
         System.out.printf(" | %-30s | %-7.6f |\n", "Quantidade AGICOIN:", carteiraCripto.getSaldoAGICOIN());
         System.out.println("=========================================================================");
     }
+
+    public String trocarCripto() {
+        System.out.println("Escolha a criptomoeda de origem:");
+        System.out.println("1 - Bitcoin (BTC)");
+        System.out.println("2 - Ethereum (ETH)");
+        System.out.println("3 - Solana (SOL)");
+        System.out.println("4 - Agicoin (AGI)");
+        System.out.print("Digite a opção: ");
+
+        int criptoOrigem = scanner.nextInt();
+
+        System.out.println("Escolha a criptomoeda de destino:");
+        System.out.println("1 - Bitcoin (BTC)");
+        System.out.println("2 - Ethereum (ETH)");
+        System.out.println("3 - Solana (SOL)");
+        System.out.println("4 - Agicoin (AGI)");
+        System.out.print("Digite a opção: ");
+
+        int criptoDestino = scanner.nextInt();
+
+        if (criptoOrigem == criptoDestino) {
+            return "Você não pode trocar uma criptomoeda por ela mesma!";
+        }
+
+        System.out.print("Digite o valor a ser convertido: ");
+        double valor = scanner.nextDouble();
+
+        boolean sucesso = carteiraCriptoController.trocarCripto(criptoOrigem, criptoDestino, valor);
+
+        return sucesso ? "Troca realizada com sucesso!" : "Não foi possível realizar a troca.";
+    }
+
 }
+
