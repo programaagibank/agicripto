@@ -64,6 +64,42 @@ public class CarteiraCriptoDAO {
             throw new RuntimeException("Erro ao comprar alguma criptmoeda!", e);
         }
     }
+    //========================================================================
+
+    public boolean venderCriptomoedas(Integer opcao, Double valor, Integer idCarteira) {
+        String sql;
+        if (opcao == 1) {
+            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
+        } else if (opcao == 2) {
+            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
+        } else if (opcao == 3) {
+            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
+        } else {
+            return false;
+        }
+
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setDouble(1, valor);
+            ps.setInt(2, idCarteira);
+
+            ps.execute();
+            ps.close();
+
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao vender alguma criptmoeda!", e);
+        }
+
+    }
+
+   // public boolean subtrairCripto(double valor, int id moeda){
+//        String sql;
+//        sql = "UPDATE agicripto.Carteira_Cripto SET ";
+//    }
+    //========================================================================
 
     public CarteiraCripto acharPeloIdCliente(Integer id) {
         String sql = "SELECT id_cliente, saldo_brl, saldo_btc, saldo_eth, saldo_sol, saldo_agicoin FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";

@@ -91,6 +91,61 @@ public class CarteiraCriptoController {
         return carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
     }
 
+    //========================================================================
+
+
+    public boolean venderCriptoMoeda(int opcao, double valor){
+        Cliente cliente = clienteController.pegarClienteLogado();
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
+
+        if (carteiraCripto == null) return false;
+        if (carteira == null) return false;
+
+        int idCripto;
+        double novoValor;
+
+        if (opcao == 1){
+            novoValor = carteiraCripto.getSaldoBTC() - valor;
+            idCripto = 1;
+            //chamar métod para subtrair cripto (DAO)
+        } else if (opcao == 2){
+            novoValor = carteiraCripto.getSaldoETH() - valor;
+            idCripto = 2;
+            //chamar métod para subtrair cripto
+        } else if (opcao == 3){
+            novoValor = carteiraCripto.getSaldoSOl() - valor;
+            idCripto = 3;
+            //chamar métod para subtrair cripto
+        } else {
+            return false;
+        }
+        if (carteiraCripto.getSaldoBTC() < valor) return false;
+        if (carteiraCripto.getSaldoETH() < valor) return false;
+        if (carteiraCripto.getSaldoSOl() < valor) return false;
+
+        LocalDateTime data = LocalDateTime.now();
+        Transacao transacao = new Transacao(
+                carteira.getId_carteira(),
+                cliente.getId_cliente(),
+                idCripto,
+                "PAGO",
+                1,
+                valor,
+                data
+        );
+
+        carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() + valor), carteira.getId_carteira());
+        transacaoDAO.comprar(transacao);
+
+        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC() + valor;
+        carteiraCriptoDAO.atualizarSaldoBrl(saldoBRl, cliente.getId_cliente());
+
+        return carteiraCriptoDAO.venderCriptomoedas(opcao, novoValor, cliente.getId_cliente());
+    }
+
+    //========================================================================
+
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);
     }
