@@ -91,9 +91,6 @@ public class CarteiraCriptoController {
         return carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
     }
 
-    //========================================================================
-
-
     public boolean venderCriptoMoeda(int opcao, double valor){
         Cliente cliente = clienteController.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
@@ -106,23 +103,26 @@ public class CarteiraCriptoController {
         double novoValor;
 
         if (opcao == 1){
-            novoValor = carteiraCripto.getSaldoBTC() - valor;
+            if (carteiraCripto.getSaldoBTC() < valor) return false;
             idCripto = 1;
-            //chamar métod para subtrair cripto (DAO)
+            novoValor = carteiraCripto.getSaldoBTC() - valor;
+            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente());
+            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira());
         } else if (opcao == 2){
-            novoValor = carteiraCripto.getSaldoETH() - valor;
+            if (carteiraCripto.getSaldoETH() < valor) return false;
             idCripto = 2;
-            //chamar métod para subtrair cripto
+            novoValor = carteiraCripto.getSaldoETH() - valor;
+            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente());
+            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira());
         } else if (opcao == 3){
-            novoValor = carteiraCripto.getSaldoSOl() - valor;
+            if (carteiraCripto.getSaldoSOl() < valor) return false;
             idCripto = 3;
-            //chamar métod para subtrair cripto
+            novoValor = carteiraCripto.getSaldoSOl() - valor;
+            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente()); // subtrair valor
+            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira()); // adc saldo na conta
         } else {
             return false;
         }
-        if (carteiraCripto.getSaldoBTC() < valor) return false;
-        if (carteiraCripto.getSaldoETH() < valor) return false;
-        if (carteiraCripto.getSaldoSOl() < valor) return false;
 
         LocalDateTime data = LocalDateTime.now();
         Transacao transacao = new Transacao(
@@ -143,8 +143,6 @@ public class CarteiraCriptoController {
 
         return carteiraCriptoDAO.venderCriptomoedas(opcao, novoValor, cliente.getId_cliente());
     }
-
-    //========================================================================
 
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);

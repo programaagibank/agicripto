@@ -81,7 +81,6 @@ public class CarteiraCriptoView {
         }
         return "Nao foi possivel comprar a criptomoeda";
     }
-    //======================================================
 
     public String venderCripto() {
         System.out.println("""
@@ -96,12 +95,11 @@ public class CarteiraCriptoView {
         double valor = scanner.nextDouble();
 
         if (carteiraCriptoController.venderCriptoMoeda(opcao, valor)) {
-            return "venda bem sucedida";
+            return "Venda feita";
         }
-        return "Nao foi possivel vender a criptomoeda";
+        return "Não foi possivel concluir a venda";
 
     }
-    //======================================================
 
     public void mostrarPortifolioCripto(){
         Cliente cliente = clienteController.pegarClienteLogado();
@@ -136,7 +134,6 @@ public class CarteiraCriptoView {
         } else {
             mostrarCarteiraCripto();
         }
-
 
         return "Nao foi possivel desativar";
     }
