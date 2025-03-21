@@ -1,86 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
-=======
-<<<<<<< HEAD
-    <list default="true" id="963736c1-8d0c-4103-b5b2-6553c051a03c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="4f02270a-e0e1-4a8e-bc42-e54189bdebe2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/agicripto.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/controller/ClienteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/CarteiraDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/ClienteDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/dao/TransacaoDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Carteira.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Cliente.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/TipoTransacao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/Transacao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/model/database/Conexao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/view/CarteiraView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgiCripto/src/main/java/com/cripto/view/ClienteView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
     </list>
-=======
-    <list default="true" id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "BrunoPrado90"
+  }
 }]]></component>
-  <component name="ProjectId" id="2txNX58xGQEhR5GDThMQOpHMnR2" />
-=======
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/programaagibank/agicripto",
+    "accountId": "7417b403-6563-4dfa-97be-029ff9dacb9f"
+  }
 }]]></component>
-  <component name="ProjectId" id="2twS8Isx1dD15MkznVvcUqXV0r0" />
-<<<<<<< HEAD
-=======
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2uURRbLDkJzWKZIaDuB8r3J88bn" />
   <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-<<<<<<< HEAD
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vitor.coelho/Desktop/GitHub/agicripto/AgiCripto"
-=======
-<<<<<<< HEAD
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vijc/Documents/GitHub/agicripto/AgiCripto"
-=======
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vitor.coelho/Desktop/GitHub/agicripto/AgiCripto"
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-      <changelist id="963736c1-8d0c-4103-b5b2-6553c051a03c" name="Changes" comment="" />
-      <created>1741289801881</created>
+      <changelist id="4f02270a-e0e1-4a8e-bc42-e54189bdebe2" name="Changes" comment="" />
+      <created>1742301159386</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1741289801881</updated>
-=======
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
-      <changelist id="4cab0c3c-1f81-4479-9329-9609e2f0e09b" name="Changes" comment="" />
-      <created>1741261482673</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1741261482673</updated>
-<<<<<<< HEAD
-=======
->>>>>>> bae17d5be9409238d653ed2d8419c0ed2f4d480d
->>>>>>> 5adc420d9f10b90e3e811aa9ba09a9369d3d0e79
+      <updated>1742301159386</updated>
     </task>
     <servers />
   </component>
