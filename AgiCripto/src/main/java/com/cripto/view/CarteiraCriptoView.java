@@ -20,13 +20,16 @@ public class CarteiraCriptoView {
     private final CarteiraDAO carteiraDAO;
     private final AssinaturaController assinaturaController;
 
+
     public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO, AssinaturaController assinaturaController) {
         this.clienteController = clienteController;
         this.carteiraDAO = carteiraDAO;
         this.assinaturaController = assinaturaController;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.carteiraCriptoController = carteiraCriptoController;
+
     }
+
 
     public void mostrarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
@@ -64,8 +67,7 @@ public class CarteiraCriptoView {
             }else if (opcao == 5){
                 System.out.println(venderCripto());
             }else if (opcao == 6) {
-                CarteiraView carteiraView = null;
-                carteiraView.exibirTutorial();
+                carteiraCriptoController.exibirTutorial();
             }else {
                 System.out.println("saindo...");
             }
