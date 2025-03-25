@@ -49,8 +49,9 @@ public class CarteiraCriptoView {
         3 - DESATIVAR CARTEIRA CRIPTO
         4 - TROCAR CRIPTO
         5 - VENDER CRIPTO
-        6 - VER TUTORIAL
-        7 - SAIR"""
+        6 - TRANSFERIR CRIPTO
+        7 - VER TUTORIAL
+        8 - SAIR"""
         );
         System.out.println("DIGITE: ");
         try {
@@ -64,11 +65,13 @@ public class CarteiraCriptoView {
                 desativarCarteiraCripto();
             } else if (opcao == 4){
                 trocarCripto();
-            }else if (opcao == 5){
+            } else if (opcao == 5) {
                 System.out.println(venderCripto());
-            }else if (opcao == 6) {
+            } else if (opcao == 6) {
+                transferir();
+            } else if (opcao == 7) {
                 carteiraCriptoController.exibirTutorial();
-            }else {
+            } else {
                 System.out.println("saindo...");
             }
         }catch (InputMismatchException e){
@@ -211,5 +214,26 @@ public class CarteiraCriptoView {
     public Assinatura mostrarInformacoesAssinatura() {
         Cliente cliente = clienteController.pegarClienteLogado();
         return assinaturaController.pegarPeloId(cliente.getId_cliente());
+    }
+
+    public void transferir() {
+        System.out.println("Escolha a criptomoeda:");
+        System.out.println("1 - Bitcoin (BTC)");
+        System.out.println("2 - Ethereum (ETH)");
+        System.out.println("3 - Solana (SOL)");
+        System.out.print("Digite a opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Digite o email para qual deseja enviar a criptomoeda:");
+        System.out.print("Email: ");
+        String emailRecebidor = scanner.nextLine();
+
+        System.out.println("Digite o valor a ser enviado: ");
+        System.out.print("Valor: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+
+        carteiraCriptoController.transferirCripto(emailRecebidor, valor, opcao);
     }
 }
