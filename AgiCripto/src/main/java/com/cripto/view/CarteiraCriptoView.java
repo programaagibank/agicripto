@@ -149,7 +149,6 @@ public class CarteiraCriptoView {
         if (criptoOrigem == criptoDestino) {
             return "Você não pode trocar uma criptomoeda por ela mesma!";
         }
-
         System.out.print("Digite o valor a ser convertido: ");
         double valor = scanner.nextDouble();
 
