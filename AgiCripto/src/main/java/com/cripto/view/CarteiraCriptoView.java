@@ -5,7 +5,6 @@ import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
-import com.cripto.model.Assinatura;
 import com.cripto.model.Carteira;
 import com.cripto.model.CarteiraCripto;
 import com.cripto.model.Cliente;
@@ -139,7 +138,7 @@ public class CarteiraCriptoView {
         System.out.println("=========================================================================");
     }
 
-    public String trocarCripto() {
+    public void trocarCripto() {
         System.out.println("Escolha a criptomoeda de origem:");
         System.out.println("1 - Bitcoin (BTC)");
         System.out.println("2 - Ethereum (ETH)");
@@ -159,17 +158,16 @@ public class CarteiraCriptoView {
         int criptoDestino = scanner.nextInt();
 
         if (criptoOrigem == criptoDestino) {
-            return "Você não pode trocar uma criptomoeda por ela mesma!";
+            return;
         }
         System.out.print("Digite o valor a ser convertido: ");
         double valor = scanner.nextDouble();
 
         boolean sucesso = carteiraCriptoController.trocarCripto(criptoOrigem, criptoDestino, valor);
 
-        return sucesso ? "Troca realizada com sucesso!" : "Não foi possível realizar a troca.";
     }
 
-    public String desativarCarteiraCripto() {
+    public void desativarCarteiraCripto() {
         System.out.println("Certeza que gostaria de encerrar sua carteira cripto?" +
                 "Todas as criptomoedas que voce possui sera convertida em real e coloca" +
                 "na sua conta principal. Caso deseja desativar digite 1, para voltar digite 2");
@@ -179,14 +177,12 @@ public class CarteiraCriptoView {
 
         if (opcao == 1) {
             if (carteiraCriptoController.desativarCarteiraCripto()) {
-                return "Desativado com sucesso";
             }
         } else {
             mostrarCarteiraCripto();
         }
 
 
-        return "Nao foi possivel desativar";
     }
 
     public String ativarAssinatura() {
@@ -220,9 +216,9 @@ public class CarteiraCriptoView {
         return "Assinatura realizada!";
     }
 
-    public Assinatura mostrarInformacoesAssinatura() {
+    public void mostrarInformacoesAssinatura() {
         Cliente cliente = clienteController.pegarClienteLogado();
-        return assinaturaController.pegarPeloId(cliente.getId_cliente());
+        assinaturaController.pegarPeloId(cliente.getId_cliente());
     }
 
     public void transferir() {

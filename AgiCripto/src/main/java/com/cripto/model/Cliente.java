@@ -1,7 +1,5 @@
 package com.cripto.model;
 
-import java.util.Random;
-
 public class Cliente {
     private Integer id_cliente;
     private String nome;

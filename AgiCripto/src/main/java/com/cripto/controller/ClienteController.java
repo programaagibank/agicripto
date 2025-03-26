@@ -49,7 +49,7 @@ public class ClienteController {
     public void excluirCliente() {
         System.out.print("\u001b[2J\u001b[H");
 
-        System.out.printf("Digite o ID do usuário a ser excluído: ");
+        System.out.print("Digite o ID do usuário a ser excluído: ");
         int id = scanner.nextInt();
 
         boolean sucesso = clienteDAO.excluirCliente(id);

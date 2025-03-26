@@ -1,6 +1,5 @@
 package com.cripto.dao;
 
-import com.cripto.controller.ClienteController;
 import com.cripto.model.Cliente;
 
 import java.sql.*;
@@ -46,7 +45,7 @@ public class ClienteDAO {
 
     public boolean excluirCliente(int id){
         String sql = "DELETE FROM agicripto.Cliente WHERE ID_CLIENTE = ?";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -73,11 +72,7 @@ public class ClienteDAO {
 
             rs = ps.executeQuery();
 
-            if (rs.next()) {
-                return true;
-            } else {
-                return false;
-            }
+            return rs.next();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao tentar logar: " + e.getMessage());
         } finally {
@@ -92,8 +87,8 @@ public class ClienteDAO {
 
     public Cliente encontrarEmail(String login) {
         String sql = "SELECT id_cliente, nome, email, cpf, senha, status, id_assinatura FROM Cliente WHERE email = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         Cliente cliente = null;
 
         try {
@@ -149,8 +144,8 @@ public class ClienteDAO {
 
     public Cliente acharPeloId(int id) {
         String sql = "SELECT * FROM Cliente WHERE id_cliente = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         Cliente cliente = null;
 
         try {
@@ -179,7 +174,7 @@ public class ClienteDAO {
         return cliente;
     }
 
-    public boolean ativarConta(int idCliente) {
+    public void ativarConta(int idCliente) {
         String sql = "UPDATE agicripto.Cliente SET status = 'ATIVO' WHERE id_cliente = ?";
         PreparedStatement ps = null;
 
@@ -187,10 +182,8 @@ public class ClienteDAO {
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, idCliente);
             int linhasAfetadas = ps.executeUpdate();
-            return linhasAfetadas > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         } finally {
             try {
                 if (ps != null) ps.close();
@@ -202,7 +195,7 @@ public class ClienteDAO {
 
     public boolean desativarCarteira(Integer idCliente) {
         String sql = "UPDATE agicripto.Cliente SET status = ? WHERE id_cliente = ?";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);

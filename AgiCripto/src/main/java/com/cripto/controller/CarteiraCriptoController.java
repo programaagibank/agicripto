@@ -27,9 +27,9 @@ public class CarteiraCriptoController {
         this.transacaoDAO = transacaoDAO;
     }
 
-    public boolean ativarCarteiraCripto() {
+    public void ativarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
-        if (cliente == null) return false;
+        if (cliente == null) return;
 
         CarteiraCripto carteiraCripto = new CarteiraCripto(
                 cliente.getId_cliente(),
@@ -42,9 +42,7 @@ public class CarteiraCriptoController {
 
         if (carteiraCriptoDAO.criarCarteiraCripto(carteiraCripto)) {
             clienteDAO.ativarConta(cliente.getId_cliente());
-            return true;
         }
-        return false;
     }
 
     public boolean comprarCripto(Integer opcao, Double valor) {
@@ -138,7 +136,7 @@ public class CarteiraCriptoController {
 
         if (saldoAtual < valor) return false;
 
-        double valorConvertido = carteiraCripto.conversao(criptoDestino, valor);
+        carteiraCripto.conversao(criptoDestino, valor);
 
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (valor + saldoAtual));
@@ -272,7 +270,7 @@ public class CarteiraCriptoController {
         CarteiraCripto carteiraRemetente = carteiraCriptoDAO.acharPeloIdCliente(clienteRemetente.getId_cliente());
         CarteiraCripto carteiraRecebidor = carteiraCriptoDAO.acharPeloIdCliente(clienteRecebidor.getId_cliente());
 
-        double saldoRecebidor = 0, saldoRemetente = 0;
+        double saldoRecebidor, saldoRemetente;
 
         switch (idCripto) {
             case 1 -> {
