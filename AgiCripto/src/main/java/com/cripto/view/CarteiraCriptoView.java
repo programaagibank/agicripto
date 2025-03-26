@@ -1,5 +1,6 @@
 package com.cripto.view;
 
+import com.cripto.api.Criptomoedas;
 import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
@@ -19,12 +20,13 @@ public class CarteiraCriptoView {
     private final ClienteController clienteController;
     private final CarteiraDAO carteiraDAO;
     private final AssinaturaController assinaturaController;
+    private final Criptomoedas criptomoedas;
 
-
-    public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO, AssinaturaController assinaturaController) {
+    public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO, AssinaturaController assinaturaController, Criptomoedas criptomoedas) {
         this.clienteController = clienteController;
         this.carteiraDAO = carteiraDAO;
         this.assinaturaController = assinaturaController;
+        this.criptomoedas = criptomoedas;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.carteiraCriptoController = carteiraCriptoController;
 
@@ -35,13 +37,20 @@ public class CarteiraCriptoView {
         Cliente cliente = clienteController.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
 
+        criptomoedas.consultarPrecoBitcoin();
+        criptomoedas.consultarPrecoEthereum();
+        criptomoedas.consultarPrecoSolana();
+
+        double precoBtc = criptomoedas.getPrecoBtc();
+        double precoEth = criptomoedas.getPrecoEth();
+        double precoSol = criptomoedas.getPrecoSol();
+
         System.out.println("=========================================================================");
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
-        System.out.println("=========================================================================");
-        System.out.println("=========================================================================");
-        System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
-        System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
+        System.out.printf(" | %-30s | %-30.2f |\n", "Preço Bitcoin (BRL):", precoBtc);
+        System.out.printf(" | %-30s | %-30.2f |\n", "Preço Ethereum (BRL):", precoEth);
+        System.out.printf(" | %-30s | %-30.2f |\n", "Preço Solana (BRL):", precoSol);
         System.out.println("=========================================================================");
         System.out.println("""
         1 - COMPRAR CRIPTO
