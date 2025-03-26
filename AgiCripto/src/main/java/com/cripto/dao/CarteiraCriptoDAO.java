@@ -170,6 +170,26 @@ public class CarteiraCriptoDAO {
         }
     }
 
+    public void atualizarSaldoCripto(int idCliente, int opcaoCripto, double novoSaldo) {
+        String sql = "";
+
+        switch (opcaoCripto) {
+            case 1 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = ? WHERE id_cliente = ?";
+            case 2 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_eth = ? WHERE id_cliente = ?";
+            case 3 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_sol = ? WHERE id_cliente = ?";
+            case 4 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_agicoin = ? WHERE id_cliente = ?";
+            default -> throw new RuntimeException("Criptomoeda inválida!");
+        }
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setDouble(1, novoSaldo);
+            ps.setInt(2, idCliente);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar saldo da cripto: " + e.getMessage(), e);
+        }
+    }
+
     public void cashback(double valor, int id) {
         String sql = "UPDATE agicripto.Carteira_Cripto SET saldo_agicoin = saldo_agicoin + ? WHERE id_cliente = ?";
 
@@ -204,4 +224,64 @@ public class CarteiraCriptoDAO {
             return false;
         }
     }
-}
+
+    public boolean venderCriptomoedas(Integer opcao, Double valor, Integer idCarteira) {
+        String sql;
+        if (opcao == 1) {
+            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
+        } else if (opcao == 2) {
+            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
+        } else if (opcao == 3) {
+            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
+        } else {
+            return false;
+        }
+
+        PreparedStatement ps = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setDouble(1, valor);
+            ps.setInt(2, idCarteira);
+
+            ps.execute();
+            ps.close();
+
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao vender alguma criptmoeda!", e);
+        }
+    }
+
+        public boolean subtrairCripto(double valor,int opcao, int idCliente){
+            String sql;
+            if (opcao == 1){
+                sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = saldo_btc - ? WHERE id_cliente = ?";
+            }else if (opcao == 2){
+                sql = "UPDATE agicripto.Carteira_Cripto SET saldo_eth = saldo_eth - ? WHERE id_cliente = ?";
+            }else if (opcao == 3){
+                sql = "UPDATE agicripto.Carteira_Cripto SET saldo_sol = saldo_sol - ? WHERE id_cliente = ?";
+            }else {
+                return false;
+            }
+
+            PreparedStatement ps = null;
+
+            try {
+                ps = conexao.prepareStatement(sql);
+                ps.setDouble(1, valor);
+                ps.setInt(2, idCliente);
+
+                ps.execute();
+                ps.close();
+
+                return true;
+            } catch (SQLException e) {
+                throw new RuntimeException("Erro ao subtrair alguma criptmoeda!", e);
+            }
+        }
+
+
+    }
+
+
