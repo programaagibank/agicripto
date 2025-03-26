@@ -48,9 +48,9 @@ public class CarteiraCriptoView {
         System.out.println("=========================================================================");
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
-        System.out.printf(" | %-30s | %-30.2f |\n", "Preço Bitcoin (BRL):", precoBtc);
-        System.out.printf(" | %-30s | %-30.2f |\n", "Preço Ethereum (BRL):", precoEth);
-        System.out.printf(" | %-30s | %-30.2f |\n", "Preço Solana (BRL):", precoSol);
+        System.out.printf(" | %-30s | R$ %-27.2f |\n", "Preço Bitcoin (BRL):", precoBtc);
+        System.out.printf(" | %-30s | R$ %-27.2f |\n", "Preço Ethereum (BRL):", precoEth);
+        System.out.printf(" | %-30s | R$ %-27.2f |\n", "Preço Solana (BRL):", precoSol);
         System.out.println("=========================================================================");
         System.out.println("""
         1 - COMPRAR CRIPTO

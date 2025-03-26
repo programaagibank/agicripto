@@ -36,11 +36,11 @@ public class Criptomoedas {
         this.precoSol = precoSol;
     }
 
-    public void consultarPrecoBitcoin() {
+    private double consultarPreco(String moeda) {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.coinbase.com/v2/prices/BTC-BRL/spot"))
+                    .uri(URI.create("https://api.coinbase.com/v2/prices/" + moeda + "-BRL/spot"))
                     .GET()
                     .build();
 
@@ -48,58 +48,26 @@ public class Criptomoedas {
 
             if (response.statusCode() == 200) {
                 JSONObject jsonResponse = new JSONObject(response.body());
-                this.precoBtc = jsonResponse.getJSONObject("data").getDouble("amount");
+                return jsonResponse.getJSONObject("data").getDouble("amount");
             } else {
-                System.out.println("Erro ao acessar a API. Código: " + response.statusCode());
+                System.out.println("Erro ao acessar a API para " + moeda + ". Código: " + response.statusCode());
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return -1;
+    }
+
+    public void consultarPrecoBitcoin() {
+        this.precoBtc = consultarPreco("BTC");
     }
 
     public void consultarPrecoEthereum() {
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.coinbase.com/v2/prices/ETH-BRL/spot"))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                JSONObject jsonResponse = new JSONObject(response.body());
-                this.precoEth = jsonResponse.getJSONObject("data").getDouble("amount");
-            } else {
-                System.out.println("Erro ao acessar a API. Código: " + response.statusCode());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.precoEth = consultarPreco("ETH");
     }
 
     public void consultarPrecoSolana() {
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.coinbase.com/v2/prices/SOL-BRL/spot"))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                JSONObject jsonResponse = new JSONObject(response.body());
-                this.precoSol = jsonResponse.getJSONObject("data").getDouble("amount");
-            } else {
-                System.out.println("Erro ao acessar a API. Código: " + response.statusCode());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.precoSol = consultarPreco("SOL");
     }
 
 }
