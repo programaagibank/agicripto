@@ -223,61 +223,6 @@ public class CarteiraCriptoDAO {
         }
     }
 
-    public boolean venderCriptomoedas(Integer opcao, Double valor, Integer idCarteira) {
-        String sql;
-        if (opcao == 1) {
-            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
-        } else if (opcao == 2) {
-            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
-        } else if (opcao == 3) {
-            sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = saldo_conta_corrente + ? WHERE id_cliente = ?";
-        } else {
-            return false;
-        }
-
-        PreparedStatement ps;
-
-        try {
-            ps = conexao.prepareStatement(sql);
-            ps.setDouble(1, valor);
-            ps.setInt(2, idCarteira);
-
-            ps.execute();
-            ps.close();
-
-            return true;
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao vender alguma criptmoeda!", e);
-        }
-    }
-
-        public void subtrairCripto(double valor, int opcao, int idCliente){
-            String sql;
-            if (opcao == 1){
-                sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = saldo_btc - ? WHERE id_cliente = ?";
-            }else if (opcao == 2){
-                sql = "UPDATE agicripto.Carteira_Cripto SET saldo_eth = saldo_eth - ? WHERE id_cliente = ?";
-            }else if (opcao == 3){
-                sql = "UPDATE agicripto.Carteira_Cripto SET saldo_sol = saldo_sol - ? WHERE id_cliente = ?";
-            }else {
-                return;
-            }
-
-            PreparedStatement ps;
-
-            try {
-                ps = conexao.prepareStatement(sql);
-                ps.setDouble(1, valor);
-                ps.setInt(2, idCliente);
-
-                ps.execute();
-                ps.close();
-
-            } catch (SQLException e) {
-                throw new RuntimeException("Erro ao subtrair alguma criptmoeda!", e);
-            }
-        }
-
 
     }
 

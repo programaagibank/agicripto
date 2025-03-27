@@ -114,7 +114,7 @@ public class ClienteView {
                 System.out.print("\t\tConfirme sua nova senha: ");
                 String confirmarSenha = scanner.nextLine();
 
-                controller.alterarSenha(cliente.getEmail(), novaSenha, confirmarSenha);
+                controller.alterarSenha(cliente.getEmail(),cliente.getCpf(), novaSenha, confirmarSenha);
                 return "Senha alterada com sucesso!";
             } else {
                 System.out.println();
@@ -139,13 +139,16 @@ public class ClienteView {
         System.out.print("\t\tDigite seu email: ");
         String email = scanner.nextLine();
 
+        System.out.print("\t\tDigite seu CPF: ");
+        String cpf = scanner.nextLine();
+
         System.out.print("\t\tDigite sua nova senha: ");
         String novaSenha = scanner.nextLine();
 
         System.out.print("\t\tConfirme sua senha: ");
         String confirmarSenha = scanner.nextLine();
 
-        if (controller.alterarSenha(email, novaSenha, confirmarSenha)) {
+        if (controller.alterarSenha(email,cpf, novaSenha, confirmarSenha)) {
             return "Senha alterada com sucesso!";
         }
         return "Nao foi possivel alterar sua senha";

@@ -210,4 +210,36 @@ public class ClienteDAO {
         }
     }
 
+    public Cliente encontrarCpf(String cpf) {
+        String sql = "SELECT id_cliente, nome, email, cpf, senha, status, id_assinatura FROM Cliente WHERE email = ?";
+        PreparedStatement ps;
+        ResultSet rs;
+        Cliente cliente = null;
+
+        try {
+            ps = conexao.prepareStatement(sql);
+            ps.setString(1, cpf);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("cpf"),
+                        rs.getString("senha"),
+                        rs.getString("status"),
+                        rs.getInt("id_assinatura")
+                );
+            } else {
+                rs.close();
+                ps.close();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fechar recursos: " + e.getMessage());
+        }
+        return cliente;
+    }
+
 }
