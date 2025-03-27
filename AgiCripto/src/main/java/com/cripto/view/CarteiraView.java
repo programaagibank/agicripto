@@ -6,10 +6,8 @@ import com.cripto.dao.CarteiraCriptoDAO;
 import com.cripto.dao.CarteiraDAO;
 import com.cripto.model.Carteira;
 import com.cripto.model.Cliente;
-import com.cripto.model.Transacao;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -18,16 +16,14 @@ public class CarteiraView {
     private final ClienteController controller;
     private final CarteiraDAO carteiraDAO;
     private final CarteiraCriptoController carteiraCriptoController;
-    private QuestionarioView questionarioView = new QuestionarioView();
-    private PagamentosView pagamentosView;
+    private final QuestionarioView questionarioView = new QuestionarioView();
+    private final PagamentosView pagamentosView;
     private final CarteiraCriptoView carteiraCriptoView;
-    private final CarteiraCriptoDAO carteiraCriptoDAO;
 
     public CarteiraView(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, CarteiraCriptoView carteiraCriptoView, CarteiraCriptoDAO carteiraCriptoDAO) {
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
         this.carteiraCriptoView = carteiraCriptoView;
-        this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.controller = controller;
         this.pagamentosView = new PagamentosView(controller, carteiraCriptoDAO, carteiraCriptoController);
@@ -67,7 +63,7 @@ public class CarteiraView {
                     System.out.println("1 - SIM");
                     System.out.println("2 - NÃO");
 
-                    int escolha = lerOpcao(1, 2);
+                    int escolha = lerOpcao();
                     if (escolha == 1) {
                         questionarioView.exibirTutorial();
                     } else {
@@ -89,7 +85,7 @@ public class CarteiraView {
     }
 
 
-    private int lerOpcao(int min, int max) {
+    private int lerOpcao() {
         int opcao = 0;
         boolean entradaValida = false;
 
@@ -99,10 +95,10 @@ public class CarteiraView {
                 opcao = scanner.nextInt();
                 scanner.nextLine();
 
-                if (opcao >= min && opcao <= max) {
+                if (opcao >= 1 && opcao <= 2) {
                     entradaValida = true;
                 } else {
-                    System.out.println("Opção inválida. Digite um número entre " + min + " e " + max + ".");
+                    System.out.println("Opção inválida. Digite um número entre " + 1 + " e " + 2 + ".");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite apenas números.");

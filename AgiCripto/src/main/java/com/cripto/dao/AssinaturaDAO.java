@@ -4,6 +4,7 @@ import com.cripto.model.Assinatura;
 
 import java.sql.*;
 
+@SuppressWarnings("SameReturnValue")
 public class AssinaturaDAO {
     private final Connection conexao;
 
@@ -14,7 +15,7 @@ public class AssinaturaDAO {
     public boolean novaAssinatura(Assinatura assinatura) {
         String sql = "INSERT INTO agicripto.Assinatura (id_cliente, valor, beneficios" +
                 ", data_inicio, data_fim, status, id_cripto) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -37,8 +38,8 @@ public class AssinaturaDAO {
 
     public Assinatura acharAssinaturaPeloIdCliente(Integer id) {
         String sql = "SELECT * FROM agicripto.Assinatura WHERE id_cliente = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         Assinatura assinatura = null;
 
         try {
@@ -69,7 +70,7 @@ public class AssinaturaDAO {
 
     public boolean desativarAssinatura(Integer idCliente) {
         String sql = "UPDATE agicripto.Assinatura SET status = ? WHERE id_cliente = ?";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);

@@ -18,10 +18,10 @@ public class AssinaturaController {
         this.assinaturaDAO = assinaturaDAO;
     }
 
-    public boolean assinar(double valor, int opcao) {
+    public void assinar(double valor, int opcao) {
         Cliente cliente = clienteController.pegarClienteLogado();
 
-        if (cliente.getStatus().equals("desativado")) return false;
+        if (cliente.getStatus().equals("desativado")) return;
 
         LocalDate dataInicio = LocalDate.now();
         LocalDate dataFim = dataInicio.plusDays(30);
@@ -36,11 +36,11 @@ public class AssinaturaController {
                 opcao
         );
 
-        return assinaturaDAO.novaAssinatura(assinatura);
+        assinaturaDAO.novaAssinatura(assinatura);
     }
 
-    public boolean desativar(int id) {
-        return assinaturaDAO.desativarAssinatura(id);
+    public void desativar(int id) {
+        assinaturaDAO.desativarAssinatura(id);
     }
 
     public Assinatura pegarPeloId(int id) {

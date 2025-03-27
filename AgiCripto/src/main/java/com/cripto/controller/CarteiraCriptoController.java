@@ -10,6 +10,7 @@ import com.cripto.model.Cliente;
 import com.cripto.model.Transacao;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class CarteiraCriptoController {
     private final ClienteController clienteController;
@@ -26,9 +27,9 @@ public class CarteiraCriptoController {
         this.transacaoDAO = transacaoDAO;
     }
 
-    public boolean ativarCarteiraCripto() {
+    public void ativarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
-        if (cliente == null) return false;
+        if (cliente == null) return;
 
         CarteiraCripto carteiraCripto = new CarteiraCripto(
                 cliente.getId_cliente(),
@@ -41,9 +42,7 @@ public class CarteiraCriptoController {
 
         if (carteiraCriptoDAO.criarCarteiraCripto(carteiraCripto)) {
             clienteDAO.ativarConta(cliente.getId_cliente());
-            return true;
         }
-        return false;
     }
 
     public boolean comprarCripto(Integer opcao, Double valor) {
@@ -190,7 +189,7 @@ public class CarteiraCriptoController {
 
         if (saldoAtual < valor) return false;
 
-        double valorConvertido = carteiraCripto.conversao(criptoDestino, valor);
+        carteiraCripto.conversao(criptoDestino, valor);
 
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (valor + saldoAtual));
@@ -306,8 +305,67 @@ public class CarteiraCriptoController {
                 Se deseja comecar no mundo das criptomoedas pesquise bem sobre os ativos utilize carteiras seguras
                 e nunca invista mais do que pode perder
                 """);
-
         System.out.println("========================================================================================================================================");
-
     }
+
+    public void transferirCripto(String emailRecebidor, double valor, int idCripto) {
+        Cliente clienteRemetente = clienteController.pegarClienteLogado();
+        Cliente clienteRecebidor = clienteDAO.encontrarEmail(emailRecebidor);
+
+        if (Objects.equals(clienteRemetente.getId_cliente(), clienteRecebidor.getId_cliente())) {
+            System.out.println("Erro: Você não pode transferir para si mesmo!");
+            return;
+        }
+
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(clienteRemetente.getId_cliente());
+        System.out.println("ID da carteira do remetente: " + carteira.getId_carteira());
+
+        CarteiraCripto carteiraRemetente = carteiraCriptoDAO.acharPeloIdCliente(clienteRemetente.getId_cliente());
+        CarteiraCripto carteiraRecebidor = carteiraCriptoDAO.acharPeloIdCliente(clienteRecebidor.getId_cliente());
+
+        double saldoRecebidor, saldoRemetente;
+
+        switch (idCripto) {
+            case 1 -> {
+                saldoRecebidor = carteiraRecebidor.getSaldoBTC();
+                saldoRemetente = carteiraRemetente.getSaldoBTC();
+            }
+            case 2 -> {
+                saldoRecebidor = carteiraRecebidor.getSaldoETH();
+                saldoRemetente = carteiraRemetente.getSaldoETH();
+            }
+            case 3 -> {
+                saldoRecebidor = carteiraRecebidor.getSaldoSOl();
+                saldoRemetente = carteiraRemetente.getSaldoSOl();
+            }
+            default -> {
+                System.out.println("Erro: ID de criptomoeda inválido!");
+                return;
+            }
+        }
+
+        if (saldoRemetente < valor) {
+            System.out.println("Erro: Saldo insuficiente para realizar a transferência!");
+            return;
+        }
+
+        carteiraCriptoDAO.atualizarSaldoCripto(carteiraRecebidor.getIdCliente(), idCripto, saldoRecebidor + valor);
+        carteiraCriptoDAO.atualizarSaldoCripto(carteiraRemetente.getIdCliente(), idCripto, saldoRemetente - valor);
+
+        LocalDateTime data = LocalDateTime.now();
+        Transacao transacao = new Transacao(
+                carteira.getId_carteira(),
+                clienteRemetente.getId_cliente(),
+                idCripto,
+                "PAGO",
+                4,
+                valor,
+                data
+        );
+
+        transacaoDAO.comprar(transacao);
+
+        System.out.println("Transferência realizada com sucesso!");
+    }
+
 }

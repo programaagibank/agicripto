@@ -17,7 +17,7 @@ public class CarteiraCriptoDAO {
     public boolean criarCarteiraCripto(CarteiraCripto carteiraCripto) {
         String sql = "INSERT INTO agicripto.Carteira_Cripto (id_cliente, saldo_brl," +
                 "saldo_btc, saldo_eth, saldo_sol, saldo_agicoin) values (?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -49,7 +49,7 @@ public class CarteiraCriptoDAO {
             return false;
         }
 
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -126,8 +126,8 @@ public class CarteiraCriptoDAO {
 
     public CarteiraCripto acharPeloIdCliente(Integer id) {
         String sql = "SELECT id_cliente, saldo_brl, saldo_btc, saldo_eth, saldo_sol, saldo_agicoin FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         CarteiraCripto carteiraCripto = null;
 
         try {
@@ -156,7 +156,7 @@ public class CarteiraCriptoDAO {
 
     public void atualizarSaldoBrl(Double saldoBRL, Integer id) {
         String sql = "UPDATE agicripto.Carteira_Cripto SET saldo_brl = ? WHERE id_cliente = ?";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -171,7 +171,7 @@ public class CarteiraCriptoDAO {
     }
 
     public void atualizarSaldoCripto(int idCliente, int opcaoCripto, double novoSaldo) {
-        String sql = "";
+        String sql;
 
         switch (opcaoCripto) {
             case 1 -> sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = ? WHERE id_cliente = ?";
@@ -207,9 +207,9 @@ public class CarteiraCriptoDAO {
     }
 
 
-    public boolean excluirCarteiraCripto(Integer idCliente) {
+    public void excluirCarteiraCripto(Integer idCliente) {
         String sql = "DELETE FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -218,10 +218,8 @@ public class CarteiraCriptoDAO {
             ps.execute();
             ps.close();
 
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -237,7 +235,7 @@ public class CarteiraCriptoDAO {
             return false;
         }
 
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -253,7 +251,7 @@ public class CarteiraCriptoDAO {
         }
     }
 
-        public boolean subtrairCripto(double valor,int opcao, int idCliente){
+        public void subtrairCripto(double valor, int opcao, int idCliente){
             String sql;
             if (opcao == 1){
                 sql = "UPDATE agicripto.Carteira_Cripto SET saldo_btc = saldo_btc - ? WHERE id_cliente = ?";
@@ -262,10 +260,10 @@ public class CarteiraCriptoDAO {
             }else if (opcao == 3){
                 sql = "UPDATE agicripto.Carteira_Cripto SET saldo_sol = saldo_sol - ? WHERE id_cliente = ?";
             }else {
-                return false;
+                return;
             }
 
-            PreparedStatement ps = null;
+            PreparedStatement ps;
 
             try {
                 ps = conexao.prepareStatement(sql);
@@ -275,7 +273,6 @@ public class CarteiraCriptoDAO {
                 ps.execute();
                 ps.close();
 
-                return true;
             } catch (SQLException e) {
                 throw new RuntimeException("Erro ao subtrair alguma criptmoeda!", e);
             }

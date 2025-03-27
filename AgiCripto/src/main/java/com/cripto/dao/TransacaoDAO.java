@@ -1,12 +1,8 @@
 package com.cripto.dao;
 
-import com.cripto.model.Carteira;
-import com.cripto.model.Cliente;
-import com.cripto.model.TipoTransacao;
 import com.cripto.model.Transacao;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +15,7 @@ public class TransacaoDAO {
 
     public boolean comprar(Transacao transacao) {
         String sql = "INSERT INTO Transacao (id_carteira, id_cliente, id_cripto, status, id_tipo_transacao, valor, data) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -43,7 +39,7 @@ public class TransacaoDAO {
     public List<Transacao> listarTransacoesPorCliente(int idCliente) {
         String sql = "SELECT * FROM agicripto.Transacao WHERE id_cliente = ?";
         List<Transacao> transacoes = new ArrayList<>();
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);

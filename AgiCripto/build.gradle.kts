@@ -14,6 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation(dependencyNotation = "mysql:mysql-connector-java:8.0.32")
     implementation("io.github.cdimascio:java-dotenv:5.2.2")
+    implementation("org.json:json:20210307")
 }
 
 
