@@ -1,5 +1,6 @@
 package com.cripto.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Transacao {
@@ -11,6 +12,8 @@ public class Transacao {
     private Integer idTipoTransacao;
     private Double valor;
     private LocalDateTime data;
+
+    public Transacao(){}
 
     public Transacao(Integer idCarteira, Integer idCliente, Integer idTipoTransacao, Double valor, LocalDateTime data) {
         this.idCarteira = idCarteira;

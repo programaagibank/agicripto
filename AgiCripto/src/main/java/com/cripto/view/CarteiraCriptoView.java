@@ -5,10 +5,13 @@ import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
+import com.cripto.dao.TransacaoDAO;
 import com.cripto.model.Carteira;
 import com.cripto.model.CarteiraCripto;
 import com.cripto.model.Cliente;
+import com.cripto.model.Transacao;
 
+import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -59,7 +62,8 @@ public class CarteiraCriptoView {
         5 - VENDER CRIPTO
         6 - TRANSFERIR CRIPTO
         7 - VER TUTORIAL
-        8 - SAIR"""
+        8 - SAIR
+        0 - TESTE """
         );
         System.out.println("DIGITE: ");
         try {
@@ -79,7 +83,10 @@ public class CarteiraCriptoView {
                 transferir();
             } else if (opcao == 7) {
                 carteiraCriptoController.exibirTutorial();
-            } else {
+            } else if (opcao == 0){
+                clienteController.mostrarHistoricoCripto();
+            }
+            else {
                 System.out.println("saindo...");
             }
         }catch (InputMismatchException e){

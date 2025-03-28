@@ -123,4 +123,15 @@ public class ClienteController {
     public List<Transacao> listarTransacoes() {
         return transacaoDAO.listarTransacoesPorCliente(pegarClienteLogado().getId_cliente());
     }
+
+    public void mostrarHistorico(){
+        transacaoDAO.listarTransacoesPorCliente(clienteLogado.getId_cliente());
+    }
+
+    public void mostrarHistoricoCripto(){
+        transacaoDAO.listarTransacoesCriptoPorCliente(clienteLogado.getId_cliente());
+    }
+
+
+
 }
