@@ -147,7 +147,6 @@ public class CarteiraCriptoDAO {
         }
     }
 
-
     public void excluirCarteiraCripto(Integer idCliente) {
         String sql = "DELETE FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
         PreparedStatement ps;

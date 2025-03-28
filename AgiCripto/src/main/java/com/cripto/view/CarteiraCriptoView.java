@@ -88,6 +88,7 @@ public class CarteiraCriptoView {
     }
 
     public String comprarCripto() {
+        Cliente cliente = clienteController.pegarClienteLogado();
         System.out.println("1 - COMPRAR BITCOIN     2 - COMPRAR ETHEREUM     3 - COMPRAR SOLANA");
         System.out.print("opcao: ");
         int opcao = scanner.nextInt();
@@ -96,6 +97,7 @@ public class CarteiraCriptoView {
         double valor = scanner.nextDouble();
 
         if (carteiraCriptoController.comprarCripto(opcao, valor)) {
+            aplicarCashback(valor, cliente.getId_cliente());
             return "Compra bem sucedida";
         }
         return "Nao foi possivel comprar a criptomoeda";
@@ -240,5 +242,17 @@ public class CarteiraCriptoView {
         scanner.nextLine();
 
         carteiraCriptoController.transferirCripto(emailRecebidor, valor, opcao);
+    }
+
+    private void aplicarCashback(double valor, int idCliente) {
+        double taxaCashback = 0.1;
+        double valorCashback = taxaCashback * valor;
+
+        boolean cashbackSucesso = carteiraCriptoController.realizarCashback(valorCashback, idCliente);
+        if (cashbackSucesso) {
+            System.out.println("Cashback aplicado com sucesso no valor de " + valorCashback + " agicoin!");
+        } else {
+            System.out.println("Erro ao aplicar cashback.");
+        }
     }
 }
