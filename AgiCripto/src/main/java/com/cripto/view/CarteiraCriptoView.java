@@ -1,10 +1,10 @@
 package com.cripto.view;
 
+import com.cripto.api.Criptomoedas;
 import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
 import com.cripto.dao.CarteiraDAO;
-import com.cripto.model.Assinatura;
 import com.cripto.model.Carteira;
 import com.cripto.model.CarteiraCripto;
 import com.cripto.model.Cliente;
@@ -19,24 +19,48 @@ public class CarteiraCriptoView {
     private final ClienteController clienteController;
     private final CarteiraDAO carteiraDAO;
     private final AssinaturaController assinaturaController;
+    private final Criptomoedas criptomoedas;
 
-    public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO, AssinaturaController assinaturaController) {
+    public CarteiraCriptoView(CarteiraCriptoController carteiraCriptoController, ClienteController clienteController, CarteiraDAO carteiraDAO, AssinaturaController assinaturaController, Criptomoedas criptomoedas) {
         this.clienteController = clienteController;
         this.carteiraDAO = carteiraDAO;
         this.assinaturaController = assinaturaController;
+        this.criptomoedas = criptomoedas;
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.carteiraCriptoController = carteiraCriptoController;
+
     }
+
 
     public void mostrarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
 
+        criptomoedas.consultarPrecoBitcoin();
+        criptomoedas.consultarPrecoEthereum();
+        criptomoedas.consultarPrecoSolana();
+
+        double precoBtc = criptomoedas.getPrecoBtc();
+        double precoEth = criptomoedas.getPrecoEth();
+        double precoSol = criptomoedas.getPrecoSol();
+
         System.out.println("=========================================================================");
         System.out.printf(" | %-30s | %-30s |\n", "Saldo Conta Corrente:", String.format("%.2f", carteira.getSaldoContaCorrente()));
         System.out.printf(" | %-30s | %-30s |\n", "Nome do Cliente:", cliente.getNome());
+        System.out.printf(" | %-30s | R$ %-27.2f |\n", "Preço Bitcoin (BRL):", precoBtc);
+        System.out.printf(" | %-30s | R$ %-27.2f |\n", "Preço Ethereum (BRL):", precoEth);
+        System.out.printf(" | %-30s | R$ %-27.2f |\n", "Preço Solana (BRL):", precoSol);
         System.out.println("=========================================================================");
-        System.out.println("1 - COMPRAR CRIPTO      2 - EXIBIR PORTIFOLIO     3 - DESATIVAR CARTEIRA CRIPTO     4 - SAIR");
+        System.out.println("""
+        1 - COMPRAR CRIPTO
+        2 - EXIBIR PORTIFOLIO
+        3 - DESATIVAR CARTEIRA CRIPTO
+        4 - TROCAR CRIPTO
+        5 - VENDER CRIPTO
+        6 - TRANSFERIR CRIPTO
+        7 - VER TUTORIAL
+        8 - SAIR"""
+        );
         System.out.println("DIGITE: ");
         try {
             int opcao = scanner.nextInt();
@@ -47,8 +71,16 @@ public class CarteiraCriptoView {
                 mostrarPortifolioCripto();
             } else if (opcao == 3) {
                 desativarCarteiraCripto();
+            } else if (opcao == 4){
+                trocarCripto();
+            } else if (opcao == 5) {
+                System.out.println(venderCripto());
+            } else if (opcao == 6) {
+                transferir();
+            } else if (opcao == 7) {
+                carteiraCriptoController.exibirTutorial();
             } else {
-                System.out.println("SAINDO...");
+                System.out.println("saindo...");
             }
         }catch (InputMismatchException e){
             System.out.println("Erro, voce digitou uma letra!");
@@ -69,6 +101,25 @@ public class CarteiraCriptoView {
         return "Nao foi possivel comprar a criptomoeda";
     }
 
+    public String venderCripto() {
+        System.out.println("""
+                1 - VENDER BITCOIN
+                2 - VENDER ETHEREUM
+                3 - VENDER SOLANA
+                """);
+        System.out.print("OPCAO: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Valor pra venda: ");
+        double valor = scanner.nextDouble();
+
+        if (carteiraCriptoController.venderCriptoMoeda(opcao, valor)) {
+            return "Venda feita";
+        }
+        return "Não foi possivel concluir a venda";
+
+    }
+
     public void mostrarPortifolioCripto(){
         Cliente cliente = clienteController.pegarClienteLogado();
         CarteiraCripto carteiraCripto = carteiraCriptoController.pegarCarteiraCripto(cliente.getId_cliente());
@@ -87,7 +138,36 @@ public class CarteiraCriptoView {
         System.out.println("=========================================================================");
     }
 
-    public String desativarCarteiraCripto() {
+    public void trocarCripto() {
+        System.out.println("Escolha a criptomoeda de origem:");
+        System.out.println("1 - Bitcoin (BTC)");
+        System.out.println("2 - Ethereum (ETH)");
+        System.out.println("3 - Solana (SOL)");
+        System.out.println("4 - Agicoin (AGI)");
+        System.out.print("Digite a opção: ");
+
+        int criptoOrigem = scanner.nextInt();
+
+        System.out.println("Escolha a criptomoeda de destino:");
+        System.out.println("1 - Bitcoin (BTC)");
+        System.out.println("2 - Ethereum (ETH)");
+        System.out.println("3 - Solana (SOL)");
+        System.out.println("4 - Agicoin (AGI)");
+        System.out.print("Digite a opção: ");
+
+        int criptoDestino = scanner.nextInt();
+
+        if (criptoOrigem == criptoDestino) {
+            return;
+        }
+        System.out.print("Digite o valor a ser convertido: ");
+        double valor = scanner.nextDouble();
+
+        boolean sucesso = carteiraCriptoController.trocarCripto(criptoOrigem, criptoDestino, valor);
+
+    }
+
+    public void desativarCarteiraCripto() {
         System.out.println("Certeza que gostaria de encerrar sua carteira cripto?" +
                 "Todas as criptomoedas que voce possui sera convertida em real e coloca" +
                 "na sua conta principal. Caso deseja desativar digite 1, para voltar digite 2");
@@ -97,14 +177,12 @@ public class CarteiraCriptoView {
 
         if (opcao == 1) {
             if (carteiraCriptoController.desativarCarteiraCripto()) {
-                return "Desativado com sucesso";
             }
         } else {
             mostrarCarteiraCripto();
         }
 
 
-        return "Nao foi possivel desativar";
     }
 
     public String ativarAssinatura() {
@@ -138,8 +216,29 @@ public class CarteiraCriptoView {
         return "Assinatura realizada!";
     }
 
-    public Assinatura mostrarInformacoesAssinatura() {
+    public void mostrarInformacoesAssinatura() {
         Cliente cliente = clienteController.pegarClienteLogado();
-        return assinaturaController.pegarPeloId(cliente.getId_cliente());
+        assinaturaController.pegarPeloId(cliente.getId_cliente());
+    }
+
+    public void transferir() {
+        System.out.println("Escolha a criptomoeda:");
+        System.out.println("1 - Bitcoin (BTC)");
+        System.out.println("2 - Ethereum (ETH)");
+        System.out.println("3 - Solana (SOL)");
+        System.out.print("Digite a opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Digite o email para qual deseja enviar a criptomoeda:");
+        System.out.print("Email: ");
+        String emailRecebidor = scanner.nextLine();
+
+        System.out.println("Digite o valor a ser enviado: ");
+        System.out.print("Valor: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+
+        carteiraCriptoController.transferirCripto(emailRecebidor, valor, opcao);
     }
 }

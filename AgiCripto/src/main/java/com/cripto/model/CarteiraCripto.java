@@ -1,5 +1,7 @@
 package com.cripto.model;
 
+import com.cripto.api.Criptomoedas;
+
 public class CarteiraCripto {
     private Integer idCarteiraCripto;
     private Integer idCliente;
@@ -82,12 +84,18 @@ public class CarteiraCripto {
     }
 
     public double conversao(int o, double v) {
+        Criptomoedas criptomoedas = new Criptomoedas();
+        criptomoedas.consultarPrecoBitcoin();
+        criptomoedas.consultarPrecoEthereum();
+        criptomoedas.consultarPrecoSolana();
+
         if (o == 1) {
-            return v * 0.00000179;
+            return v / criptomoedas.getPrecoBtc();
         } else if (o == 2) {
-            return v * 0.000093;
-        } else  {
-            return v * 0.00135582;
+            return v / criptomoedas.getPrecoEth();
+        } else {
+            return v / criptomoedas.getPrecoSol();
         }
+
     }
 }

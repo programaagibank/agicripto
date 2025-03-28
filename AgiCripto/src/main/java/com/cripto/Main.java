@@ -1,5 +1,6 @@
 package com.cripto;
 
+import com.cripto.api.Criptomoedas;
 import com.cripto.controller.AssinaturaController;
 import com.cripto.controller.CarteiraCriptoController;
 import com.cripto.controller.ClienteController;
@@ -39,6 +40,7 @@ public class Main {
         CarteiraCriptoDAO criptoDAO = new CarteiraCriptoDAO(connection);
         AssinaturaDAO assinaturaDAO = new AssinaturaDAO(connection);
         AssinaturaController assinaturaController = new AssinaturaController(controller, assinaturaDAO);
+        Criptomoedas criptomoedas = new Criptomoedas();
         CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(
                 controller,
                 criptoDAO,
@@ -46,6 +48,13 @@ public class Main {
                 clienteDAO,
                 transacaoDAO
         );
-        CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(carteiraCriptoController, controller, carteiraDAO, assinaturaController);
-        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView, carteiraCriptoDAO,clienteDAO);    }
+        CarteiraCriptoView carteiraCriptoView = new CarteiraCriptoView(
+                carteiraCriptoController,
+                controller,
+                carteiraDAO,
+                assinaturaController,
+                criptomoedas
+        );
+        return new ClienteView(controller, carteiraDAO, carteiraCriptoController, carteiraCriptoView, carteiraCriptoDAO,clienteDAO);
+    }
 }

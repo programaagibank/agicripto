@@ -14,13 +14,10 @@ public class PagamentosView {
 
     private final Scanner scanner = new Scanner(System.in);
     private final ClienteController clienteController;
-    private final CarteiraCriptoDAO carteiraCriptoDAO;
     private final CarteiraCriptoController carteiraCriptoController;
-    private Cliente cliente;
 
     public PagamentosView(ClienteController clienteController, CarteiraCriptoDAO carteiraCriptoDAO, CarteiraCriptoController carteiraCriptoController) {
         this.clienteController = clienteController;
-        this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.carteiraCriptoController = carteiraCriptoController;
     }
 
@@ -32,7 +29,7 @@ public class PagamentosView {
         System.out.println("2 - Historico de Transacoes");
         System.out.println("3 - Sair");
         System.out.println("=".repeat(73));
-        int escolha = lerOpcao(1, 3);
+        int escolha = lerOpcao();
 
         if (escolha == 1) {
             telaCompra();
@@ -43,7 +40,7 @@ public class PagamentosView {
         }
     }
 
-    private int lerOpcao(int min, int max) {
+    private int lerOpcao() {
         int opcao = 0;
         boolean entradaValida = false;
 
@@ -53,10 +50,10 @@ public class PagamentosView {
                 opcao = scanner.nextInt();
                 scanner.nextLine();
 
-                if (opcao >= min && opcao <= max) {
+                if (opcao >= 1 && opcao <= 3) {
                     entradaValida = true;
                 } else {
-                    System.out.println("Opção inválida. Digite um número entre " + min + " e " + max + ".");
+                    System.out.println("Opção inválida. Digite um número entre " + 1 + " e " + 3 + ".");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite apenas números.");
@@ -88,8 +85,8 @@ public class PagamentosView {
         System.out.println("1 - Débito");
         System.out.println("2 - Crédito");
 
-        int opcao = 0;
-        String tipoPagamento = "";
+        int opcao;
+        String tipoPagamento;
         try {
             opcao = scanner.nextInt();
             if (opcao == 1) {
@@ -112,7 +109,7 @@ public class PagamentosView {
             return;
         }
 
-        cliente = clienteController.pegarClienteLogado();
+        Cliente cliente = clienteController.pegarClienteLogado();
         boolean sucesso = clienteController.comprar(valor);
 
         if (sucesso) {
@@ -134,7 +131,7 @@ public class PagamentosView {
     }
 
     private double obterValorCompra() {
-        double valor = 0;
+        double valor;
         try {
             System.out.println("Digite o valor da compra: ");
             valor = scanner.nextDouble();
