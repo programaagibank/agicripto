@@ -1,0 +1,3 @@
+[submodule "AgiCripto/agiJavaFx"]
+	path = AgiCripto/agiJavaFx
+	url = git@github.com:vijcoelho/agiJavaFx.git
