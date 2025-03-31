@@ -1,7 +1,6 @@
 package com.cripto.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Assinatura {
     private Integer idAssinatura;

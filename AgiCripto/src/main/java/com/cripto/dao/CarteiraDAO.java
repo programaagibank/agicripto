@@ -16,7 +16,7 @@ public class CarteiraDAO {
 
     public void criarCarteira(Carteira carteira) {
         String sql = "INSERT INTO agicripto.Carteira (id_cliente, saldo_conta_corrente) values(?,?)";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -32,8 +32,8 @@ public class CarteiraDAO {
 
     public Carteira pegarCarteiraPeloClienteId(Integer id) {
         String sql = "SELECT id_carteira, id_cliente, saldo_conta_corrente FROM agicripto.Carteira WHERE id_cliente = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         Carteira carteira = null;
 
         try {
@@ -57,9 +57,9 @@ public class CarteiraDAO {
         return carteira;
     }
 
-    public boolean atualizarSaldo(Double valor, Integer idCarteira) {
+    public void atualizarSaldo(Double valor, Integer idCarteira) {
         String sql = "UPDATE agicripto.Carteira SET saldo_conta_corrente = ? WHERE id_carteira = ?";
-        PreparedStatement ps = null;
+        PreparedStatement ps;
 
         try {
             ps = conexao.prepareStatement(sql);
@@ -67,7 +67,6 @@ public class CarteiraDAO {
             ps.setInt(2, idCarteira);
             ps.execute();
             ps.close();
-            return true;
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar saldo!", e);

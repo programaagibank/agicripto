@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class QuestionarioView {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public int iniciarQuestionario() {
         System.out.println("\t".repeat(7) + "Questinário Cripto" + "\t".repeat(7));
@@ -14,14 +14,13 @@ public class QuestionarioView {
         System.out.println("1 - SIM");
         System.out.println("2 - NÃO");
         System.out.println("=".repeat(73));
-        int escolha = lerOpcao(1, 2);
+        int escolha = lerOpcao(2);
 
         if (escolha == 2) {
             System.out.println("Você será redirecionado para sua carteira digital...");
             return 0;
         } else if (escolha == 1) {
-            int pontuacao = iniciarPerguntas();
-            return (pontuacao);
+            return (iniciarPerguntas());
         }
         return 0;
     }
@@ -45,10 +44,10 @@ public class QuestionarioView {
         System.out.println("3 - Médio conhecimento");
         System.out.println("4 - Tenho conhecimento");
 
-        return lerOpcao(1, 4);
+        return lerOpcao(4);
     }
 
-    private int lerOpcao(int min, int max) {
+    private int lerOpcao(int max) {
         int opcao = 0;
         boolean entradaValida = false;
 
@@ -58,10 +57,10 @@ public class QuestionarioView {
                 opcao = scanner.nextInt();
                 scanner.nextLine();
 
-                if (opcao >= min && opcao <= max) {
+                if (opcao >= 1 && opcao <= max) {
                     entradaValida = true;
                 } else {
-                    System.out.println("Opção inválida. Digite um número entre " + min + " e " + max + ".");
+                    System.out.println("Opção inválida. Digite um número entre " + 1 + " e " + max + ".");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite apenas números.");
