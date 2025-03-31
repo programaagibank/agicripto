@@ -180,11 +180,16 @@ public class CarteiraCriptoController {
 
         if (carteiraCripto == null) return false;
 
-        double saldoAtual;
+        double saldoAtual = 0;
         if (criptoOrigem == 1) saldoAtual = carteiraCripto.getSaldoBTC();
         else if (criptoOrigem == 2) saldoAtual = carteiraCripto.getSaldoETH();
         else if (criptoOrigem == 3) saldoAtual = carteiraCripto.getSaldoSOl();
-        else if (criptoOrigem == 4) saldoAtual = carteiraCripto.getSaldoAGICOIN();
+        else return false;
+
+        double saldoDestino = 0;
+        if (criptoDestino == 1) saldoDestino = carteiraCripto.getSaldoBTC();
+        else if (criptoDestino == 2) saldoDestino = carteiraCripto.getSaldoETH();
+        else if (criptoDestino == 3) saldoDestino = carteiraCripto.getSaldoSOl();
         else return false;
 
         if (saldoAtual < valor) return false;
@@ -192,7 +197,7 @@ public class CarteiraCriptoController {
         carteiraCripto.conversao(criptoDestino, valor);
 
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
-        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (saldoAtual));
+        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (saldoDestino + valor));
 
         LocalDateTime data = LocalDateTime.now();
         Transacao transacao = new Transacao(
