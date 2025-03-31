@@ -192,7 +192,7 @@ public class CarteiraCriptoController {
         carteiraCripto.conversao(criptoDestino, valor);
 
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
-        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (valor + saldoAtual));
+        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (saldoAtual));
 
         LocalDateTime data = LocalDateTime.now();
         Transacao transacao = new Transacao(
