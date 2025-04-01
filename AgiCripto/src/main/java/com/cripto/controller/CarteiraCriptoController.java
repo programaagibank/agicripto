@@ -138,8 +138,6 @@ public class CarteiraCriptoController {
 
         if (saldoAtual < valor) return false;
 
-        double valorConvertido = carteiraCripto.conversao(criptoDestino, valor);
-
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (valor + saldoAtual));
 
@@ -205,7 +203,7 @@ public class CarteiraCriptoController {
         carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() + valor), carteira.getId_carteira());
         transacaoDAO.comprar(transacao);
 
-        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC() + valor;
+        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC() - valor;
         carteiraCriptoDAO.atualizarSaldoBrl(saldoBRl, cliente.getId_cliente());
 
         return carteiraCriptoDAO.venderCriptomoedas(opcao, novoValor, cliente.getId_cliente());
