@@ -1,0 +1,51 @@
+.root {
+    -fx-background-color: #FFFFFF;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
+}
+
+.button {
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+#loginBotao {
+    -fx-background-color: #0052CC;
+    -fx-text-fill: white;
+}
+
+#loginBotao:hover {
+    -fx-background-color: #003D99;
+}
+
+#loginBotao:pressed {
+    -fx-background-color: #002F73;
+}
+
+#cadastroBotao, #esqueceuSenhaBotao {
+    -fx-background-color: white;
+    -fx-text-fill: #0052CC;
+    -fx-border-color: #000000;
+}
+
+#cadastroBotao:hover, #esqueceuSenhaBotao:hover {
+    -fx-background-color: #E6E6E6;
+}
+
+#cadastroBotao:pressed, #esqueceuSenhaBotao:pressed {
+    -fx-background-color: #CCCCCC;
+}
