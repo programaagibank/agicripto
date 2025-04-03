@@ -16,7 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class CriptoController {
     @FXML
@@ -142,5 +144,18 @@ public class CriptoController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
         stage.setScene(new Scene(root));
+    }
+
+    public void abrirTutorial() {
+
+        String url = "https://docs.google.com/document/d/1iYs-_-BqH6Q8N1AuYM1FrW0Hg1ZVmRV4ETuexy27N90/edit?usp=sharing";
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE)) {
+                desktop.browse(new URI(url));
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao abrir a URL: " + e.getMessage());
+        }
     }
 }
