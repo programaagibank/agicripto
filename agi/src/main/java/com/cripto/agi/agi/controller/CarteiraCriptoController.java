@@ -8,6 +8,7 @@ import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.CarteiraCripto;
 import com.cripto.agi.agi.model.Cliente;
 import com.cripto.agi.agi.model.Transacao;
+import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -219,6 +220,14 @@ public class CarteiraCriptoController {
             valorDebitado = carteiraCripto.getSaldoETH() - valor;
         } else if (opcao == 3 && (valor <= carteiraCripto.getSaldoSOl())) {
             valorDebitado = carteiraCripto.getSaldoSOl() - valor;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Erro de venda");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro, você não pode vender mais do que possui!");
+            alert.showAndWait();
+
+            return false;
         }
 
         try {
