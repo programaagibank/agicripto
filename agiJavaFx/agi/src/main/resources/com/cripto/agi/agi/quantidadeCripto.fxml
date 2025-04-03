@@ -105,6 +105,8 @@
                 <Button layoutX="27.0" layoutY="474.0" mnemonicParsing="false" onAction="#comprarCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
                 <Button layoutX="263.0" layoutY="474.0" mnemonicParsing="false" onAction="#venderCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
                 <Button layoutX="263.0" layoutY="533.0" mnemonicParsing="false" onAction="#trocarCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
+                <Button fx:id="btnExcluirCarteira" layoutX="276.0" layoutY="68.0" onAction="#desativarCarteira" prefHeight="36.0" prefWidth="131.0" styleClass="crypto-button" text="Desativar Carteira" textFill="#cc0000" />
+
                 <Button layoutX="27.0" layoutY="535.0" mnemonicParsing="false" onAction="#transferirCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
                 <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="324.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                     <image>
