@@ -14,41 +14,36 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class VenderController {
+
+
+public class AssinaturaControllerFX {
+
     @FXML
-    public Label saldoLabel;
+    private TextField aporteMensalField;
+
     @FXML
-    public Label nomeLabel;
-    @FXML
-    public Label btcValor;
-    @FXML
-    public Label ethValor;
-    @FXML
-    public Label solValor;
-    @FXML
-    public Label saldoGeral;
-    @FXML
-    public TextField quantidadeCripto;
-    @FXML
-    public ChoiceBox<String> escolhaCripto;
+    private ChoiceBox<String> moedaChoiceBox;
+
 
     private ClienteController controller;
     private CarteiraDAO carteiraDAO;
     private CarteiraCriptoController carteiraCriptoController;
-    private AssinaturaController assinaturaController;
     private AssinaturaDAO assinaturaDAO;
+    private AssinaturaController assinaturaController;
 
     public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, AssinaturaController assinaturaController, AssinaturaDAO assinaturaDAO) {
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
-        this.carteiraCriptoController = carteiraCriptoController;
-        this.assinaturaController = assinaturaController;
         this.assinaturaDAO = assinaturaDAO;
+        this.assinaturaController = assinaturaController;
+        this.carteiraCriptoController = carteiraCriptoController;
         this.carregarInfos();
     }
 
@@ -56,41 +51,20 @@ public class VenderController {
         Cliente cliente = controller.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
         CarteiraCripto carteiraCripto = carteiraCriptoController.pegarCarteiraCripto(cliente.getId_cliente());
-
-        nomeLabel.setText(cliente.getNome());
-        saldoLabel.setText(String.valueOf(carteira.getSaldoContaCorrente()));
-        saldoGeral.setText(String.format("%.2f", carteiraCripto.getSaldoBRL()));
-        btcValor.setText(String.valueOf(carteiraCripto.getSaldoBTC()));
-        ethValor.setText(String.valueOf(carteiraCripto.getSaldoETH()));
-        solValor.setText(String.valueOf(carteiraCripto.getSaldoSOl()));
     }
 
-    public void venderCripto(ActionEvent actionEvent) throws IOException {
-        int opcao = escolhaCripto.getSelectionModel().getSelectedIndex() + 1;
-        double valor = Double.parseDouble(quantidadeCripto.getText());
+    public void assinarCripto(ActionEvent actionEvent) throws IOException {
+        int opcao = moedaChoiceBox.getSelectionModel().getSelectedIndex() + 1;
+        double valor = Double.parseDouble(aporteMensalField.getText());
 
-        if (carteiraCriptoController.venderCriptoMoeda(opcao, valor)) {
+        if (assinaturaController.assinar(valor, opcao)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Venda realizado");
+            alert.setTitle("Assinatura Realizada!!");
             alert.setHeaderText(null);
-            alert.setContentText("Venda realizada com sucesso! Dinheiro da venda já está na sua conta!!");
+            alert.setContentText("Sua assinatura: R$ " + valor + "mensal na moeda " + opcao);
             alert.showAndWait();
             voltarParaCarteiraCripto(actionEvent);
-        } else {
-            System.out.println("ERROR");
         }
-    }
-
-    public void voltarParaCarteiraCripto(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cripto/agi/agi/carteiraCripto.fxml"));
-        Parent root = loader.load();
-
-        CriptoController criptoController = loader.getController();
-        criptoController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setResizable(false);
-        stage.setScene(new Scene(root));
     }
 
     public void carteiraCorrente(ActionEvent actionEvent) throws IOException {
@@ -117,8 +91,21 @@ public class VenderController {
         stage.setScene(new Scene(root));
     }
 
+    public void voltarParaCarteiraCripto(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cripto/agi/agi/carteiraCripto.fxml"));
+        Parent root = loader.load();
+
+        CriptoController criptoController = loader.getController();
+        criptoController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setResizable(false);
+        stage.setScene(new Scene(root));
+    }
+
     @FXML
     public void initialize() {
-        escolhaCripto.getItems().addAll("Bitcoin", "Ethereum", "Solana");
+        moedaChoiceBox.getItems().addAll("Bitcoin", "Ethereum", "Solana");
     }
+
 }

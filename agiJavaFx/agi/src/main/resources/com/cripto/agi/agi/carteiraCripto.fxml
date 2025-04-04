@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="415.0" stylesheets="@css/contaCorrente.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cripto.agi.agi.javafx.controllers.CriptoController">
     <children>
@@ -187,6 +190,31 @@
                   <Font size="16.0" />
                </font>
             </Label>
+            <Button layoutX="27.0" layoutY="596.0" mnemonicParsing="false" onAction="#assinarCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
+            <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="32.0" layoutY="606.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/iconeAssinatura.jpg" />
+               </image>
+            </ImageView>
+            <Canvas height="200.0" width="200.0" />
+            <Label layoutX="71.0" layoutY="607.0" prefHeight="25.0" prefWidth="80.0" styleClass="info-label" text="Assinatura">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+                <Button layoutX="263.0" layoutY="592.0" mnemonicParsing="false" onAction="#abrirTutorial"
+                        prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" text="     Tutorial"
+                        textFill="#0052cc">
+                    <font>
+                        <Font name="System Bold" size="16.0"/>
+                    </font>
+                </Button>
+                <ImageView fitHeight="32.0" fitWidth="31.0" layoutX="274.0" layoutY="599.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@imagens/livro-icon.png"/>
+                    </image>
+                </ImageView>
             </children></Pane>
         <Pane layoutX="-7.0" layoutY="658.0" prefHeight="61.0" prefWidth="422.0" styleClass="bottom-pane">
             <children>

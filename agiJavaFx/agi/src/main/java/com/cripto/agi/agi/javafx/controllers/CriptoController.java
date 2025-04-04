@@ -1,7 +1,9 @@
 package com.cripto.agi.agi.javafx.controllers;
 
+import com.cripto.agi.agi.controller.AssinaturaController;
 import com.cripto.agi.agi.controller.CarteiraCriptoController;
 import com.cripto.agi.agi.controller.ClienteController;
+import com.cripto.agi.agi.dao.AssinaturaDAO;
 import com.cripto.agi.agi.dao.CarteiraDAO;
 import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.CarteiraCripto;
@@ -17,7 +19,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URI;
 
 public class CriptoController {
     @FXML
@@ -36,13 +41,18 @@ public class CriptoController {
     private Label agicoinValor;
 
     private ClienteController controller;
+    private AssinaturaController assinaturaController;
     private CarteiraDAO carteiraDAO;
     private CarteiraCriptoController carteiraCriptoController;
+    private AssinaturaDAO assinaturaDAO;
 
-    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+
+    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, AssinaturaController assinaturaController, AssinaturaDAO assinaturaDAO) {
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.assinaturaController = assinaturaController;
+        this.assinaturaDAO = assinaturaDAO;
         this.carregarInfos();
     }
 
@@ -68,7 +78,7 @@ public class CriptoController {
         Parent root = loader.load();
 
         CarteiraCorrenteController carteiraCorrenteController = loader.getController();
-        carteiraCorrenteController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController);
+        carteiraCorrenteController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -92,7 +102,7 @@ public class CriptoController {
         Parent root = loader.load();
 
         CompraController compraController = loader.getController();
-        compraController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController);
+        compraController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -104,7 +114,7 @@ public class CriptoController {
         Parent root = loader.load();
 
         VenderController verderController = loader.getController();
-        verderController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        verderController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -116,7 +126,7 @@ public class CriptoController {
         Parent root = loader.load();
 
         TrocarController trocarController = loader.getController();
-        trocarController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        trocarController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -155,7 +165,7 @@ public class CriptoController {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }else{
+            } else {
                 Alert erroAlert = new Alert(Alert.AlertType.ERROR);
                 erroAlert.setTitle("Erro");
                 erroAlert.setHeaderText(null);
@@ -165,16 +175,41 @@ public class CriptoController {
         }
     }
 
+    public void assinarCripto(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cripto/agi/agi/assinaturaCripto.fxml"));
+        Parent root = loader.load();
+
+        AssinaturaControllerFX assinaturaControllerFX = loader.getController();
+        assinaturaControllerFX.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController,this.assinaturaController, assinaturaDAO);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
+    }
+
     public void sair(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cripto/agi/agi/login.fxml"));
         Parent root = loader.load();
 
         LoginController loginController = loader.getController();
-        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController);
+        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController, assinaturaController, assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
         stage.setScene(new Scene(root));
     }
 
+    public void abrirTutorial() {
+
+        String url = "https://docs.google.com/document/d/1iYs-_-BqH6Q8N1AuYM1FrW0Hg1ZVmRV4ETuexy27N90/edit?usp=sharing";
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE)) {
+                desktop.browse(new URI(url));
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao abrir a URL: " + e.getMessage());
+        }
+    }
 }

@@ -14,6 +14,7 @@ module com.cripto.agi.agi {
     requires org.jetbrains.annotations;
     requires org.json;
     requires io.github.cdimascio.dotenv.java;
+    requires java.desktop;
 
     opens com.cripto.agi.agi to javafx.fxml;
     exports com.cripto.agi.agi;

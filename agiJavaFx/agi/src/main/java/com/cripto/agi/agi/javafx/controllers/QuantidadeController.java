@@ -1,7 +1,9 @@
 package com.cripto.agi.agi.javafx.controllers;
 
+import com.cripto.agi.agi.controller.AssinaturaController;
 import com.cripto.agi.agi.controller.CarteiraCriptoController;
 import com.cripto.agi.agi.controller.ClienteController;
+import com.cripto.agi.agi.dao.AssinaturaDAO;
 import com.cripto.agi.agi.dao.CarteiraDAO;
 import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.CarteiraCripto;
@@ -18,7 +20,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class QuantidadeController {
     @FXML
@@ -39,6 +43,8 @@ public class QuantidadeController {
     private ClienteController controller;
     private CarteiraDAO carteiraDAO;
     private CarteiraCriptoController carteiraCriptoController;
+    private AssinaturaDAO assinaturaDAO;
+    private AssinaturaController assinaturaController;
 
     public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
         this.controller = controller;
@@ -67,7 +73,7 @@ public class QuantidadeController {
         Parent root = loader.load();
 
         CarteiraCorrenteController carteiraCorrenteController = loader.getController();
-        carteiraCorrenteController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController);
+        carteiraCorrenteController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -79,7 +85,7 @@ public class QuantidadeController {
         Parent root = loader.load();
 
         CriptoController criptoController = loader.getController();
-        criptoController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController);
+        criptoController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -91,7 +97,7 @@ public class QuantidadeController {
         Parent root = loader.load();
 
         CompraController compraController = loader.getController();
-        compraController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController);
+        compraController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController,this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -103,7 +109,7 @@ public class QuantidadeController {
         Parent root = loader.load();
 
         VenderController verderController = loader.getController();
-        verderController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        verderController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -115,7 +121,7 @@ public class QuantidadeController {
         Parent root = loader.load();
 
         TrocarController trocarController = loader.getController();
-        trocarController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        trocarController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -169,10 +175,23 @@ public class QuantidadeController {
         Parent root = loader.load();
 
         LoginController loginController = loader.getController();
-        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController);
+        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController, assinaturaController, assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
         stage.setScene(new Scene(root));
+    }
+
+    public void abrirTutorial() {
+
+        String url = "https://docs.google.com/document/d/1iYs-_-BqH6Q8N1AuYM1FrW0Hg1ZVmRV4ETuexy27N90/edit?usp=sharing";
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE)) {
+                desktop.browse(new URI(url));
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao abrir a URL: " + e.getMessage());
+        }
     }
 }

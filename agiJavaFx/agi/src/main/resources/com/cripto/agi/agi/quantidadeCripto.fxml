@@ -168,6 +168,19 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
+                <Button layoutX="263.0" layoutY="592.0" mnemonicParsing="false" onAction="#abrirTutorial"
+                        prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" text="     Tutorial"
+                        textFill="#0052cc">
+                    <font>
+                        <Font name="System Bold" size="16.0"/>
+                    </font>
+                </Button>
+                <ImageView fitHeight="32.0" fitWidth="31.0" layoutX="274.0" layoutY="599.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@imagens/livro-icon.png"/>
+                    </image>
+                </ImageView>
             </children></Pane>
         <Pane layoutX="-7.0" layoutY="658.0" prefHeight="61.0" prefWidth="422.0" styleClass="bottom-pane">
             <children>
