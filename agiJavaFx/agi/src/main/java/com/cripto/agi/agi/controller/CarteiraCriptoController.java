@@ -1,9 +1,6 @@
 package com.cripto.agi.agi.controller;
 
-import com.cripto.agi.agi.dao.CarteiraCriptoDAO;
-import com.cripto.agi.agi.dao.CarteiraDAO;
-import com.cripto.agi.agi.dao.ClienteDAO;
-import com.cripto.agi.agi.dao.TransacaoDAO;
+import com.cripto.agi.agi.dao.*;
 import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.CarteiraCripto;
 import com.cripto.agi.agi.model.Cliente;
@@ -19,13 +16,18 @@ public class CarteiraCriptoController {
     private final CarteiraDAO carteiraDAO;
     private final ClienteDAO clienteDAO;
     private final TransacaoDAO transacaoDAO;
+    private final AssinaturaDAO assinaturaDAO;
+    private final AssinaturaController assinaturaController;
 
-    public CarteiraCriptoController(ClienteController clienteController, CarteiraCriptoDAO carteiraCriptoDAO, CarteiraDAO carteiraDAO, ClienteDAO clienteDAO, TransacaoDAO transacaoDAO) {
+
+    public CarteiraCriptoController(ClienteController clienteController,AssinaturaController assinaturaController, CarteiraCriptoDAO carteiraCriptoDAO, CarteiraDAO carteiraDAO, ClienteDAO clienteDAO, TransacaoDAO transacaoDAO, AssinaturaDAO assinaturaDAO) {
         this.clienteController = clienteController;
+        this.assinaturaController = assinaturaController;
         this.carteiraCriptoDAO = carteiraCriptoDAO;
         this.carteiraDAO = carteiraDAO;
         this.clienteDAO = clienteDAO;
         this.transacaoDAO = transacaoDAO;
+        this.assinaturaDAO = assinaturaDAO;
     }
 
     public boolean ativarCarteiraCripto() {

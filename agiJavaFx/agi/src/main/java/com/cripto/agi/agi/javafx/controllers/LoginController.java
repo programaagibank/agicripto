@@ -1,7 +1,9 @@
 package com.cripto.agi.agi.javafx.controllers;
 
+import com.cripto.agi.agi.controller.AssinaturaController;
 import com.cripto.agi.agi.controller.CarteiraCriptoController;
 import com.cripto.agi.agi.controller.ClienteController;
+import com.cripto.agi.agi.dao.AssinaturaDAO;
 import com.cripto.agi.agi.dao.CarteiraDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,11 +28,15 @@ public class LoginController {
     private ClienteController controller;
     private CarteiraDAO carteiraDAO;
     private CarteiraCriptoController carteiraCriptoController;
+    private AssinaturaController assinaturaController;
+    private AssinaturaDAO assinaturaDAO;
 
-    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, AssinaturaController assinaturaController, AssinaturaDAO assinaturaDAO) {
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.assinaturaController = assinaturaController;
+        this.assinaturaDAO = assinaturaDAO;
     }
 
     public void login(ActionEvent actionEvent) throws IOException {
@@ -55,7 +61,7 @@ public class LoginController {
         Parent root = loader.load();
 
         CarteiraCorrenteController carteiraController = loader.getController();
-        carteiraController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        carteiraController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
         carteiraController.carregarInfos();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -68,7 +74,7 @@ public class LoginController {
         Parent root = loader.load();
 
         CadastroController cadastroController = loader.getController();
-        cadastroController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        cadastroController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -80,7 +86,7 @@ public class LoginController {
         Parent root = loader.load();
 
         EsqueceuSenhaController esqueceuSenhaController = loader.getController();
-        esqueceuSenhaController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        esqueceuSenhaController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);

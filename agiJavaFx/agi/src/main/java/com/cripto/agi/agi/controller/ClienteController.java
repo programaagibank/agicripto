@@ -1,5 +1,6 @@
 package com.cripto.agi.agi.controller;
 
+import com.cripto.agi.agi.dao.AssinaturaDAO;
 import com.cripto.agi.agi.dao.CarteiraDAO;
 import com.cripto.agi.agi.dao.ClienteDAO;
 import com.cripto.agi.agi.dao.TransacaoDAO;
@@ -24,6 +25,7 @@ public class ClienteController {
             ClienteDAO clienteDAO,
             CarteiraDAO carteiraDAO,
             TransacaoDAO transacaoDAO
+
     ) {
         this.carteiraDAO = carteiraDAO;
         this.transacaoDAO = transacaoDAO;
@@ -134,4 +136,5 @@ public class ClienteController {
     public CarteiraDAO getCarteiraDAO() {
         return this.carteiraDAO;
     }
+
 }

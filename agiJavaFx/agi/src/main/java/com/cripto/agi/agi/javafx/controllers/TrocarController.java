@@ -1,8 +1,10 @@
 package com.cripto.agi.agi.javafx.controllers;
 
 import com.cripto.agi.agi.api.Criptomoedas;
+import com.cripto.agi.agi.controller.AssinaturaController;
 import com.cripto.agi.agi.controller.CarteiraCriptoController;
 import com.cripto.agi.agi.controller.ClienteController;
+import com.cripto.agi.agi.dao.AssinaturaDAO;
 import com.cripto.agi.agi.dao.CarteiraDAO;
 import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.CarteiraCripto;
@@ -41,11 +43,15 @@ public class TrocarController {
     private ClienteController controller;
     private CarteiraDAO carteiraDAO;
     private CarteiraCriptoController carteiraCriptoController;
+    private AssinaturaController assinaturaController;
+    private AssinaturaDAO assinaturaDAO;
 
-    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, AssinaturaController assinaturaController, AssinaturaDAO assinaturaDAO) {
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.assinaturaController = assinaturaController;
+        this.assinaturaDAO = assinaturaDAO;
         this.carregarInfos();
     }
 
@@ -85,7 +91,7 @@ public class TrocarController {
         Parent root = loader.load();
 
         CriptoController criptoController = loader.getController();
-        criptoController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        criptoController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -97,7 +103,7 @@ public class TrocarController {
         Parent root = loader.load();
 
         CarteiraCorrenteController carteiraCorrenteController = loader.getController();
-        carteiraCorrenteController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController);
+        carteiraCorrenteController.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
@@ -109,7 +115,7 @@ public class TrocarController {
         Parent root = loader.load();
 
         LoginController loginController = loader.getController();
-        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController);
+        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController, assinaturaController, assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
