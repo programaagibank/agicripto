@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="415.0" stylesheets="@css/contaCorrente.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cripto.agi.agi.javafx.controllers.CriptoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="415.0" stylesheets="@css/contaCorrente.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cripto.agi.agi.javafx.controllers.CriptoController">
     <children>
         <Pane prefHeight="664.0" prefWidth="415.0" style="-fx-background-color: #0052CC;" styleClass="pane-top">
             <children>
@@ -126,7 +126,8 @@
             <Button layoutX="263.0" layoutY="474.0" mnemonicParsing="false" onAction="#venderCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
             <Button layoutX="263.0" layoutY="533.0" mnemonicParsing="false" onAction="#trocarCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
             <Button layoutX="27.0" layoutY="535.0" mnemonicParsing="false" onAction="#transferirCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
-            <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="324.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="btnExcluirCarteira" layoutX="276.0" layoutY="68.0" onAction="#desativarCarteira" prefHeight="36.0" prefWidth="131.0" styleClass="crypto-button" text="Desativar Carteira" textFill="#cc0000" />
+                <ImageView fitHeight="78.0" fitWidth="75.0" layoutX="324.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@imagens/agilogo-removebg-preview.png" />
                </image>

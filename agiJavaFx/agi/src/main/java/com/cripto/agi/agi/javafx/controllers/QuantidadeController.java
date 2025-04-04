@@ -12,7 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -130,6 +132,36 @@ public class QuantidadeController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
         stage.setScene(new Scene(root));
+    }
+
+    public void desativarCarteira(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação");
+        alert.setHeaderText("Desativar carteira");
+        alert.setContentText("Tem certeza de que deseja desativar sua carteira? Esta ação não pode ser desfeita.");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            boolean sucesso = carteiraCriptoController.desativarCarteiraCripto();
+
+            if (sucesso) {
+                Alert sucessoAlert = new Alert(Alert.AlertType.INFORMATION);
+                sucessoAlert.setTitle("Sucesso");
+                sucessoAlert.setHeaderText(null);
+                sucessoAlert.setContentText("Carteira desativada com sucesso.");
+                sucessoAlert.showAndWait();
+                try {
+                    carteiraCorrente(actionEvent);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else{
+                Alert erroAlert = new Alert(Alert.AlertType.ERROR);
+                erroAlert.setTitle("Erro");
+                erroAlert.setHeaderText(null);
+                erroAlert.setContentText("Erro ao desativar a carteira. Tente novamente.");
+                erroAlert.showAndWait();
+            }
+        }
     }
 
     public void sair(ActionEvent actionEvent) throws IOException {

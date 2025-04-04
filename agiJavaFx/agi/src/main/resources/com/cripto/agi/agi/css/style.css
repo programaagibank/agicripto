@@ -49,3 +49,39 @@
 #cadastroBotao:pressed, #esqueceuSenhaBotao:pressed {
     -fx-background-color: #CCCCCC;
 }
+
+/* Adicione estas classes ao seu arquivo contaCorrente.css */
+
+/* Estilo base para botões de cripto (mantendo consistência) */
+.crypto-button {
+    -fx-background-color: white;
+    -fx-text-fill: #0052CC;
+    -fx-border-color: #0052CC;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Estilo específico para o botão de desativação */
+.button-danger {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.button-danger:hover {
+    -fx-background-color: #c82333;
+}
+
+.button-danger:pressed {
+    -fx-background-color: #bd2130;
+}
+
+.button-danger:disabled {
+    -fx-background-color: #6c757d;
+    -fx-opacity: 1;
+}
