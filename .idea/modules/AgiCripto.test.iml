@@ -3,16 +3,23 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_21">
     <output-test url="file://$MODULE_DIR$/../../AgiCripto/build/classes/java/test" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../AgiCripto/src/test" />
+    <content url="file://$MODULE_DIR$/../../AgiCripto/src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../AgiCripto/src/test/java" isTestSource="true" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="AgiCripto.main" />
     <orderEntry type="library" name="Gradle: io.github.cdimascio:java-dotenv:5.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.json:json:20210307" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter:5.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.mockito:mockito-junit-jupiter:5.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.mockito:mockito-core:5.7.0" level="project" />
     <orderEntry type="library" name="Gradle: com.mysql:mysql-connector-j:8.0.32" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-params:5.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy:1.14.9" level="project" />
+    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.14.9" level="project" />
     <orderEntry type="library" name="Gradle: com.google.protobuf:protobuf-java:3.21.9" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
@@ -20,6 +27,7 @@
     <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.10.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.objenesis:objenesis:3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.10.0" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="AgiCripto.main" />
