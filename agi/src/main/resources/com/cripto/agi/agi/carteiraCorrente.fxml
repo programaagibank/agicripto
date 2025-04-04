@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cripto.agi.agi.javafx.controllers.CarteiraCorrenteController">
+   <children>
+      <Pane prefHeight="250.0" prefWidth="415.0" style="-fx-background-color: #0052CC;" styleClass="pane-top">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" styleClass="header-label" text="Olá, " textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="saldoLabel" layoutX="78.0" layoutY="97.0" styleClass="header-label" text="0,00" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="nomeLabel" layoutX="78.0" layoutY="14.0" styleClass="header-label" text="nome" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="97.0" styleClass="header-label" text="R$:" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Button layoutX="170.0" layoutY="220.0" mnemonicParsing="false" onAction="#carteiraCripto" prefHeight="61.0" prefWidth="210.0" styleClass="crypto-button">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <ImageView fitHeight="49.0" fitWidth="103.0" layoutX="183.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/images.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="242.0" layoutY="241.0" styleClass="info-label" text="Carteira Criptmoedas" />
+            <ImageView fitHeight="114.0" fitWidth="75.0" layoutX="326.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/agilogo-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Button layoutX="39.0" layoutY="220.0" mnemonicParsing="false" onAction="#telaPix" prefHeight="61.0" prefWidth="75.0" styleClass="crypto-button" />
+      <Pane layoutX="51.0" layoutY="328.0" prefHeight="200.0" prefWidth="313.0" styleClass="info-pane">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" styleClass="info-label" text="Comece utilizar">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="167.0" layoutY="14.0" styleClass="info-label" text="nossa carteira ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="67.0" layoutY="43.0" styleClass="info-label" text="de Criptomoedas!">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="52.0" layoutY="100.0" styleClass="info-label" text="Com apenas um clique">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="40.0" layoutY="138.0" styleClass="info-label" text="você já começa a investir">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="-7.0" layoutY="658.0" prefHeight="61.0" prefWidth="422.0" styleClass="bottom-pane">
+         <children>
+            <Button layoutX="46.0" layoutY="6.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="112.0" style="-fx-border-color: #FFFFFF;" styleClass="crypto-button" textFill="#0052cc" />
+            <Button layoutX="285.0" layoutY="6.0" mnemonicParsing="false" onAction="#sair" prefHeight="49.0" prefWidth="112.0" styleClass="crypto-button" textFill="#0052cc" />
+            <ImageView fitHeight="36.0" fitWidth="64.0" layoutX="59.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/images%20(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="36.0" fitWidth="49.0" layoutX="294.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/images%20(2).png" />
+               </image>
+            </ImageView>
+            <Label layoutX="102.0" layoutY="22.0" prefHeight="18.0" prefWidth="50.0" styleClass="info-label" text="Inicio" />
+            <Label layoutX="341.0" layoutY="22.0" prefHeight="18.0" prefWidth="50.0" styleClass="info-label" text="Sair" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="36.0" fitWidth="64.0" layoutX="59.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" styleClass="icon-pix">
+         <image>
+            <Image url="@imagens/pix-removebg-preview.png" />
+         </image></ImageView>
+      <Label layoutX="66.0" layoutY="262.0" prefHeight="18.0" prefWidth="37.0" styleClass="info-label" text="Pix">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+   <stylesheets>
+      <URL value="@css/contaCorrente.css" />
+      <URL value="@css/contaCorrente.css" />
+   </stylesheets>
+</Pane>

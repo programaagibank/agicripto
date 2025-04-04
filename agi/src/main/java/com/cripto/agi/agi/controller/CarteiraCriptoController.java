@@ -1,14 +1,16 @@
-package com.cripto.controller;
+package com.cripto.agi.agi.controller;
 
-import com.cripto.dao.CarteiraCriptoDAO;
-import com.cripto.dao.CarteiraDAO;
-import com.cripto.dao.ClienteDAO;
-import com.cripto.dao.TransacaoDAO;
-import com.cripto.model.Carteira;
-import com.cripto.model.CarteiraCripto;
-import com.cripto.model.Cliente;
-import com.cripto.model.Transacao;
+import com.cripto.agi.agi.dao.CarteiraCriptoDAO;
+import com.cripto.agi.agi.dao.CarteiraDAO;
+import com.cripto.agi.agi.dao.ClienteDAO;
+import com.cripto.agi.agi.dao.TransacaoDAO;
+import com.cripto.agi.agi.model.Carteira;
+import com.cripto.agi.agi.model.CarteiraCripto;
+import com.cripto.agi.agi.model.Cliente;
+import com.cripto.agi.agi.model.Transacao;
+import javafx.scene.control.Alert;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -27,9 +29,9 @@ public class CarteiraCriptoController {
         this.transacaoDAO = transacaoDAO;
     }
 
-    public void ativarCarteiraCripto() {
+    public boolean ativarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
-        if (cliente == null) return;
+        if (cliente == null) return false;
 
         CarteiraCripto carteiraCripto = new CarteiraCripto(
                 cliente.getId_cliente(),
@@ -42,7 +44,9 @@ public class CarteiraCriptoController {
 
         if (carteiraCriptoDAO.criarCarteiraCripto(carteiraCripto)) {
             clienteDAO.ativarConta(cliente.getId_cliente());
+            return true;
         }
+        return false;
     }
 
     public boolean comprarCripto(Integer opcao, Double valor) {
@@ -90,59 +94,6 @@ public class CarteiraCriptoController {
         return carteiraCriptoDAO.comprarCriptomoedas(opcao, novoValor, cliente.getId_cliente());
     }
 
-    public boolean venderCriptoMoeda(int opcao, double valor){
-        Cliente cliente = clienteController.pegarClienteLogado();
-        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
-        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
-
-        if (carteiraCripto == null) return false;
-        if (carteira == null) return false;
-
-        int idCripto;
-        double novoValor;
-
-        if (opcao == 1){
-            if (carteiraCripto.getSaldoBTC() < valor) return false;
-            idCripto = 1;
-            novoValor = carteiraCripto.getSaldoBTC() - valor;
-            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente());
-            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira());
-        } else if (opcao == 2){
-            if (carteiraCripto.getSaldoETH() < valor) return false;
-            idCripto = 2;
-            novoValor = carteiraCripto.getSaldoETH() - valor;
-            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente());
-            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira());
-        } else if (opcao == 3){
-            if (carteiraCripto.getSaldoSOl() < valor) return false;
-            idCripto = 3;
-            novoValor = carteiraCripto.getSaldoSOl() - valor;
-            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente()); // subtrair valor
-            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira()); // adc saldo na conta
-        } else {
-            return false;
-        }
-
-        LocalDateTime data = LocalDateTime.now();
-        Transacao transacao = new Transacao(
-                carteira.getId_carteira(),
-                cliente.getId_cliente(),
-                idCripto,
-                "PAGO",
-                1,
-                valor,
-                data
-        );
-
-        carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() + valor), carteira.getId_carteira());
-        transacaoDAO.comprar(transacao);
-
-        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC() - valor;
-        carteiraCriptoDAO.atualizarSaldoBrl(saldoBRl, cliente.getId_cliente());
-
-        return carteiraCriptoDAO.venderCriptomoedas(opcao, valor, cliente.getId_cliente());
-    }
-
     public CarteiraCripto pegarCarteiraCripto(Integer id) {
         return carteiraCriptoDAO.acharPeloIdCliente(id);
     }
@@ -184,20 +135,16 @@ public class CarteiraCriptoController {
         if (criptoOrigem == 1) saldoAtual = carteiraCripto.getSaldoBTC();
         else if (criptoOrigem == 2) saldoAtual = carteiraCripto.getSaldoETH();
         else if (criptoOrigem == 3) saldoAtual = carteiraCripto.getSaldoSOl();
-        else return false;
-
+        
         double saldoDestino = 0;
         if (criptoDestino == 1) saldoDestino = carteiraCripto.getSaldoBTC();
         else if (criptoDestino == 2) saldoDestino = carteiraCripto.getSaldoETH();
         else if (criptoDestino == 3) saldoDestino = carteiraCripto.getSaldoSOl();
-        else return false;
 
         if (saldoAtual < valor) return false;
 
-        carteiraCripto.conversao(criptoDestino, valor);
-
         carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoOrigem, saldoAtual - valor);
-        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (saldoDestino + valor));
+        carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), criptoDestino, (valor + saldoDestino));
 
         LocalDateTime data = LocalDateTime.now();
         Transacao transacao = new Transacao(
@@ -223,24 +170,20 @@ public class CarteiraCriptoController {
 //        if (carteira == null) return false;
 //
 //        int idCripto;
-//        double novoValor;
 //
 //        if (opcao == 1){
 //            if (carteiraCripto.getSaldoBTC() < valor) return false;
 //            idCripto = 1;
-//            novoValor = carteiraCripto.getSaldoBTC() - valor;
 //            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente());
 //            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira());
 //        } else if (opcao == 2){
 //            if (carteiraCripto.getSaldoETH() < valor) return false;
 //            idCripto = 2;
-//            novoValor = carteiraCripto.getSaldoETH() - valor;
 //            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente());
 //            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira());
 //        } else if (opcao == 3){
 //            if (carteiraCripto.getSaldoSOl() < valor) return false;
 //            idCripto = 3;
-//            novoValor = carteiraCripto.getSaldoSOl() - valor;
 //            carteiraCriptoDAO.subtrairCripto(valor,opcao,carteiraCripto.getIdCliente()); // subtrair valor
 //            carteiraDAO.atualizarSaldo(carteira.getSaldoContaCorrente() + valor,carteira.getId_carteira()); // adc saldo na conta
 //        } else {
@@ -257,15 +200,62 @@ public class CarteiraCriptoController {
 //                valor,
 //                data
 //        );
-//
-//        carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() + valor), carteira.getId_carteira());
 //        transacaoDAO.comprar(transacao);
 //
-//        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC() + valor;
+//        double saldoBRl = carteiraCripto.getSaldoSOl() + carteiraCripto.getSaldoETH() + carteiraCripto.getSaldoBTC();
 //        carteiraCriptoDAO.atualizarSaldoBrl(saldoBRl, cliente.getId_cliente());
 //
-//        return carteiraCriptoDAO.venderCriptomoedas(opcao, novoValor, cliente.getId_cliente());
+//        return carteiraCriptoDAO.venderCriptomoedas(opcao, valor, cliente.getId_cliente());
 //    }
+
+    public boolean venderCriptoMoeda(int opcao, double valor) {
+        Cliente cliente = clienteController.pegarClienteLogado();
+        Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());
+        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
+
+        double valorDebitado = 0;
+        if (opcao == 1 && (valor <= carteiraCripto.getSaldoBTC())) {
+            valorDebitado = carteiraCripto.getSaldoBTC() - valor;
+        } else if (opcao == 2 && (valor <= carteiraCripto.getSaldoETH())) {
+            valorDebitado = carteiraCripto.getSaldoETH() - valor;
+        } else if (opcao == 3 && (valor <= carteiraCripto.getSaldoSOl())) {
+            valorDebitado = carteiraCripto.getSaldoSOl() - valor;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Erro de venda");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro, você não pode vender mais do que possui!");
+            alert.showAndWait();
+
+            return false;
+        }
+
+        try {
+            carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() + valor), carteira.getId_carteira());
+            carteiraCriptoDAO.atualizarSaldoCripto(cliente.getId_cliente(), opcao, valorDebitado);
+            carteiraCriptoDAO.atualizarSaldoBrl(
+                    (carteiraCripto.getSaldoSOl()
+                            + carteiraCripto.getSaldoBTC()
+                            + carteiraCripto.getSaldoETH() - valor),
+                    cliente.getId_cliente()
+            );
+
+            LocalDateTime data = LocalDateTime.now();
+            Transacao transacao = new Transacao(
+                    carteira.getId_carteira(),
+                    cliente.getId_cliente(),
+                    opcao,
+                    "PAGO",
+                    3,
+                    valor,
+                    data
+            );
+            transacaoDAO.comprar(transacao);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException("ERRO AO VENDER! ", e);
+        }
+    }
 
     public void exibirTutorial(){
         System.out.println("========================================================================================================================================");
@@ -313,13 +303,13 @@ public class CarteiraCriptoController {
         System.out.println("========================================================================================================================================");
     }
 
-    public void transferirCripto(String emailRecebidor, double valor, int idCripto) {
+    public boolean transferirCripto(String emailRecebidor, double valor, int idCripto) {
         Cliente clienteRemetente = clienteController.pegarClienteLogado();
         Cliente clienteRecebidor = clienteDAO.encontrarEmail(emailRecebidor);
 
         if (Objects.equals(clienteRemetente.getId_cliente(), clienteRecebidor.getId_cliente())) {
             System.out.println("Erro: Você não pode transferir para si mesmo!");
-            return;
+            return false;
         }
 
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(clienteRemetente.getId_cliente());
@@ -328,7 +318,7 @@ public class CarteiraCriptoController {
         CarteiraCripto carteiraRemetente = carteiraCriptoDAO.acharPeloIdCliente(clienteRemetente.getId_cliente());
         CarteiraCripto carteiraRecebidor = carteiraCriptoDAO.acharPeloIdCliente(clienteRecebidor.getId_cliente());
 
-        double saldoRecebidor, saldoRemetente;
+        double saldoRecebidor = 0, saldoRemetente = 0;
 
         switch (idCripto) {
             case 1 -> {
@@ -345,13 +335,13 @@ public class CarteiraCriptoController {
             }
             default -> {
                 System.out.println("Erro: ID de criptomoeda inválido!");
-                return;
+                return false;
             }
         }
 
         if (saldoRemetente < valor) {
             System.out.println("Erro: Saldo insuficiente para realizar a transferência!");
-            return;
+            return false;
         }
 
         carteiraCriptoDAO.atualizarSaldoCripto(carteiraRecebidor.getIdCliente(), idCripto, saldoRecebidor + valor);
@@ -371,6 +361,7 @@ public class CarteiraCriptoController {
         transacaoDAO.comprar(transacao);
 
         System.out.println("Transferência realizada com sucesso!");
+        return true;
     }
 
 }
