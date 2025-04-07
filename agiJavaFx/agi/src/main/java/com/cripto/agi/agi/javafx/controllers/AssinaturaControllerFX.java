@@ -61,7 +61,10 @@ public class AssinaturaControllerFX {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Assinatura Realizada!!");
             alert.setHeaderText(null);
-            alert.setContentText("Sua assinatura: R$ " + valor + "mensal na moeda " + opcao);
+            if (opcao == 1) alert.setContentText("Sua assinatura: R$ " + valor + " mensal na moeda BTC");
+            if (opcao == 2) alert.setContentText("Sua assinatura: R$ " + valor + " mensal na moeda ETH");
+            if (opcao == 3) alert.setContentText("Sua assinatura: R$ " + valor + " mensal na moeda SOL");
+
             alert.showAndWait();
             voltarParaCarteiraCripto(actionEvent);
         }
