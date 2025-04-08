@@ -69,6 +69,15 @@ public class AssinaturaControllerFX {
         int opcao = moedaChoiceBox.getSelectionModel().getSelectedIndex() + 1;
         double valor = Double.parseDouble(aporteMensalField.getText());
 
+        if (valor <= 0) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Valor inválido");
+            alert.setHeaderText(null);
+            alert.setContentText("Digite um valor positivo para realizar a assinatura.");
+            alert.showAndWait();
+            return;
+        }
+
         if (assinaturaController.assinar(valor, opcao)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Assinatura Realizada!!");
