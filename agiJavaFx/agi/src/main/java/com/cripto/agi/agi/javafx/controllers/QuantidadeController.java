@@ -46,10 +46,12 @@ public class QuantidadeController {
     private AssinaturaDAO assinaturaDAO;
     private AssinaturaController assinaturaController;
 
-    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController) {
+    public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, AssinaturaController assinaturaController, AssinaturaDAO assinaturaDAO) {
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
         this.carteiraCriptoController = carteiraCriptoController;
+        this.assinaturaController = assinaturaController;
+        this.assinaturaDAO = assinaturaDAO;
         this.carregarInfos();
     }
 
@@ -193,5 +195,18 @@ public class QuantidadeController {
         } catch (Exception e) {
             System.err.println("Erro ao abrir a URL: " + e.getMessage());
         }
+    }
+
+    public void assinarCripto(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cripto/agi/agi/assinaturaCripto.fxml"));
+        Parent root = loader.load();
+
+        AssinaturaControllerFX assinaturaControllerFX = loader.getController();
+        assinaturaControllerFX.setClienteController(this.controller, this.controller.getCarteiraDAO(), carteiraCriptoController,this.assinaturaController, assinaturaDAO);
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
     }
 }

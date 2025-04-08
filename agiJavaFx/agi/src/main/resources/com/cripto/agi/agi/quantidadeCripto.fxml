@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.canvas.Canvas?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="415.0" stylesheets="@css/contaCorrente.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cripto.agi.agi.javafx.controllers.QuantidadeController">
     <children>
         <Pane prefHeight="664.0" prefWidth="415.0" style="-fx-background-color: #0052CC;" styleClass="pane-top">
@@ -164,6 +165,18 @@
                     </image>
                 </ImageView>
                 <Label layoutX="263.0" layoutY="116.0" styleClass="header-label" text="Quantidade Agicoin">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Button layoutX="27.0" layoutY="596.0" mnemonicParsing="false" onAction="#assinarCripto" prefHeight="46.0" prefWidth="131.0" styleClass="crypto-button" textFill="#0052cc" />
+                <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="32.0" layoutY="606.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@imagens/iconeAssinatura.jpg" />
+                    </image>
+                </ImageView>
+                <Canvas height="200.0" width="200.0" />
+                <Label layoutX="71.0" layoutY="607.0" prefHeight="25.0" prefWidth="80.0" styleClass="info-label" text="Assinatura">
                     <font>
                         <Font size="16.0" />
                     </font>

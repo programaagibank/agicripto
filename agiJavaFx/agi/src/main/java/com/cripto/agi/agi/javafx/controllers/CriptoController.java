@@ -46,7 +46,6 @@ public class CriptoController {
     private CarteiraCriptoController carteiraCriptoController;
     private AssinaturaDAO assinaturaDAO;
 
-
     public void setClienteController(ClienteController controller, CarteiraDAO carteiraDAO, CarteiraCriptoController carteiraCriptoController, AssinaturaController assinaturaController, AssinaturaDAO assinaturaDAO) {
         this.controller = controller;
         this.carteiraDAO = carteiraDAO;
@@ -55,8 +54,6 @@ public class CriptoController {
         this.assinaturaDAO = assinaturaDAO;
         this.carregarInfos();
     }
-
-
 
     public void carregarInfos() {
         Cliente cliente = controller.pegarClienteLogado();
@@ -90,7 +87,7 @@ public class CriptoController {
         Parent root = loader.load();
 
         QuantidadeController quantidadeController = loader.getController();
-        quantidadeController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController);
+        quantidadeController.setClienteController(this.controller, this.carteiraDAO, this.carteiraCriptoController, this.assinaturaController, this.assinaturaDAO);
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setResizable(false);
