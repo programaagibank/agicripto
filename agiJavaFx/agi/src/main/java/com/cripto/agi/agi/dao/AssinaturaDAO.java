@@ -3,6 +3,8 @@ package com.cripto.agi.agi.dao;
 import com.cripto.agi.agi.model.Assinatura;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AssinaturaDAO {
     private final Connection conexao;
@@ -35,53 +37,50 @@ public class AssinaturaDAO {
         }
     }
 
-    public Assinatura acharAssinaturaPeloIdCliente(Integer id) {
-        String sql = "SELECT * FROM agicripto.Assinatura WHERE id_cliente = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Assinatura assinatura = null;
+    public List<Assinatura> acharAssinaturasPorIdCliente(Integer id) {
+        String sql = "SELECT * FROM agicripto.Assinatura WHERE id_cliente = ? AND status = ?";
+        List<Assinatura> assinaturas = new ArrayList<>();
 
-        try {
-            ps = conexao.prepareStatement(sql);
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setInt(1, id);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                assinatura = new Assinatura(
-                        rs.getInt("id_assinatura"),
-                        rs.getInt("id_cliente"),
-                        rs.getDouble("valor"),
-                        rs.getString("beneficios"),
-                        rs.getDate("data_inicio").toLocalDate(),
-                        rs.getDate("data_fim").toLocalDate(),
-                        rs.getString("status"),
-                        rs.getInt("id_cripto")
-                );
-            } else {
-                rs.close();
-                ps.execute();
+            ps.setString(2, "ativo");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Assinatura assinatura = new Assinatura(
+                            rs.getInt("id_assinatura"),
+                            rs.getInt("id_cliente"),
+                            rs.getDouble("valor"),
+                            rs.getString("beneficios"),
+                            rs.getDate("data_inicio").toLocalDate(),
+                            rs.getDate("data_fim").toLocalDate(),
+                            rs.getString("status"),
+                            rs.getInt("id_cripto")
+                    );
+                    assinaturas.add(assinatura);
+                }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar assinatura ", e);
+            throw new RuntimeException("Erro ao buscar assinaturas do cliente com id: " + id, e);
         }
-        return assinatura;
+
+        return assinaturas;
     }
 
-    public boolean desativarAssinatura(Integer idCliente) {
-        String sql = "UPDATE agicripto.Assinatura SET status = ? WHERE id_cliente = ?";
-        PreparedStatement ps = null;
 
-        try {
-            ps = conexao.prepareStatement(sql);
+    public boolean desativarAssinatura(Integer idCliente, Integer idAssinatura) {
+        String sql = "UPDATE agicripto.Assinatura SET status = ? WHERE id_cliente = ? AND id_assinatura = ?";
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setString(1, "inativo");
             ps.setInt(2, idCliente);
+            ps.setInt(3, idAssinatura);
 
-            ps.execute();
-            ps.close();
+            int linhasAfetadas = ps.executeUpdate();
 
-            return true;
+            return linhasAfetadas > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao desativar assinatura ", e);
+            throw new RuntimeException("Erro ao desativar a assinatura com ID: " + idAssinatura, e);
         }
     }
+
 }

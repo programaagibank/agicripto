@@ -5,6 +5,7 @@ import com.cripto.agi.agi.model.Assinatura;
 import com.cripto.agi.agi.model.Cliente;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class AssinaturaController {
     private final ClienteController clienteController;
@@ -23,6 +24,14 @@ public class AssinaturaController {
 
         if (cliente.getStatus().equals("desativado")) return false;
 
+        List<Assinatura> assinaturasExistentes = assinaturaDAO.acharAssinaturasPorIdCliente(cliente.getId_cliente());
+
+        for (Assinatura a : assinaturasExistentes) {
+            if (a.getIdCripto() == opcao && a.getStatus().equalsIgnoreCase("ativo")) {
+                return false;
+            }
+        }
+
         LocalDate dataInicio = LocalDate.now();
         LocalDate dataFim = dataInicio.plusDays(30);
 
@@ -39,11 +48,12 @@ public class AssinaturaController {
         return assinaturaDAO.novaAssinatura(assinatura);
     }
 
-    public boolean desativar(int id) {
-        return assinaturaDAO.desativarAssinatura(id);
+
+    public boolean desativar(int idCliente, int idAssinatura) {
+        return assinaturaDAO.desativarAssinatura(idCliente, idAssinatura);
     }
 
-    public Assinatura pegarPeloId(int id) {
-        return assinaturaDAO.acharAssinaturaPeloIdCliente(id);
+    public List<Assinatura> pegarPeloId(int id) {
+        return assinaturaDAO.acharAssinaturasPorIdCliente(id);
     }
 }

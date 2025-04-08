@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.VBox?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="415.0" stylesheets="@css/contaCorrente.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cripto.agi.agi.javafx.controllers.AssinaturaControllerFX">
     <children>
         <Pane prefHeight="664.0" prefWidth="415.0" style="-fx-background-color: #0052CC;" styleClass="pane-top">
@@ -40,6 +41,17 @@
                      </font></Button>
                     </children>
                 </Pane>
+                <Pane layoutX="22.0" layoutY="381.0" prefHeight="247.0" prefWidth="372.0" style="-fx-background-color: d3eaff;" styleClass="info-pane">
+                    <children>
+                        <Label layoutX="14.0" layoutY="10.0" prefHeight="40.0" prefWidth="195.0" styleClass="button-label" text="Assinaturas:">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <VBox fx:id="assinaturasBox" layoutX="14.0" layoutY="50.0" spacing="10.0" prefWidth="340.0" />
+                    </children>
+                </Pane>
+
             </children>
         </Pane>
 
