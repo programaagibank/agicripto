@@ -29,17 +29,12 @@ import java.util.List;
 
 
 public class AssinaturaControllerFX {
-
     @FXML
     private TextField aporteMensalField;
-
     @FXML
     private ChoiceBox<String> moedaChoiceBox;
-
     @FXML
     private VBox assinaturasBox;
-
-
 
     private ClienteController controller;
     private CarteiraDAO carteiraDAO;

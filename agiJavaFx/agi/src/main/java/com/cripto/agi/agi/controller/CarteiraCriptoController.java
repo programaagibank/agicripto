@@ -339,6 +339,9 @@ public class CarteiraCriptoController {
         carteiraCriptoDAO.atualizarSaldoCripto(carteiraRecebidor.getIdCliente(), idCripto, saldoRecebidor + valor);
         carteiraCriptoDAO.atualizarSaldoCripto(carteiraRemetente.getIdCliente(), idCripto, saldoRemetente - valor);
 
+        carteiraCriptoDAO.atualizarSaldoBrl((carteiraRemetente.getSaldoBRL() + valor), carteiraRemetente.getIdCliente());
+        carteiraCriptoDAO.atualizarSaldoBrl((carteiraRecebidor.getSaldoBRL() + valor), carteiraRecebidor.getIdCliente());
+
         LocalDateTime data = LocalDateTime.now();
         Transacao transacao = new Transacao(
                 carteira.getId_carteira(),
