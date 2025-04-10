@@ -1,6 +1,8 @@
 package com.cripto.agi.agi.dao;
 
+import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.CarteiraCripto;
+import com.cripto.agi.agi.model.Cliente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -164,6 +166,36 @@ public class CarteiraCriptoDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public CarteiraCripto obterSaldo(int idCliente){
+        String sql = "SELECT id_carteira_cripto, id_cliente, saldo_brl, saldo_btc, saldo_eth, saldo_sol, saldo_agicoin\n" +
+                "FROM agicripto.Carteira_Cripto WHERE id_cliente = ?";
+        PreparedStatement ps = null;
+
+        CarteiraCripto carteiraCripto = null;
+
+        try{
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1,idCliente);
+            ResultSet rs = ps.executeQuery(sql);
+
+            if (rs.next()) {
+
+                carteiraCripto.setIdCarteiraCripto(rs.getInt("id_carteira_cripto"));
+                carteiraCripto.setIdCliente(rs.getInt("id_cliente"));
+                carteiraCripto.setSaldoBRL(rs.getDouble("saldo_brl"));
+                carteiraCripto.setSaldoBTC(rs.getDouble("saldo_btc"));
+                carteiraCripto.setSaldoETH(rs.getDouble("saldo_eth"));
+                carteiraCripto.setSaldoSOl(rs.getDouble("saldo_sol"));
+                carteiraCripto.setSaldoAGICOIN(rs.getDouble("saldo_agicoin"));
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return carteiraCripto;
     }
 }
 

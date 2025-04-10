@@ -52,7 +52,11 @@ public class LoginController {
 
             carteiraCorrente(actionEvent);
         } else {
-            System.out.println("Nao top");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Conta não encontrada");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique o login ou a senha digitada!");
+            alert.showAndWait();
         }
     }
 

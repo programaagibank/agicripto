@@ -5,6 +5,7 @@ import com.cripto.agi.agi.controller.CarteiraCriptoController;
 import com.cripto.agi.agi.controller.ClienteController;
 import com.cripto.agi.agi.dao.*;
 import com.cripto.agi.agi.javafx.controllers.LoginController;
+import com.cripto.agi.agi.model.CarteiraCripto;
 import com.cripto.agi.agi.model.database.Conexao;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,7 @@ public class MainApplication extends Application {
         TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
         AssinaturaDAO assinaturaDAO = new AssinaturaDAO(connection);
         ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
-        AssinaturaController assinaturaController = new AssinaturaController(controller, assinaturaDAO);
+        AssinaturaController assinaturaController = new AssinaturaController(controller, assinaturaDAO, carteiraDAO,carteiraCriptoDAO);
         CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(controller,assinaturaController, carteiraCriptoDAO, carteiraDAO, clienteDAO, transacaoDAO, assinaturaDAO);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
