@@ -60,9 +60,14 @@ public class AssinaturaController {
         LocalDate dataInicio = LocalDate.now();
         LocalDate dataFim = dataInicio.plusDays(30);
 
+        CarteiraCripto carteiraCripto = carteiraCriptoDAO.acharPeloIdCliente(cliente.getId_cliente());
+
         carteiraDAO.atualizarSaldo((carteira.getSaldoContaCorrente() - valor),carteira.getId_carteira());
 
-        carteiraCriptoDAO.comprarCriptomoedas(opcao,valor,cliente.getId_cliente());
+
+        if (opcao == 1)carteiraCriptoDAO.comprarCriptomoedas(opcao,(carteiraCripto.getSaldoBTC()+valor),cliente.getId_cliente());
+        if (opcao == 2)carteiraCriptoDAO.comprarCriptomoedas(opcao,(carteiraCripto.getSaldoETH()+valor),cliente.getId_cliente());
+        if (opcao == 3)carteiraCriptoDAO.comprarCriptomoedas(opcao,(carteiraCripto.getSaldoSOl()+valor),cliente.getId_cliente());
 
         Assinatura assinatura = new Assinatura(
                 cliente.getId_cliente(),
@@ -73,10 +78,6 @@ public class AssinaturaController {
                 "ativo",
                 opcao
         );
-
-
-
-//        carteiraCriptoDAO.atualizarSaldoCripto();
 
         return assinaturaDAO.novaAssinatura(assinatura);
     }
