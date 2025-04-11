@@ -1,9 +1,6 @@
 package com.cripto.agi.agi.controller;
 
-import com.cripto.agi.agi.dao.AssinaturaDAO;
-import com.cripto.agi.agi.dao.CarteiraDAO;
-import com.cripto.agi.agi.dao.ClienteDAO;
-import com.cripto.agi.agi.dao.TransacaoDAO;
+import com.cripto.agi.agi.dao.*;
 import com.cripto.agi.agi.model.Carteira;
 import com.cripto.agi.agi.model.Cliente;
 import com.cripto.agi.agi.model.Transacao;
@@ -20,6 +17,7 @@ public class ClienteController {
     private final Cliente cliente = new Cliente();
     private Cliente clienteLogado;
     private final TransacaoDAO transacaoDAO;
+    private CarteiraCriptoController carteiraCriptoController;
 
     public ClienteController(
             ClienteDAO clienteDAO,
@@ -32,6 +30,11 @@ public class ClienteController {
         this.scanner = new Scanner(System.in).useLocale(Locale.US);
         this.clienteDAO = clienteDAO;
     }
+
+    public void setCarteiraCriptoController(CarteiraCriptoController carteiraCriptoController) {
+        this.carteiraCriptoController = carteiraCriptoController;
+    }
+
 
     public boolean cadastro(String nome, String email, String senha, String cpf) {
         Cliente cliente = new Cliente(nome, email, cpf);
@@ -125,6 +128,9 @@ public class ClienteController {
                 (carteiraLogada.getSaldoContaCorrente() - valor),
                 carteiraLogada.getId_carteira()
         );
+        double valorCash = valor / 0.01;
+        carteiraCriptoController.realizarCashback(valorCash, clienteLogado.getId_cliente());
+
 
         return transacaoDAO.comprar(transacao);
     }

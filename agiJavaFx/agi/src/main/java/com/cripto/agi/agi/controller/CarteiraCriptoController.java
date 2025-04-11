@@ -110,7 +110,6 @@ public class CarteiraCriptoController {
         }
     }
 
-
     public boolean desativarCarteiraCripto() {
         Cliente cliente = clienteController.pegarClienteLogado();
         Carteira carteira = carteiraDAO.pegarCarteiraPeloClienteId(cliente.getId_cliente());

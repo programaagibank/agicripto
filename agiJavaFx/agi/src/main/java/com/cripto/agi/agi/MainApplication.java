@@ -24,19 +24,25 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException, SQLException {
         Conexao conexao = new Conexao();
         Connection connection = conexao.getConexao(0);
+
         CarteiraDAO carteiraDAO = new CarteiraDAO(connection);
         CarteiraCriptoDAO carteiraCriptoDAO = new CarteiraCriptoDAO(connection);
         ClienteDAO clienteDAO = new ClienteDAO(connection);
         TransacaoDAO transacaoDAO = new TransacaoDAO(connection);
         AssinaturaDAO assinaturaDAO = new AssinaturaDAO(connection);
-        ClienteController controller = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
-        AssinaturaController assinaturaController = new AssinaturaController(controller, assinaturaDAO, carteiraDAO,carteiraCriptoDAO);
-        CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(controller,assinaturaController, carteiraCriptoDAO, carteiraDAO, clienteDAO, transacaoDAO, assinaturaDAO);
+
+        ClienteController clienteController = new ClienteController(clienteDAO, carteiraDAO, transacaoDAO);
+        AssinaturaController assinaturaController = new AssinaturaController(clienteController, assinaturaDAO, carteiraDAO, carteiraCriptoDAO);
+        CarteiraCriptoController carteiraCriptoController = new CarteiraCriptoController(
+                clienteController, assinaturaController, carteiraCriptoDAO, carteiraDAO, clienteDAO, transacaoDAO, assinaturaDAO
+        );
+
+        clienteController.setCarteiraCriptoController(carteiraCriptoController);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent root = loader.load();
         LoginController loginController = loader.getController();
-        loginController.setClienteController(controller, carteiraDAO, carteiraCriptoController, assinaturaController, assinaturaDAO);
+        loginController.setClienteController(clienteController, carteiraDAO, carteiraCriptoController, assinaturaController, assinaturaDAO);
         Scene scene = new Scene(root);
         stage.setTitle("Login");
         stage.setScene(scene);
