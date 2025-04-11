@@ -128,7 +128,7 @@ public class ClienteController {
                 (carteiraLogada.getSaldoContaCorrente() - valor),
                 carteiraLogada.getId_carteira()
         );
-        double valorCash = valor / 0.01;
+        double valorCash = valor * 0.01;
         carteiraCriptoController.realizarCashback(valorCash, clienteLogado.getId_cliente());
 
 
